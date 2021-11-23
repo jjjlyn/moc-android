@@ -15,3 +15,5 @@
 local.properties
 services.tar
 .idea
+.idea/gradle.xml
+.idea/misc.xml
