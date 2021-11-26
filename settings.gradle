@@ -1,3 +1,0 @@
-rootProject.name = "moc-android"
-include ":core",
-        ":app"
