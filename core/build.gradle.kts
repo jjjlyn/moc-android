@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = Sdk.compile
 
     defaultConfig {
-        minSdk = 23
-        targetSdk = 31
+        minSdk = Sdk.min
+        targetSdk = Sdk.target
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,12 +36,14 @@ android {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    testImplementation("junit:junit:4.+")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(Library.coreKtx)
+    implementation(Library.appcompat)
+    implementation(Library.material)
+    implementation(Library.constraintLayout)
+//    implementation(Library.hilt)
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    testImplementation(Library.junit)
+    androidTestImplementation(Library.testExtJunit)
+    androidTestImplementation(Library.espressoCore)
 }

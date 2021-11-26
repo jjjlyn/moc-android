@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    compileSdk = Sdk.COMPILE_SDK_VERSION
+    compileSdk = Sdk.compile
 
     defaultConfig {
-        minSdk = Sdk.MIN_SDK_VERSION
-        targetSdk = Sdk.TARGET_SDK_VERSION
+        minSdk = Sdk.min
+        targetSdk = Sdk.target
 
-        applicationId = AppCoordinates.APP_ID
-        versionCode = AppCoordinates.APP_VERSION_CODE
-        versionName = AppCoordinates.APP_VERSION_NAME
+        applicationId = AppCoordinates.appID
+        versionCode = AppCoordinates.appVersionCode
+        versionName = AppCoordinates.appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,11 +40,14 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    testImplementation("junit:junit:4.+")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(project(":core"))
+    implementation(Library.coreKtx)
+    implementation(Library.appcompat)
+    implementation(Library.material)
+    implementation(Library.constraintLayout)
+    implementation(Library.hilt)
+//    implementation(Library.hiltCompiler)
+    testImplementation(Library.junit)
+    androidTestImplementation(Library.testExtJunit)
+    androidTestImplementation(Library.espressoCore)
 }
