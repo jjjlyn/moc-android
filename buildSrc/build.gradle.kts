@@ -1,3 +1,4 @@
+
 plugins {
     `kotlin-dsl`
 }
@@ -7,12 +8,12 @@ repositories {
     mavenCentral()
 }
 
-object Plugins {
-    const val AGP = "7.0.3"
-    const val KOTLIN = "1.5.21"
+object Version {
+    const val kotlin = "1.5.21"
+    const val gradle = "7.0.3"
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${Plugins.KOTLIN}")
-    implementation("com.android.tools.build:gradle:${Plugins.AGP}")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
+    implementation("com.android.tools.build:gradle:${Version.gradle}")
 }
