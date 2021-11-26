@@ -16,7 +16,7 @@
     <color name="system_ui_scrim_dark">#40000000</color> <!-- 25% black -->
 
     <!-- When in 'light' mode, we use a light scrim and light status bar -->
-    <color name="status_bar_scrim">@color/color_on_surface_0</color>
+    <color name="status_bar_scrim">#1A474CFF</color>
 
     <!-- We use a dark scrim for the nav bar, since light nav bar is API 27+ -->
     <color name="nav_bar_scrim">@color/system_ui_scrim_dark</color>
