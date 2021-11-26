@@ -6,11 +6,14 @@
         <item name="colorPrimaryVariant">@color/color_primary_900</item>
         <!-- Secondary brand color. -->
         <item name="statusBarScrim">@color/status_bar_scrim</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.Moc.Main"/>
+
     <style name="Theme.Moc.Splash">
-        <item name="android:statusBarColor">#1A474CFF</item>
+        <item name="android:statusBarColor">@color/color_surface</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
