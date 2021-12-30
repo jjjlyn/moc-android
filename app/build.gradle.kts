@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -40,13 +43,30 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(Library.coreKtx)
+    implementation(project(":shared"))
+    implementation(project(":model"))
+    implementation(Library.kotlinLib)
+    implementation(Library.activity)
     implementation(Library.appcompat)
+    implementation(Library.core)
     implementation(Library.material)
     implementation(Library.constraintLayout)
+    implementation(Library.fragment)
     implementation(Library.hilt)
-//    implementation(Library.hiltCompiler)
+    kapt(Library.hiltCompiler)
+    implementation(Library.dataStore)
+    implementation(Library.okhttp)
+    implementation(Library.okhttpLoggingInterceptor)
+    implementation(Library.retrofit)
+    implementation(Library.retrofitConverterMoshi)
+    implementation(Library.retrofitConverterScalars)
+    implementation(Library.moshi)
+    implementation(Library.moshiKotlin)
+    implementation(Library.lifecycleCompiler)
+    implementation(Library.lifecycleRunTime)
+    implementation(Library.navigationFragment)
+    implementation(Library.navigationUI)
+    implementation(Library.timber)
     testImplementation(Library.junit)
     androidTestImplementation(Library.testExtJunit)
     androidTestImplementation(Library.espressoCore)
