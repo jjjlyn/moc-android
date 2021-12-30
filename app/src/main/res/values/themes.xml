@@ -1,18 +1,38 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Moc" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
+    <style name="Theme.Moc" parent="Base.Theme.Moc">
         <item name="colorPrimary">@color/color_primary_500</item>
-        <item name="colorPrimaryVariant">@color/color_primary_900</item>
-        <!-- Secondary brand color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="colorPrimaryVariant">@color/color_primary_500</item>
+        <item name="colorSecondary">@color/color_primary_500</item>
+        <item name="statusBarScrim">@color/status_bar_scrim</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.Design.BottomSheetDialog.Moc</item>
+        <item name="android:textViewStyle">@style/Widget.Moc.TextView</item>
     </style>
 
+    <style name="Theme.Moc.Main"/>
+
     <style name="Theme.Moc.Splash">
-        <item name="android:statusBarColor">@color/color_surface</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
+    </style>
+
+    <style name="Base.Theme.Moc" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Window decor-->
+        <item name="android:windowLightStatusBar">@bool/use_light_status_bar</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/use_light_nav_bar</item>
+        <item name="android:statusBarColor">?statusBarScrim</item>
+        <!--        <item name="android:navigationBarColor">@color/nav_bar_scrim</item>-->
+    </style>
+
+    <style name="Theme.Design.BottomSheetDialog.Moc" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Design.BottomSheet.Moc</item>
+        <item name="android:textViewStyle">@style/Widget.Moc.TextView</item>
+    </style>
+
+    <style name="Widget.Design.BottomSheet.Moc" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

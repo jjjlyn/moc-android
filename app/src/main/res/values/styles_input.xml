@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Moc.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="backgroundColor">@color/transparent</item>
+        <item name="boxStrokeWidth">@dimen/stroke_small</item>
+        <item name="boxStrokeColor">@color/selector_text_input_layout_outlined_stroke</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintTextAppearance">@style/TextAppearance.Moc.H4</item>
+        <item name="hintTextColor">@color/color_on_surface_400</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_large</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_large</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_large</item>
+        <item name="boxCornerRadiusTopStart">@dimen/radius_large</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Widget.Moc.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+</resources>
