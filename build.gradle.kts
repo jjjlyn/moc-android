@@ -12,6 +12,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${BuildPluginsVersion.secrets}")
         classpath("com.android.tools.build:gradle:${BuildPluginsVersion.gradle}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${BuildPluginsVersion.kotlin}")
         classpath("com.google.gms:google-services:${BuildPluginsVersion.gms}")
@@ -26,6 +27,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 

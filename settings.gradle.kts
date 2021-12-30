@@ -1,2 +1,2 @@
 rootProject.name = ("moc-android")
-include("app", "core")
+include("app", "shared", "model")
