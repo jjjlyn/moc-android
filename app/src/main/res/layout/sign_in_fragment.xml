@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="app.moc.android.ui.signin.SignInViewModel" />
+        <variable
+            name="signIn"
+            type="app.moc.model.SignIn" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/default_header" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textLoginLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="로그인"
+            android:textAppearance="@style/TextAppearance.Moc.H1"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputEmail"
+            style="@style/Widget.Moc.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            app:endIconMode="clear_text"
+            app:endIconDrawable="@drawable/ic_text_clear"
+            app:endIconTint="@color/color_on_surface_200"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textLoginLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이메일을 입력해주세요"
+                android:textColorHint="@color/color_on_surface_400"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onEmailChanged(text)}"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <app.moc.android.widget.DrawableTextInputLayout
+            android:id="@+id/textInputPassword"
+            style="@style/Widget.Moc.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputEmail"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/color_on_surface_400">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onPwdChanged(text)}"
+                android:hint="비밀번호를 입력해주세요"
+                android:textColorHint="@color/color_on_surface_400"
+                android:inputType="textPassword" />
+        </app.moc.android.widget.DrawableTextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSignUp"
+            style="@style/Widget.Moc.Button.FilledBox.Ghost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:text="가입하기"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="@color/color_on_surface_600"
+            app:layout_constraintRight_toLeftOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@id/textInputPassword" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="@dimen/stroke_small"
+            android:layout_height="13dp"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:background="@drawable/bg_divider_contained_radius_small"
+            app:layout_constraintBottom_toBottomOf="@id/buttonSignUp"
+            app:layout_constraintRight_toLeftOf="@id/buttonFindPassword"
+            app:layout_constraintTop_toTopOf="@id/buttonSignUp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonFindPassword"
+            style="@style/Widget.Moc.Button.FilledBox.Ghost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="비밀번호 찾기"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="?colorPrimary"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/buttonSignUp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Moc.Button.FilledBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textAppearance="@style/TextAppearance.Moc.H3"
+            android:textColor="@color/color_on_surface_0"
+            app:cornerRadius="0dp"
+            android:onClick="@{() -> viewModel.onSignIn(signIn)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
