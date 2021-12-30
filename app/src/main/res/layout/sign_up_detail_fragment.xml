@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="app.moc.android.ui.signup.SignUpViewModel" />
+
+        <variable
+            name="actionHandler"
+            type="app.moc.android.ui.signup.SignUpActionHandler" />
+
+        <variable
+            name="keyWords"
+            type="String" />
+
+        <variable
+            name="business"
+            type="String" />
+
+        <variable
+            name="leaveDate"
+            type="String" />
+
+        <variable
+            name="isNickNameValid"
+            type="boolean" />
+
+        <variable
+            name="onEndIconClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/default_header" />
+
+        <app.moc.android.widget.DrawableTextInputLayout
+            android:id="@+id/textInputNickName"
+            style="@style/Widget.Moc.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            app:endIconDrawable="@drawable/ic_text_duplicate_check"
+            app:endIconMode="custom"
+            app:endIconTint="?colorPrimary"
+            app:isEndIconChanged="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:setEndIconOnClick="@{isNickNameValid ? null : onEndIconClick}">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editNickName"
+                style="@style/Widget.Moc.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:hint="닉네임을 입력해주세요"
+                android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onNickNameChanged(text)}"
+                android:textAppearance="@style/TextAppearance.Moc.H4"
+                android:textColor="@color/color_on_surface_600"
+                android:textColorHint="@color/color_on_surface_400" />
+        </app.moc.android.widget.DrawableTextInputLayout>
+
+        <app.moc.android.widget.CheckableTextView
+            android:id="@+id/textInputBusiness"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            android:background="@drawable/bg_text_outlined_bold_radius_large_selector"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_text_arrow_down_selector"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:hint="현재 직종을 선택해주세요"
+            android:maxLines="1"
+            android:onClick="@{() -> actionHandler.showBusinessList()}"
+            android:paddingStart="@dimen/margin_large"
+            android:paddingEnd="18dp"
+            android:text="@{business}"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="@color/color_on_surface_600"
+            android:textColorHint="@color/color_on_surface_400"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputNickName" />
+
+        <app.moc.android.widget.CheckableTextView
+            android:id="@+id/textInputKeyWords"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            android:background="@drawable/bg_text_outlined_bold_radius_large_selector"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_text_arrow_down_selector"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:hint="퇴사 고민 키워드를 선택해주세요"
+            android:maxLines="1"
+            android:onClick="@{() -> actionHandler.showKeyWordList()}"
+            android:paddingStart="@dimen/margin_large"
+            android:paddingEnd="18dp"
+            android:text="@{keyWords}"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="@color/color_on_surface_600"
+            android:textColorHint="@color/color_on_surface_400"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputBusiness" />
+
+        <app.moc.android.widget.CheckableTextView
+            android:id="@+id/textInputLeaveDate"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            android:background="@drawable/bg_text_outlined_bold_radius_large_selector"
+            android:drawableEnd="@drawable/ic_text_arrow_down_selector"
+            android:gravity="center_vertical"
+            android:hint="퇴사 예정일을 지정해주세요"
+            android:onClick="@{() -> actionHandler.showLeaveDatePicker()}"
+            android:paddingStart="@dimen/margin_large"
+            android:paddingEnd="18dp"
+            android:text="@{leaveDate}"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="@color/color_on_surface_600"
+            android:textColorHint="@color/color_on_surface_400"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputKeyWords" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Moc.Button.FilledBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onSignUp()}"
+            android:text="확인"
+            android:textAppearance="@style/TextAppearance.Moc.H3"
+            android:textColor="@color/color_on_surface_0"
+            app:cornerRadius="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <include
+            android:id="@+id/containerLoading"
+            layout="@layout/transparent_loading_view"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

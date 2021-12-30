@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textBusinessLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_xlarge"
+            android:layout_marginTop="19dp"
+            android:text="직종을 선택해주세요"
+            android:textAppearance="@style/TextAppearance.Moc.H2"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonConfirm"
+            style="@style/Widget.Moc.Button.FilledBox.Ghost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:text="확인"
+            android:onClick="@{onClick}"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textMainLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:paddingVertical="@dimen/margin_normal"
+            android:paddingStart="@dimen/margin_xlarge"
+            android:text="대분류"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textBusinessLabel"
+            app:layout_constraintWidth_percent="0.45" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textSubLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/margin_normal"
+            android:paddingStart="@dimen/margin_xlarge"
+            android:text="소분류"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintLeft_toRightOf="@id/textMainLabel"
+            app:layout_constraintTop_toTopOf="@id/textMainLabel"
+            app:layout_constraintWidth_percent="0.55" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listMain"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/dividerVertical"
+            app:layout_constraintTop_toBottomOf="@id/dividerHorizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:spanCount="1" />
+
+        <View
+            android:id="@+id/dividerVertical"
+            android:layout_width="@dimen/stroke_small"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:background="@color/color_on_surface_200"
+            app:layout_constraintRight_toRightOf="@id/textMainLabel"
+            app:layout_constraintTop_toBottomOf="@id/textMainLabel" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSub"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/dividerVertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerHorizontal" />
+
+        <View
+            android:id="@+id/dividerHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/stroke_small"
+            android:background="@color/color_on_surface_400"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textMainLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

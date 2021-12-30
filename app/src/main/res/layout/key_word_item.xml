@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
+            name="keyWord"
+            type="String" />
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/textKeyWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_micro"
+        android:layout_marginVertical="@dimen/spacing_micro"
+        android:background="@{isSelected ? @drawable/bg_text_outlined_bold_radius_large_selected : @drawable/bg_text_outlined_bold_radius_large_unselected}"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="@{onClick}"
+        android:paddingHorizontal="@dimen/margin_2xlarge"
+        android:paddingVertical="13dp"
+        android:text="@{keyWord}"
+        android:textAppearance="@style/TextAppearance.Moc.H5"
+        android:textColor="@{isSelected ? @color/color_primary : @color/color_on_surface_500}"
+        tools:text="잦은 야근" />
+
+</layout>
