@@ -25,5 +25,11 @@ jobs:
       - name: Unzip Services
         run: tar xvf services.tar
 
+      - name: Access Secrets
+        run: |
+          echo API_END_POINT=\"$API_END_POINT\" > ./local.properties
+        env:
+          API_END_POINT: ${{ secrets.API_END_POINT }}
+
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
