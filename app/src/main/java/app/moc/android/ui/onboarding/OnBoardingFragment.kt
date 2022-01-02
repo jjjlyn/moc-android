@@ -10,8 +10,12 @@ import app.moc.android.R
 import app.moc.android.databinding.OnBoardingFragmentBinding
 import app.moc.android.ui.signin.SignInFragment
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
+import app.moc.android.util.setVisible
+import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OnBoardingFragment : Fragment(R.layout.on_boarding_fragment) {
@@ -27,13 +31,15 @@ class OnBoardingFragment : Fragment(R.layout.on_boarding_fragment) {
         }
 
         launchAndRepeatWithViewLifecycle {
-            onBoardingViewModel.navigationAction.collect { action ->
-                when(action){
-                    OnBoardingNavigationAction.NavigateToSignUp -> {
-                        findNavController().navigate(OnBoardingFragmentDirections.toSignUp())
-                    }
-                    OnBoardingNavigationAction.NavigateToSignIn -> {
-                        findNavController().navigate(OnBoardingFragmentDirections.toSignIn())
+            launch {
+                onBoardingViewModel.navigationAction.collectLatest { action ->
+                    when(action){
+                        OnBoardingNavigationAction.NavigateToSignUp -> {
+                            findNavController().navigate(OnBoardingFragmentDirections.toSignUp())
+                        }
+                        OnBoardingNavigationAction.NavigateToSignIn -> {
+                            findNavController().navigate(OnBoardingFragmentDirections.toSignIn())
+                        }
                     }
                 }
             }
