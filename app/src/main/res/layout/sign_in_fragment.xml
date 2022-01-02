@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="viewModel"
             type="app.moc.android.ui.signin.SignInViewModel" />
+
         <variable
-            name="signIn"
-            type="app.moc.model.SignIn" />
+            name="isSignInEnabled"
+            type="boolean" />
+
+        <variable
+            name="actionHandler"
+            type="app.moc.android.ui.signin.SignInActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,9 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_xlarge"
-            app:endIconMode="clear_text"
             app:endIconDrawable="@drawable/ic_text_clear"
-            app:endIconTint="@color/color_on_surface_200"
+            app:endIconMode="clear_text"
+            app:endIconTint="@null"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textLoginLabel">
@@ -49,9 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="이메일을 입력해주세요"
-                android:textColorHint="@color/color_on_surface_400"
+                android:inputType="textEmailAddress"
                 android:onTextChanged="@{(text, start, before, count) -> viewModel.onEmailChanged(text)}"
-                android:inputType="textEmailAddress" />
+                android:textColorHint="@color/color_on_surface_400" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <app.moc.android.widget.DrawableTextInputLayout
@@ -71,10 +78,10 @@
                 android:id="@+id/editPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.onPwdChanged(text)}"
                 android:hint="비밀번호를 입력해주세요"
-                android:textColorHint="@color/color_on_surface_400"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onPwdChanged(text)}"
+                android:textColorHint="@color/color_on_surface_400" />
         </app.moc.android.widget.DrawableTextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -84,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_marginEnd="@dimen/spacing_normal"
+            android:onClick="@{() -> actionHandler.navigateToSignUp()}"
             android:text="가입하기"
             android:textAppearance="@style/TextAppearance.Moc.H5_2"
             android:textColor="@color/color_on_surface_600"
@@ -116,14 +124,20 @@
             style="@style/Widget.Moc.Button.FilledBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:enabled="@{isSignInEnabled}"
+            android:onClick="@{() -> viewModel.onSignIn()}"
             android:text="로그인"
             android:textAppearance="@style/TextAppearance.Moc.H3"
             android:textColor="@color/color_on_surface_0"
             app:cornerRadius="0dp"
-            android:onClick="@{() -> viewModel.onSignIn(signIn)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
+        <include
+            android:id="@+id/containerLoading"
+            layout="@layout/transparent_loading_view"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

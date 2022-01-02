@@ -30,6 +30,34 @@
             android:id="@+id/header"
             layout="@layout/default_header" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textStep1"
+            android:layout_width="22dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_sign_up_step"
+            android:backgroundTint="?colorPrimary"
+            android:gravity="center"
+            android:text="1"
+            app:layout_constraintRight_toLeftOf="@id/textStep2"
+            android:layout_marginRight="7dp"
+            android:textColor="@color/color_on_surface_0"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="@id/header" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="16dp"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/color_primary_200"
+            android:background="@drawable/bg_sign_up_step"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/margin_large"
+            app:layout_constraintTop_toTopOf="@id/header"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            android:id="@+id/textStep2"/>
+
+
         <app.moc.android.widget.DrawableTextInputLayout
             android:id="@+id/textInputEmail"
             style="@style/Widget.Moc.TextInputLayout.OutlinedBox"
@@ -39,6 +67,7 @@
             android:layout_marginTop="@dimen/margin_xlarge"
             app:endIconDrawable="@drawable/ic_text_duplicate_check"
             app:endIconMode="custom"
+            app:endIconPaddingEnd="0dp"
             app:endIconTint="?colorPrimary"
             app:isEndIconChanged="false"
             app:layout_constraintLeft_toLeftOf="parent"
