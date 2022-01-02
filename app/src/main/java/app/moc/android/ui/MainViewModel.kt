@@ -3,6 +3,7 @@ package app.moc.android.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.moc.android.ui.MainNavigationAction.*
+import app.moc.android.ui.onboarding.OnBoardingDelegate
 import app.moc.shared.domain.prefs.OnBoardingCompletedUseCase
 import app.moc.shared.result.Result
 import app.moc.shared.result.data
@@ -14,15 +15,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    onBoardingCompletedUseCase: OnBoardingCompletedUseCase
-) : ViewModel(){
-    val mainDestination = onBoardingCompletedUseCase(Unit).map { result ->
-        if (result.data == false) {
-            NavigateToOnBoarding
-        } else {
-            NavigateToHome
+    onBoardingDelegate: OnBoardingDelegate
+) : ViewModel(), OnBoardingDelegate by onBoardingDelegate{
+    val mainDestination = onBoardingCompleted.map { result ->
+        when {
+            result.isLoading -> {
+                Result.Loading
+            }
+            result.data == false -> {
+                NavigateToOnBoarding
+            }
+            else -> {
+                NavigateToHome
+            }
         }
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, Result.Loading)
+    }
 }
 
 sealed class MainNavigationAction {

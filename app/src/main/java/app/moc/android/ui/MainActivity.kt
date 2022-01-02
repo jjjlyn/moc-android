@@ -17,9 +17,11 @@ import app.moc.android.NavigationHost
 import app.moc.android.R
 import app.moc.android.databinding.MainActivityBinding
 import app.moc.android.ui.MainNavigationAction.*
+import app.moc.android.util.setVisible
 import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -41,22 +43,26 @@ class MainActivity : AppCompatActivity(), NavigationHost {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-        val navGraph = navHostFragment.findNavController().navInflater.inflate(R.navigation.nav_graph)
+        val navGraph =
+            navHostFragment.findNavController().navInflater.inflate(R.navigation.nav_graph)
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.mainDestination.collect { action ->
-                    binding.containerLoading.root.isVisible = action is Result.Loading
+                viewModel.mainDestination.collectLatest { action ->
+                    binding.containerLoading.root.setVisible(action is Result.Loading)
                     when (action) {
                         is NavigateToOnBoarding -> {
-                            if(navGraph.startDestination == R.id.onBoarding) return@collect
+                            if (navGraph.startDestination == R.id.onBoarding) return@collectLatest
                             navGraph.startDestination = R.id.onBoarding
+                            navController.graph = navGraph
                         }
                         is NavigateToHome -> {
-//                            if(navGraph.startDestination == R.id.home) return@collect
-//                            navGraph.startDestination = R.id.home
+                            if (navGraph.startDestination == R.id.home) return@collectLatest
+                            navGraph.startDestination = R.id.home
+                            navController.graph = navGraph
                         }
                     }
                 }
