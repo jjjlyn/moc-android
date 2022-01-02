@@ -46,11 +46,10 @@ object ApiModule {
                 @ApplicationContext context: Context,
         ): OkHttpClient {
             return OkHttpClient.Builder()
-                    .addInterceptor(
-                            HttpLoggingInterceptor().apply {
-                                setLevel(HttpLoggingInterceptor.Level.BASIC)
-                            }
-                    )
+                    .addInterceptor(HttpLoggingInterceptor().apply {
+                        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                        else HttpLoggingInterceptor.Level.NONE
+                    })
                     .build()
         }
     }
