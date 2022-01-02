@@ -7,9 +7,9 @@
     </style>
 
     <style name="Widget.Moc.Button.FilledBox">
-        <item name="backgroundTint">?colorPrimary</item>
-        <item name="android:paddingTop">@dimen/button_padding_normal_top</item>
-        <item name="android:paddingBottom">@dimen/button_padding_normal_bottom</item>
+        <item name="android:backgroundTint">@color/selector_button_background_tint</item>
+        <item name="android:paddingTop">@dimen/button_padding_large_top</item>
+        <item name="android:paddingBottom">@dimen/button_padding_large_bottom</item>
         <item name="cornerRadius">@dimen/radius_large</item>
     </style>
 
@@ -17,6 +17,7 @@
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
         <item name="rippleColor">@color/color_on_surface_200</item>
+        <item name="android:backgroundTint">@null</item>
         <item name="backgroundTint">@color/transparent</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="cornerRadius">@dimen/radius_normal</item>
@@ -27,11 +28,11 @@
     </style>
 
     <style name="Widget.Moc.Button.OutlinedBox">
-        <item name="backgroundTint">?android:colorBackground</item>
+        <item name="android:backgroundTint">?android:colorBackground</item>
         <item name="strokeWidth">@dimen/stroke_small</item>
         <item name="strokeColor">?colorPrimary</item>
-        <item name="android:paddingTop">@dimen/button_padding_normal_top</item>
-        <item name="android:paddingBottom">@dimen/button_padding_normal_bottom</item>
+        <item name="android:paddingTop">@dimen/button_padding_large_top</item>
+        <item name="android:paddingBottom">@dimen/button_padding_large_bottom</item>
         <item name="cornerRadius">@dimen/radius_large</item>
         <item name="android:textColor">?colorPrimary</item>
     </style>

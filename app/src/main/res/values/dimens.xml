@@ -23,8 +23,10 @@
     <dimen name="button_padding_small_end">@dimen/spacing_normal</dimen>
     <dimen name="button_padding_small_top">9dp</dimen>
     <dimen name="button_padding_small_bottom">9dp</dimen>
-    <dimen name="button_padding_normal_top">15dp</dimen>
-    <dimen name="button_padding_normal_bottom">17dp</dimen>
+    <dimen name="button_padding_normal_top">11dp</dimen>
+    <dimen name="button_padding_normal_bottom">13dp</dimen>
+    <dimen name="button_padding_large_top">15dp</dimen>
+    <dimen name="button_padding_large_bottom">17dp</dimen>
 
     <dimen name="radius_small">4dp</dimen>
     <dimen name="radius_normal">8dp</dimen>

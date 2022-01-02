@@ -2,5 +2,7 @@
 <resources>
     <declare-styleable name="DrawableTextInputLayout">
         <attr name="isEndIconChanged" format="boolean" />
+        <attr name="endIconPaddingEnd" format="dimension|float"/>
+        <attr name="endIconPaddingStart" format="dimension|float"/>
     </declare-styleable>
 </resources>
