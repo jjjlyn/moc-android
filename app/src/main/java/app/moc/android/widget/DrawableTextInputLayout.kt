@@ -36,6 +36,9 @@ class DrawableTextInputLayout @JvmOverloads constructor(
         }
     }
 
+    var endIconPaddingStart = context.resources.getDimensionPixelOffset(R.dimen.margin_xsmall)
+    var endIconPaddingEnd = context.resources.getDimensionPixelOffset(R.dimen.margin_small)
+
     var isEndIconChanged : Boolean = false
         set(value) {
             if(value){
@@ -47,6 +50,8 @@ class DrawableTextInputLayout @JvmOverloads constructor(
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.DrawableTextInputLayout, defStyleAttr, 0)
         isEndIconChanged = a.getBoolean(R.styleable.DrawableTextInputLayout_isEndIconChanged, this.isEndIconChanged)
+        endIconPaddingStart = a.getDimensionPixelOffset(R.styleable.DrawableTextInputLayout_endIconPaddingStart, this.endIconPaddingStart)
+        endIconPaddingEnd = a.getDimensionPixelOffset(R.styleable.DrawableTextInputLayout_endIconPaddingEnd, this.endIconPaddingEnd)
         a.recycle()
     }
 
@@ -88,15 +93,15 @@ class DrawableTextInputLayout @JvmOverloads constructor(
         if (hasEndIconMode) {
             val shiftedClearTextIcon = clearTextIcon
             val endIconDrawable = endIconDrawable ?: return
-            val endIconWidth = endIconDrawable.intrinsicWidth
-            shiftedClearTextIcon.setMargins(0, 0,
-                    if(endIconWidth <= 30.dp().toInt()) endIconWidth * 2 else endIconWidth, 0
+            shiftedClearTextIcon.setMargins(
+                0, 0, endIconDrawable.intrinsicWidth + endIconPaddingStart + endIconPaddingEnd, 0
             )
             frameLayout.addView(shiftedClearTextIcon)
         } else {
             frameLayout.addView(clearTextIcon)
         }
-        clearTextIcon.setVisible(false)
+
+        clearTextIcon.setVisible(editText.text.isNotBlank())
 
         this.clearTextIcon = clearTextIcon
     }
