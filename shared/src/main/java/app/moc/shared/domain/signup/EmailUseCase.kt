@@ -1,5 +1,6 @@
 package app.moc.shared.domain.signup
 
+import app.moc.model.User
 import app.moc.shared.data.auth.AuthRepository
 import app.moc.shared.di.IODispatcher
 import app.moc.shared.domain.FlowUseCase
@@ -12,8 +13,8 @@ import javax.inject.Inject
 class EmailUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     @IODispatcher ioDispatcher: CoroutineDispatcher
-) : FlowUseCase<String, Unit>(ioDispatcher) {
-    override fun execute(parameters: String): Flow<Result<Unit>> {
+) : FlowUseCase<String, User>(ioDispatcher) {
+    override fun execute(parameters: String): Flow<Result<User>> {
         return flow {
             emit(Result.Loading)
             emit(Result.Success(authRepository.checkEmailDuplicate(parameters)))
