@@ -8,10 +8,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import app.moc.android.MainNavigationFragment
 import app.moc.android.R
 import app.moc.android.databinding.SignInFragmentBinding
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
+import app.moc.android.util.setVisible
 import app.moc.model.SignIn
 import app.moc.shared.result.Result
 import app.moc.shared.result.data
@@ -23,7 +25,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SignInFragment : MainNavigationFragment(R.layout.sign_in_fragment) {
+class SignInFragment : MainNavigationFragment(R.layout.sign_in_fragment), SignInActionHandler {
 
     private val signInViewModel: SignInViewModel by viewModels()
 
@@ -39,20 +41,23 @@ class SignInFragment : MainNavigationFragment(R.layout.sign_in_fragment) {
         binding = SignInFragmentBinding.bind(view).apply {
             viewModel = signInViewModel
             lifecycleOwner = viewLifecycleOwner
+            actionHandler = this@SignInFragment
         }
 
         launchAndRepeatWithViewLifecycle {
-            combine(signInViewModel.email, signInViewModel.pwd) { email, pwd ->
-                SignIn(email, pwd)
-            }.collectLatest {
-                binding.signIn = it
+            launch {
+                signInViewModel.signInUseCaseResult.collectLatest { result ->
+                    binding.containerLoading.root.setVisible(result.isLoading)
+                    if(result.isLoading.not() && result is Result.Success){
+                        signInViewModel.onBoardingComplete(result.data)
+                    }
+                }
             }
-        }
 
-        launchAndRepeatWithViewLifecycle {
-            signInViewModel.signInUseCaseResult.collectLatest { result ->
-                // user 저장 (data store)
-
+            launch {
+                signInViewModel.isSignInEnabled.collectLatest { isEnabled ->
+                    binding.isSignInEnabled = isEnabled
+                }
             }
         }
     }
@@ -60,5 +65,13 @@ class SignInFragment : MainNavigationFragment(R.layout.sign_in_fragment) {
     override fun onDestroy() {
         requireActivity().window.statusBarColor = ContextCompat.getColor(requireActivity(), R.color.status_bar)
         super.onDestroy()
+    }
+
+    override fun navigateToSignUp() {
+        findNavController().navigate(SignInFragmentDirections.toSignUp())
+    }
+
+    override fun navigateToFindPwd() {
+
     }
 }
