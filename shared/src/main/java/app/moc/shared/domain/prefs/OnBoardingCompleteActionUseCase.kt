@@ -1,5 +1,6 @@
 package app.moc.shared.domain.prefs
 
+import app.moc.model.User
 import app.moc.shared.data.prefs.PreferencesStorage
 import app.moc.shared.di.IODispatcher
 import app.moc.shared.domain.UseCase
@@ -9,8 +10,8 @@ import javax.inject.Inject
 open class OnBoardingCompleteActionUseCase @Inject constructor(
     private val preferencesStorage: PreferencesStorage,
     @IODispatcher dispatcher: CoroutineDispatcher
-): UseCase<Boolean, Unit>(dispatcher) {
-    override suspend fun execute(parameters: Boolean) {
+): UseCase<User, Unit>(dispatcher) {
+    override suspend fun execute(parameters: User) {
         preferencesStorage.completeOnBoarding(parameters)
     }
 }
