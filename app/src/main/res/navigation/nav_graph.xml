@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/onBoarding"
     android:id="@+id/nav_graph">
 
     <fragment
         android:id="@+id/signIn"
         android:name="app.moc.android.ui.signin.SignInFragment">
+        <action
+            android:id="@+id/toSignUp"
+            app:destination="@id/signUp"/>
     </fragment>
 
     <fragment
@@ -18,6 +20,9 @@
         <action
             android:id="@+id/toSignUp"
             app:destination="@id/signUp"/>
+        <action
+            android:id="@+id/toHome"
+            app:destination="@id/home"/>
     </fragment>
 
     <fragment
@@ -40,5 +45,9 @@
             android:name="pwd"
             app:argType="string"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/home"
+        android:name="app.moc.android.ui.home.HomeFragment"/>
 
 </navigation>
