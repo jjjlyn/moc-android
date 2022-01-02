@@ -10,8 +10,8 @@ import app.moc.shared.data.api.response.toModel
 interface AuthRepository {
     suspend fun signIn(signIn: SignIn): User
     suspend fun signUp(signUp: SignUp): User
-    suspend fun checkEmailDuplicate(email: String)
-    suspend fun checkNickNameDuplicate(nickName: String)
+    suspend fun checkEmailDuplicate(email: String): User
+    suspend fun checkNickNameDuplicate(nickName: String): User
 }
 
 class DefaultAuthRepository(private val service: AuthService) : AuthRepository {
@@ -27,15 +27,15 @@ class DefaultAuthRepository(private val service: AuthService) : AuthRepository {
         }.getOrThrow().toModel()
     }
 
-    override suspend fun checkEmailDuplicate(email: String) {
+    override suspend fun checkEmailDuplicate(email: String): User {
         return kotlin.runCatching {
             service.checkEmailDuplicate(email)
-        }.getOrThrow()
+        }.getOrThrow().toModel()
     }
 
-    override suspend fun checkNickNameDuplicate(nickName: String) {
+    override suspend fun checkNickNameDuplicate(nickName: String): User {
         return kotlin.runCatching {
             service.checkNickNameDuplicate(nickName)
-        }.getOrThrow()
+        }.getOrThrow().toModel()
     }
 }
