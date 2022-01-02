@@ -1,7 +1,9 @@
 package app.moc.android.ui.signup
 
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.moc.android.ui.onboarding.OnBoardingDelegate
 import app.moc.model.*
 import app.moc.shared.domain.signup.BusinessUseCase
 import app.moc.shared.domain.signup.EmailUseCase
@@ -14,13 +16,18 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private val REGEX_PASSWORD = "^[A-Za-z0-9]{8,12}\$"
+    .toRegex()
+    .toPattern()
+
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
         private val signUpUseCase: SignUpUseCase,
         private val businessUseCase: BusinessUseCase,
         private val emailUseCase: EmailUseCase,
-        private val nickNameUseCase: NickNameUseCase
-): ViewModel() {
+        private val nickNameUseCase: NickNameUseCase,
+        private val onBoardingDelegate: OnBoardingDelegate
+): ViewModel(), OnBoardingDelegate by onBoardingDelegate {
     private val _navigationAction = Channel<SignUpNavigationAction>(Channel.CONFLATED)
     val navigationAction = _navigationAction.receiveAsFlow()
 
@@ -33,7 +40,7 @@ class SignUpViewModel @Inject constructor(
     private val _nickName = MutableStateFlow("")
     val nickName = _nickName.asStateFlow()
 
-    private val _business = MutableStateFlow(Business(1, 101, "QA(Quality Assurance)", Business.CATEGORY_SUB))
+    private val _business = MutableStateFlow<Business?>(null)
     val business = _business.asStateFlow()
 
     private val _keyWords = MutableStateFlow(emptySet<KeyWord>())
@@ -45,20 +52,35 @@ class SignUpViewModel @Inject constructor(
     private val _signUpUseCaseResult = MutableSharedFlow<Result<User>>()
     val signUpUseCaseResult = _signUpUseCaseResult.asSharedFlow()
 
-    private val _emailUseCaseResult = MutableSharedFlow<Result<Unit>>()
+    private val _emailUseCaseResult = MutableSharedFlow<Result<User>>()
     val emailUseCaseResult = _emailUseCaseResult.asSharedFlow()
 
-    private val _nickNameUseCaseResult = MutableSharedFlow<Result<Unit>>()
+    private val _nickNameUseCaseResult = MutableSharedFlow<Result<User>>()
     val nickNameUseCaseResult = _nickNameUseCaseResult.asSharedFlow()
 
-    val isNextEnabled = combine(_email, _pwd){ email, pwd ->
-        isNextEnabled(email, pwd)
+    val emailValidCheck = MutableStateFlow(EmailValidCheck("", false)) // check duplicate
+    val isNickNameValid = MutableStateFlow(false) // check duplicate
+
+    val isNextEnabled = combine(emailValidCheck, _pwd){ emailValidCheck, pwd ->
+        isNextEnabled(emailValidCheck.checkedEmail, emailValidCheck.isValid, pwd)
+    }
+    val isSignUpEnabled = combine(isNickNameValid, _business, _keyWords, _leaveDate){ isNickNameValid, business, keyWords, leaveDate ->
+        isSignUpEnabled(isNickNameValid, business, keyWords, leaveDate)
     }
 
     private val _businessUseCaseResult = MutableStateFlow<Result<List<Business>>>(Result.Loading)
 
-    private fun isNextEnabled(email: String, pwd: String): Boolean {
-        return email.isNotEmpty() && pwd.isNotEmpty()
+    private fun isNextEnabled(email: String, isEmailValid: Boolean, pwd: String): Boolean {
+        return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() &&
+                isEmailValid &&
+                REGEX_PASSWORD.matcher(pwd).matches()
+    }
+
+    private fun isSignUpEnabled(isNickNameValid: Boolean, business: Business?, keyWords: Set<KeyWord>, leaveDate: DateTime?): Boolean {
+        return isNickNameValid &&
+                business != null &&
+                keyWords.isNotEmpty() &&
+                leaveDate != null
     }
 
     fun getBusinessByMain(businessMain: Business) : List<Business> {
@@ -84,6 +106,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun checkEmailDuplicate(){
+        if(_email.value.isEmpty()) return
         viewModelScope.launch {
             emailUseCase(_email.value).collectLatest {
                 _emailUseCaseResult.emit(it)
@@ -92,6 +115,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun checkNickNameDuplicate(){
+        if(_nickName.value.isEmpty()) return
         viewModelScope.launch {
             nickNameUseCase(_nickName.value).collectLatest {
                 _nickNameUseCaseResult.emit(it)
@@ -113,10 +137,10 @@ class SignUpViewModel @Inject constructor(
 
     fun onSignUp(){
         val signUp = SignUp(
-            business = _business.value.categoryS ?: return,
+            business = _business.value?.categoryS ?: return,
             email = _email.value,
             keyWords = _keyWords.value.joinToString { it.content },
-            leaveDate = _leaveDate.value?.time ?: return,
+            leaveDate = _leaveDate.value?.time?.let { it / 1000 } ?: return,
             nickName = _nickName.value,
             pwd = _pwd.value
         )

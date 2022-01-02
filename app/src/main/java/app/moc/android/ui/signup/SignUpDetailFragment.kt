@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -46,15 +47,23 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
 
         launchAndRepeatWithViewLifecycle {
             launch {
-                signUpViewModel.nickName.collectLatest { _ ->
+                signUpViewModel.isSignUpEnabled.collectLatest { isEnabled ->
+                    binding.isSignUpEnabled = isEnabled
+                }
+            }
+
+            launch {
+                signUpViewModel.nickName.collectLatest {
                     setNickNameValid(false)
                 }
             }
 
             launch {
                 signUpViewModel.business.collectLatest { business ->
-                    val main = businessMain.find { it.categoryM == business.categoryM }?.content
-                    binding.business = "$main - ${business.content}"
+                    if(business != null){
+                        val main = businessMain.find { it.categoryM == business.categoryM }?.content
+                        binding.business = "$main - ${business.content}"
+                    }
                 }
             }
 
@@ -81,7 +90,10 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
                     binding.containerLoading.root.setVisible(result.isLoading)
                     when(result){
                         is Result.Success -> {
-                            Toast.makeText(requireActivity(), "회원가입 성공", Toast.LENGTH_SHORT).show()
+                            SignUpConfirmDialogFragment().apply {
+                                isCancelable = false
+                                arguments = bundleOf("user" to result.data)
+                            }.show(childFragmentManager, SignUpConfirmDialogFragment::class.java.simpleName)
                         }
                         is Result.Error -> {
                             Toast.makeText(requireActivity(), "회원가입 실패", Toast.LENGTH_SHORT).show()
@@ -94,7 +106,7 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
             launch {
                 signUpViewModel.nickNameUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
-                    val isValid = result.isLoading.not() && result is Result.Success
+                    val isValid = result.isLoading.not() && result is Result.Success && result.data.result
                     setNickNameValid(isValid)
                 }
             }
@@ -104,9 +116,15 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
     private fun setNickNameValid(isValid: Boolean){
         val previousState = binding.isNickNameValid
         if(previousState != isValid){
+            signUpViewModel.isNickNameValid.value = isValid
             binding.isNickNameValid = isValid
             binding.textInputNickName.endIconDrawable =
-                requireActivity().getDrawableCompat(if(isValid) R.drawable.ic_text_valid else R.drawable.ic_text_duplicate_check)
+                requireActivity().getDrawableCompat(
+                    if (isValid) R.drawable.ic_text_valid
+                    else R.drawable.ic_text_duplicate_check
+                )
+            binding.textInputNickName.endIconPaddingEnd =
+                if (isValid) requireActivity().resources.getDimensionPixelOffset(R.dimen.margin_small) else 0.dp().toInt()
             binding.textInputNickName.isEndIconChanged = true
         }
     }
