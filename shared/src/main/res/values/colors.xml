@@ -47,10 +47,12 @@
 
     <color name="color_primary_50">#F1FBF3</color>
     <color name="color_primary_100">#E4F7E7</color>
-    <color name="color_primary_200">#A8E5B8</color>
+    <color name="color_primary_200">#d5d5f5</color>
     <color name="color_primary_300">#84DB9B</color>
     <color name="color_primary_400">#61CF82</color>
     <color name="color_primary_500">#5D61FF</color>
+    <color name="color_primary_A200">#335D61FF</color>
+    <color name="color_primary_A250">#405D61FF</color>
     <color name="color_primary_600">#3DB262</color>
     <color name="color_primary_700">#33A656</color>
     <color name="color_primary_800">#29914C</color>
