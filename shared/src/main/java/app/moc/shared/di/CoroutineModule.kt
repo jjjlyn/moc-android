@@ -1,4 +1,4 @@
-package app.moc.android.di
+package app.moc.shared.di
 
 import app.moc.shared.di.DefaultDispatcher
 import app.moc.shared.di.IODispatcher
