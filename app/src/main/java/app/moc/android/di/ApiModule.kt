@@ -17,6 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+// 지라 테스트
 @InstallIn(SingletonComponent::class)
 @Module(includes = [ApiModule.Providers::class])
 object ApiModule {
