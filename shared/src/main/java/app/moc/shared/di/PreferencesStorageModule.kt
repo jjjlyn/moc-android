@@ -1,4 +1,4 @@
-package app.moc.android.di
+package app.moc.shared.di
 
 import android.content.Context
 import androidx.datastore.preferences.SharedPreferencesMigration

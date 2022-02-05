@@ -30,6 +30,7 @@ data class User(
     val keyWords: String?,
     val leaveDate: Long,
     val userToken: String?,
+    val userTokenExpiredDate: Long,
     val deviceToken: String?,
     val notiFlag: Int
 ): Parcelable

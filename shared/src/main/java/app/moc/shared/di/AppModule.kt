@@ -1,13 +1,5 @@
-package app.moc.android.di
+package app.moc.shared.di
 
-import app.moc.shared.data.api.AuthService
-import app.moc.shared.data.api.BusinessService
-import app.moc.shared.data.auth.AuthRepository
-import app.moc.shared.data.auth.DefaultAuthRepository
-import app.moc.shared.data.business.BusinessRepository
-import app.moc.shared.data.business.DefaultBusinessRepository
-import app.moc.shared.di.ApplicationScope
-import app.moc.shared.di.DefaultDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +12,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
-
     @ApplicationScope
     @Singleton
     @Provides

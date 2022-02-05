@@ -16,8 +16,9 @@ data class AuthResponse(
     val createDate: Long,
     val modifyDate: Long,
     val userToken: String?,
+    val userTokenExpiredDate: Long,
     val deviceToken: String?,
     val notiFlag: Int
 )
 
-fun AuthResponse.toModel() = User(result, email, nickName, business, keyWords, leaveDate, userToken, deviceToken, notiFlag)
+fun AuthResponse.toModel() = User(result, email, nickName, business, keyWords, leaveDate, userToken, userTokenExpiredDate, deviceToken, notiFlag)

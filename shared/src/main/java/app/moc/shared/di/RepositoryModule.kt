@@ -1,4 +1,4 @@
-package app.moc.android.di
+package app.moc.shared.di
 
 import app.moc.shared.data.api.AuthService
 import app.moc.shared.data.api.BusinessService
