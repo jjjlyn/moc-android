@@ -52,6 +52,12 @@ class DataStorePreferencesStorage @Inject constructor(
     override val onBoardingCompleted: Flow<Boolean> =
         dataStore.data.map {
             val userToken = it[PREFS_ON_USER_TOKEN] ?: return@map false
-            userToken.isNotEmpty()
+            val userTokenExpiredDate = it[PREFS_ON_USER_TOKEN_EXPIRED_DATE] ?: return@map false
+            userTokenExpiredDate > System.currentTimeMillis() && userToken.isNotEmpty()
+        }
+
+    override val userToken: Flow<String> =
+        dataStore.data.map {
+            it[PREFS_ON_USER_TOKEN] ?: return@map ""
         }
 }
