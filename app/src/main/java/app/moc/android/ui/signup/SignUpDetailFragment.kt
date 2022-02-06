@@ -77,7 +77,7 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
                 signUpViewModel.leaveDate.collectLatest { leaveDate ->
                     if(leaveDate != null){
                         binding.leaveDate = try {
-                            SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(leaveDate)
+                            "yyyy/MM/dd".toFmt(leaveDate)
                         } catch (e: Exception) {
                             return@collectLatest
                         }
