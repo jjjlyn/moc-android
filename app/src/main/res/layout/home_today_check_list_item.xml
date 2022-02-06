@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="titleUIModel"
+            type="app.moc.android.ui.home.ComponentTitleUIModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            app:uiModel="@{titleUIModel}"
+            android:id="@+id/containerTitle"
+            layout="@layout/component_title_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:overScrollMode="never"
+            android:id="@+id/list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:listitem="@layout/home_today_check_item"
+            app:layout_constraintTop_toBottomOf="@id/containerTitle"
+            android:paddingLeft="@dimen/margin_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/margin_xlarge"
+            android:clipToPadding="false"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textNoData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_xlarge"
+            android:background="@drawable/bg_radius_xlarge"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/button_padding_2xlarge_top"
+            android:paddingBottom="@dimen/button_padding_2xlarge_bottom"
+            android:visibility="gone"
+            android:text="현재 등록된 플랜이 없습니다.\n퇴사플랜을 등록해주세요."
+            android:textAppearance="@style/TextAppearance.Moc.H6"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/containerTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

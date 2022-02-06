@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="uiModel"
+            type="app.moc.android.ui.home.MocTalkItemUIModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorSurface">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="카테고리 display txt 추가해주세요"
+            android:textAppearance="@style/TextAppearance.Moc.H7_2"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="UI/UX/GUI디자인" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="@{uiModel.createDateFmt}"
+            android:textAppearance="@style/TextAppearance.Moc.H7"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="2021-01-01" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:text="@{uiModel.title}"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="@color/color_on_surface_800"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textCategory"
+            tool:text="직장상사 때문에 고민이예요" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="28dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{uiModel.content}"
+            android:textAppearance="@style/TextAppearance.Moc.H6"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/imageThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/textTitle"
+            tool:text="일월과 별과 그들에게 따뜻한 그들은 가치를\n일월과 별과 그들에게 따뜻한 그들은 가치를 .." />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageThumbnail"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_radius_small"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textDate" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_xlarge"
+            android:src="@drawable/ic_likes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textContent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textLikesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:text="@{uiModel.likes}"
+            android:textAppearance="@style/TextAppearance.Moc.H7"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintBottom_toBottomOf="@id/imageLikes"
+            app:layout_constraintLeft_toRightOf="@id/imageLikes"
+            app:layout_constraintTop_toTopOf="@id/imageLikes"
+            tool:text="257" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:src="@drawable/ic_reply"
+            app:layout_constraintBottom_toBottomOf="@id/imageLikes"
+            app:layout_constraintLeft_toRightOf="@id/textLikesCount"
+            app:layout_constraintTop_toTopOf="@id/imageLikes" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textReplyCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:text="@{uiModel.hits}"
+            android:textAppearance="@style/TextAppearance.Moc.H7"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintBottom_toBottomOf="@id/imageLikes"
+            app:layout_constraintLeft_toRightOf="@id/imageReply"
+            app:layout_constraintTop_toTopOf="@id/imageLikes"
+            tool:text="34" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

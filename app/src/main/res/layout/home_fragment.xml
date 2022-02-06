@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:tool="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="app.moc.android.ui.home.HomeViewModel" />
+        <variable
+            name="todayCheckTitleUIModel"
+            type="app.moc.android.ui.home.ComponentTitleUIModel" />
+        <variable
+            name="mocTalkTitleUIModel"
+            type="app.moc.android.ui.home.ComponentTitleUIModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                app:uiModel="@{viewModel.homeIntroUIModel}"
+                android:id="@+id/containerIntro"
+                layout="@layout/home_intro_item" />
+
+            <include
+                app:titleUIModel="@{todayCheckTitleUIModel}"
+                android:id="@+id/containerTodayCheck"
+                layout="@layout/home_today_check_list_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/containerIntro" />
+
+            <include
+                app:titleUIModel="@{mocTalkTitleUIModel}"
+                android:id="@+id/containerMocTalk"
+                layout="@layout/home_moc_talk_list_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/containerTodayCheck" />
+
+        <include
+            android:visibility="gone"
+            tool:visibility="visible"
+            android:id="@+id/containerLoading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            layout="@layout/transparent_loading_view"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>
