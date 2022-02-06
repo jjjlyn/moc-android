@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class NickNameUseCase @Inject constructor(
+class CheckEmailDuplicateUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     @IODispatcher ioDispatcher: CoroutineDispatcher
 ) : FlowUseCase<String, User>(ioDispatcher) {
     override fun execute(parameters: String): Flow<Result<User>> {
         return flow {
             emit(Result.Loading)
-            emit(Result.Success(authRepository.checkNickNameDuplicate(parameters)))
+            emit(Result.Success(authRepository.checkEmailDuplicate(parameters)))
         }
     }
 }
