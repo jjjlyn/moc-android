@@ -16,10 +16,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <include
-        tools:visibility="visible"
-        android:visibility="gone"
-        android:id="@+id/containerLoading"
-        layout="@layout/loading_view"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

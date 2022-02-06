@@ -22,7 +22,7 @@
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="22dp"
             android:text="퇴사 고민 키워드"
-            android:textAppearance="@style/TextAppearance.Moc.H2"
+            android:textAppearance="@style/TextAppearance.Moc.H3"
             android:textColor="@color/color_on_surface_800"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="26dp"
             android:text="(중복선택 가능)"
-            android:textAppearance="@style/TextAppearance.Moc.H5"
+            android:textAppearance="@style/TextAppearance.Moc.H6"
             android:textColor="@color/color_on_surface_500"
             app:layout_constraintLeft_toRightOf="@id/textTitle"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +48,7 @@
             android:layout_marginEnd="@dimen/margin_xsmall"
             android:onClick="@{onClick}"
             android:text="확인"
-            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textAppearance="@style/TextAppearance.Moc.H5"
             android:textColor="@color/color_on_surface_900"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

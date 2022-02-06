@@ -29,7 +29,7 @@
         android:paddingVertical="@dimen/margin_normal"
         android:paddingStart="@dimen/margin_xlarge"
         android:text="@{item.content}"
-        android:textAppearance="@style/TextAppearance.Moc.H5"
+        android:textAppearance="@style/TextAppearance.Moc.H6"
         android:textColor="@{isSelected ? @color/color_primary : @color/color_on_surface_600}"
         tools:text="IT/인터넷">
 

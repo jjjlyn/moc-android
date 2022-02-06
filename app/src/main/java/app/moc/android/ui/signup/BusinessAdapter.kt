@@ -38,9 +38,9 @@ class BusinessAdapter: ListAdapter<Business, BusinessAdapter.ViewHolder>(DIFF_CA
                     val isSelected = this.isSelected ?: false
                     textBusiness.setTextAppearance(
                         if(isSelected){
-                            R.style.TextAppearance_Moc_H5_3
+                            R.style.TextAppearance_Moc_H6_3
                         } else {
-                            R.style.TextAppearance_Moc_H5
+                            R.style.TextAppearance_Moc_H6
                         }
                     )
                 }

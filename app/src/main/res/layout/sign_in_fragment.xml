@@ -93,7 +93,7 @@
             android:layout_marginEnd="@dimen/spacing_normal"
             android:onClick="@{() -> actionHandler.navigateToSignUp()}"
             android:text="가입하기"
-            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textAppearance="@style/TextAppearance.Moc.H6_2"
             android:textColor="@color/color_on_surface_600"
             app:layout_constraintRight_toLeftOf="@id/divider"
             app:layout_constraintTop_toBottomOf="@id/textInputPassword" />
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_large"
             android:text="비밀번호 찾기"
-            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textAppearance="@style/TextAppearance.Moc.H6_2"
             android:textColor="?colorPrimary"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/buttonSignUp" />
@@ -127,7 +127,7 @@
             android:enabled="@{isSignInEnabled}"
             android:onClick="@{() -> viewModel.onSignIn()}"
             android:text="로그인"
-            android:textAppearance="@style/TextAppearance.Moc.H3"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
             android:textColor="@color/color_on_surface_0"
             app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
