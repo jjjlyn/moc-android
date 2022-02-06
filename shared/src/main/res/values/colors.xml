@@ -51,6 +51,7 @@
     <color name="color_primary_300">#84DB9B</color>
     <color name="color_primary_400">#61CF82</color>
     <color name="color_primary_500">#5D61FF</color>
+    <color name="color_primary_A100">#265054DD</color>
     <color name="color_primary_A200">#335D61FF</color>
     <color name="color_primary_A250">#405D61FF</color>
     <color name="color_primary_600">#3DB262</color>
@@ -68,5 +69,5 @@
     <color name="color_on_surface_600">#4f4f4f</color>
     <color name="color_on_surface_700">#4c4c4c</color>
     <color name="color_on_surface_800">#333333</color>
-    <color name="color_on_surface_900">#1c1c1c</color>
+    <color name="color_on_surface_900">#212121</color>
 </resources>
