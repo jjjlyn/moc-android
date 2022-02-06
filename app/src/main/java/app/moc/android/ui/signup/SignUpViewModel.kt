@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.moc.android.ui.onboarding.OnBoardingDelegate
 import app.moc.model.*
-import app.moc.shared.domain.signup.BusinessUseCase
-import app.moc.shared.domain.signup.EmailUseCase
-import app.moc.shared.domain.signup.NickNameUseCase
+import app.moc.shared.domain.signup.CheckEmailDuplicateUseCase
+import app.moc.shared.domain.signup.CheckNickNameDuplicateUseCase
 import app.moc.shared.domain.signup.SignUpUseCase
 import app.moc.shared.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,11 +21,10 @@ private val REGEX_PASSWORD = "^[A-Za-z0-9]{8,12}\$"
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-        private val signUpUseCase: SignUpUseCase,
-        private val businessUseCase: BusinessUseCase,
-        private val emailUseCase: EmailUseCase,
-        private val nickNameUseCase: NickNameUseCase,
-        private val onBoardingDelegate: OnBoardingDelegate
+    private val signUpUseCase: SignUpUseCase,
+    private val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
+    private val checkNickNameDuplicateUseCase: CheckNickNameDuplicateUseCase,
+    private val onBoardingDelegate: OnBoardingDelegate
 ): ViewModel(), OnBoardingDelegate by onBoardingDelegate {
     private val _navigationAction = Channel<SignUpNavigationAction>(Channel.CONFLATED)
     val navigationAction = _navigationAction.receiveAsFlow()
@@ -68,8 +66,6 @@ class SignUpViewModel @Inject constructor(
         isSignUpEnabled(isNickNameValid, business, keyWords, leaveDate)
     }
 
-    private val _businessUseCaseResult = MutableStateFlow<Result<List<Business>>>(Result.Loading)
-
     private fun isNextEnabled(email: String, isEmailValid: Boolean, pwd: String): Boolean {
         return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() &&
                 isEmailValid &&
@@ -108,7 +104,7 @@ class SignUpViewModel @Inject constructor(
     fun checkEmailDuplicate(){
         if(_email.value.isEmpty()) return
         viewModelScope.launch {
-            emailUseCase(_email.value).collectLatest {
+            checkEmailDuplicateUseCase(_email.value).collectLatest {
                 _emailUseCaseResult.emit(it)
             }
         }
@@ -117,7 +113,7 @@ class SignUpViewModel @Inject constructor(
     fun checkNickNameDuplicate(){
         if(_nickName.value.isEmpty()) return
         viewModelScope.launch {
-            nickNameUseCase(_nickName.value).collectLatest {
+            checkNickNameDuplicateUseCase(_nickName.value).collectLatest {
                 _nickNameUseCaseResult.emit(it)
             }
         }
@@ -148,12 +144,6 @@ class SignUpViewModel @Inject constructor(
             signUpUseCase(signUp).collectLatest {
                 _signUpUseCaseResult.emit(it)
             }
-        }
-    }
-
-    private fun getBusiness(){
-        viewModelScope.launch {
-            _businessUseCaseResult.value = businessUseCase(Unit)
         }
     }
 }
