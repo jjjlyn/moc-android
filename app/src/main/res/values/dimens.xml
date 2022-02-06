@@ -13,25 +13,33 @@
     <dimen name="margin_4xlarge">48dp</dimen>
 
     <dimen name="text_size_h1">24dp</dimen>
-    <dimen name="text_size_h2">20dp</dimen>
-    <dimen name="text_size_h3">18dp</dimen>
-    <dimen name="text_size_h4">16dp</dimen>
-    <dimen name="text_size_h5">14dp</dimen>
-    <dimen name="text_size_h6">12dp</dimen>
+    <dimen name="text_size_h2">22dp</dimen>
+    <dimen name="text_size_h3">20dp</dimen>
+    <dimen name="text_size_h4">18dp</dimen>
+    <dimen name="text_size_h5">16dp</dimen>
+    <dimen name="text_size_h6">14dp</dimen>
+    <dimen name="text_size_h7">12dp</dimen>
 
     <dimen name="button_padding_small_start">@dimen/spacing_normal</dimen>
     <dimen name="button_padding_small_end">@dimen/spacing_normal</dimen>
-    <dimen name="button_padding_small_top">9dp</dimen>
-    <dimen name="button_padding_small_bottom">9dp</dimen>
+    <dimen name="button_padding_small_top">8dp</dimen>
+    <dimen name="button_padding_small_bottom">10dp</dimen>
     <dimen name="button_padding_normal_top">11dp</dimen>
     <dimen name="button_padding_normal_bottom">13dp</dimen>
     <dimen name="button_padding_large_top">15dp</dimen>
     <dimen name="button_padding_large_bottom">17dp</dimen>
+    <dimen name="button_padding_xlarge_top">19dp</dimen>
+    <dimen name="button_padding_xlarge_bottom">21dp</dimen>
+    <dimen name="button_padding_2xlarge_top">22dp</dimen>
+    <dimen name="button_padding_2xlarge_bottom">24dp</dimen>
 
-    <dimen name="radius_small">4dp</dimen>
+    <dimen name="radius_xsmall">4dp</dimen>
+    <dimen name="radius_small">6dp</dimen>
     <dimen name="radius_normal">8dp</dimen>
     <dimen name="radius_large">14dp</dimen>
-    <dimen name="radius_xlarge">20dp</dimen>
+    <dimen name="radius_xlarge">16dp</dimen>
+    <dimen name="radius_2xlarge">20dp</dimen>
 
     <dimen name="stroke_small">1dp</dimen>
+    <dimen name="stroke_normal">2dp</dimen>
 </resources>

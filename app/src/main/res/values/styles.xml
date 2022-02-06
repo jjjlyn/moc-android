@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Widget.Moc.Dialog.Alert" parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:background">@drawable/bg_alert_dialog_radius_xlarge</item>
+        <item name="android:background">@drawable/bg_radius_2xlarge</item>
     </style>
 
 </resources>

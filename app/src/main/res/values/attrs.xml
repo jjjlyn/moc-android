@@ -5,4 +5,17 @@
         <attr name="endIconPaddingEnd" format="dimension|float"/>
         <attr name="endIconPaddingStart" format="dimension|float"/>
     </declare-styleable>
+
+    <declare-styleable name="CareerProgressBar">
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
+        <attr name="android:radius" />
+        <attr name="strokeColor" />
+        <attr name="strokeWidth" />
+        <!-- scope: 0 ~ 1 -->
+        <attr name="progress" format="float" />
+        <attr name="progressBackgroundColor" format="reference|color" />
+        <attr name="progressForegroundColor" format="reference|color" />
+        <attr name="CareerProgressBarStyle" format="reference"/>
+    </declare-styleable>
 </resources>

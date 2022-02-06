@@ -5,7 +5,7 @@
         <item name="boxStrokeWidth">@dimen/stroke_small</item>
         <item name="boxStrokeColor">@color/selector_text_input_layout_outlined_stroke</item>
         <item name="hintEnabled">false</item>
-        <item name="hintTextAppearance">@style/TextAppearance.Moc.H4</item>
+        <item name="hintTextAppearance">@style/TextAppearance.Moc.H5</item>
         <item name="hintTextColor">@color/color_on_surface_400</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/radius_large</item>
         <item name="boxCornerRadiusBottomStart">@dimen/radius_large</item>
