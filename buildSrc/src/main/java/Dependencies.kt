@@ -15,6 +15,7 @@ object Version {
     const val dataStore = "1.0.0-beta01"
     const val pref = "1.1.1"
     const val navigation = "2.3.5"
+    const val paging = "3.1.0"
 
     const val kotlinSerialization = "1.3.1"
     const val kotlinSerializationConverter = "0.8.0"
@@ -90,6 +91,7 @@ object Library {
     const val pref = "androidx.preference:preference-ktx:${Version.pref}"
     const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
     const val navigationUI = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
+    const val paging = "androidx.paging:paging-runtime:${Version.paging}"
 
     // ui
     const val material = "com.google.android.material:material:${Version.material}"
