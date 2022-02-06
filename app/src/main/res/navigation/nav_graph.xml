@@ -4,11 +4,25 @@
     android:id="@+id/nav_graph">
 
     <fragment
+        android:id="@+id/loading"
+        android:name="app.moc.android.ui.loading.LoadingFragment">
+        <action
+            android:id="@+id/toOnBoarding"
+            app:destination="@id/onBoarding"/>
+        <action
+            android:id="@+id/toHome"
+            app:destination="@id/home"/>
+    </fragment>
+
+    <fragment
         android:id="@+id/signIn"
         android:name="app.moc.android.ui.signin.SignInFragment">
         <action
             android:id="@+id/toSignUp"
             app:destination="@id/signUp"/>
+        <action
+            android:id="@+id/toHome"
+            app:destination="@id/home"/>
     </fragment>
 
     <fragment

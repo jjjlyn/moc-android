@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -43,26 +44,24 @@ class MainActivity : AppCompatActivity(), NavigationHost {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-        val navGraph =
-            navHostFragment.findNavController().navInflater.inflate(R.navigation.nav_graph)
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+        navGraph.startDestination = R.id.loading
+        navController.graph = navGraph
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.mainDestination.collectLatest { action ->
-                    binding.containerLoading.root.setVisible(action is Result.Loading)
                     when (action) {
-                        is NavigateToOnBoarding -> {
-                            if (navGraph.startDestination == R.id.onBoarding) return@collectLatest
-                            navGraph.startDestination = R.id.onBoarding
-                            navController.graph = navGraph
-                        }
                         is NavigateToHome -> {
-                            if (navGraph.startDestination == R.id.home) return@collectLatest
-                            navGraph.startDestination = R.id.home
-                            navController.graph = navGraph
+//                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            navController.navigate(R.id.toHome)
+                            navController.graph.startDestination = R.id.home
+                        }
+                        is NavigateToOnBoarding -> {
+                            navController.navigate(R.id.toOnBoarding)
+                            navController.graph.startDestination = R.id.onBoarding
                         }
                     }
                 }
