@@ -53,6 +53,7 @@ dependencies {
     implementation(Library.moshiKotlin)
     implementation(Library.networkResponse)
     implementation(Library.timber)
+    implementation(Library.paging)
     testImplementation(Library.junit)
     androidTestImplementation(Library.testExtJunit)
     androidTestImplementation(Library.espressoCore)

@@ -66,6 +66,7 @@ dependencies {
     implementation(Library.lifecycleRunTime)
     implementation(Library.navigationFragment)
     implementation(Library.navigationUI)
+    implementation(Library.paging)
     implementation(Library.timber)
     testImplementation(Library.junit)
     androidTestImplementation(Library.testExtJunit)
