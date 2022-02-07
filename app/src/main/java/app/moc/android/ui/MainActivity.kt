@@ -1,6 +1,7 @@
 package app.moc.android.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -9,10 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import app.moc.android.NavigationHost
 import app.moc.android.R
@@ -28,20 +31,32 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationHost {
 
-    private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: MainActivityBinding
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
 
-    companion object {
-        private val TOP_LEVEL_DESTINATIONS = emptySet<Int>()
-    }
+    private val onDestinationChanged: (NavController, NavDestination, Bundle?) -> Unit =
+        { _, destination, _ ->
+            val id = destination.id
+            binding.bottomNav.visibility =
+                if (id == R.id.home || id == R.id.careerManage) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            with(binding.bottomNav.menu) {
+                findItem(id)?.isChecked = true
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Moc_Main)
         super.onCreate(savedInstanceState)
-        binding = MainActivityBinding.inflate(layoutInflater)
+        binding = MainActivityBinding.inflate(layoutInflater).apply {
+            bottomNav.itemIconTintList = null
+        }
         setContentView(binding.root)
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -67,10 +82,33 @@ class MainActivity : AppCompatActivity(), NavigationHost {
                 }
             }
         }
+
+        binding.bottomNav.setOnNavigationItemSelectedListener {
+            if (it.isChecked) {
+                false
+            } else {
+                NavigationUI.onNavDestinationSelected(it, navController)
+                true
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navController.addOnDestinationChangedListener(onDestinationChanged)
+    }
+
+    override fun onPause() {
+        navController.removeOnDestinationChangedListener(onDestinationChanged)
+        super.onPause()
     }
 
     override fun registerToolbarWithNavigation(toolbar: Toolbar) {
         val appBarConfiguration = AppBarConfiguration(TOP_LEVEL_DESTINATIONS)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    companion object {
+        private val TOP_LEVEL_DESTINATIONS = emptySet<Int>()
     }
 }
