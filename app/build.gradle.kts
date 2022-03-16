@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -68,6 +69,7 @@ dependencies {
     implementation(Library.navigationUI)
     implementation(Library.paging)
     implementation(Library.timber)
+    implementation(Library.threetenabp)
     testImplementation(Library.junit)
     androidTestImplementation(Library.testExtJunit)
     androidTestImplementation(Library.espressoCore)

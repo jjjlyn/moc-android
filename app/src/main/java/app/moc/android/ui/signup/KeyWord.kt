@@ -1,5 +1,8 @@
 package app.moc.android.ui.signup
 
+import androidx.annotation.Keep
+
+@Keep
 data class KeyWord(
     val id: Int,
     val content: String

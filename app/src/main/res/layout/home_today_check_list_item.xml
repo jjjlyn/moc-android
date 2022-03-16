@@ -3,8 +3,12 @@
     <data>
         <variable
             name="titleUIModel"
-            type="app.moc.android.ui.home.ComponentTitleUIModel" />
+            type="app.moc.android.ui.common.ComponentTitleUIModel" />
+        <variable
+            name="actionHandler"
+            type="app.moc.android.ui.home.HomeActionHandler" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -12,6 +16,7 @@
 
         <include
             app:uiModel="@{titleUIModel}"
+            android:onClick="@{() -> actionHandler.navigateToCareerDetail()}"
             android:id="@+id/containerTitle"
             layout="@layout/component_title_item" />
 
@@ -26,7 +31,7 @@
             app:layout_constraintRight_toRightOf="parent"
             tools:listitem="@layout/home_today_check_item"
             app:layout_constraintTop_toBottomOf="@id/containerTitle"
-            android:paddingLeft="@dimen/margin_large"
+            android:paddingHorizontal="@dimen/margin_large"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/margin_xlarge"
             android:clipToPadding="false"/>

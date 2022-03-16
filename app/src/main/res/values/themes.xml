@@ -14,7 +14,7 @@
     <style name="Theme.Moc.Main"/>
 
     <style name="Theme.Moc.Splash">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentStatus">false</item>
     </style>

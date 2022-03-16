@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <style name="Widget.Moc.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipMinTouchTargetSize">0dp</item>
+        <item name="chipCornerRadius">90dp</item>
+        <item name="android:checkable">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipStrokeColor">@color/selector_chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/stroke_small</item>
+        <item name="chipBackgroundColor">@color/selector_chip_background_tint</item>
+        <item name="android:textAppearance">@style/TextAppearance.Moc.H6</item>
+        <item name="android:textColor">@color/selector_chip_text</item>
+    </style>
+
+    <style name="Widget.Moc.Chip.Choice.Outlined" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipMinTouchTargetSize">0dp</item>
+        <item name="chipCornerRadius">@dimen/radius_normal</item>
+        <item name="android:checkable">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipStrokeColor">@color/selector_chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/stroke_small</item>
+        <item name="chipBackgroundColor">@color/transparent</item>
+        <item name="android:textAppearance">@style/TextAppearance.Moc.H6</item>
+        <item name="android:textColor">@color/color_on_surface_800</item>
+    </style>
+
+
+</resources>

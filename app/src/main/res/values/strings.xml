@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">moc</string>
+    <string name="career_check_satisfied_type1">만족 😊</string>
+    <string name="career_check_satisfied_type2">보통 😐</string>
+    <string name="career_check_satisfied_type3">불만족 🙁</string>
+
 </resources>

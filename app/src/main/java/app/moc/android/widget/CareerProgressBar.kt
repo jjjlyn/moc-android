@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
+import androidx.core.content.withStyledAttributes
 import androidx.core.view.updateLayoutParams
 import app.moc.android.R
 import app.moc.android.util.dp
@@ -59,14 +60,14 @@ class CareerProgressBar @JvmOverloads constructor(
     private val progressView = View(context)
 
     init {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.CareerProgressBar, defStyleAttr, 0)
-        progressBarWidth = a.getDimensionPixelSize(R.styleable.CareerProgressBar_android_layout_width, this.progressBarWidth)
-        progressBarHeight = a.getDimensionPixelSize(R.styleable.CareerProgressBar_android_layout_height, this.progressBarHeight)
-        progress = a.getFloat(R.styleable.CareerProgressBar_progress, this.progress)
-        progressBackgroundColor = a.getColor(R.styleable.CareerProgressBar_progressBackgroundColor, this.progressBackgroundColor)
-        progressForegroundColor = a.getColor(R.styleable.CareerProgressBar_progressForegroundColor, this.progressForegroundColor)
-        radius = a.getDimension(R.styleable.CareerProgressBar_android_radius, this.radius)
-        a.recycle()
+        context.withStyledAttributes(attrs, R.styleable.CareerProgressBar, defStyleAttr, 0) {
+            progressBarWidth = getDimensionPixelSize(R.styleable.CareerProgressBar_android_layout_width, progressBarWidth)
+            progressBarHeight = getDimensionPixelSize(R.styleable.CareerProgressBar_android_layout_height, progressBarHeight)
+            progress = getFloat(R.styleable.CareerProgressBar_progress, progress)
+            progressBackgroundColor = getColor(R.styleable.CareerProgressBar_progressBackgroundColor, progressBackgroundColor)
+            progressForegroundColor = getColor(R.styleable.CareerProgressBar_progressForegroundColor, progressForegroundColor)
+            radius = getDimension(R.styleable.CareerProgressBar_android_radius, radius)
+        }
     }
 
     override fun onFinishInflate() {

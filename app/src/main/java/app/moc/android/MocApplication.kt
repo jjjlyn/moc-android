@@ -1,6 +1,7 @@
 package app.moc.android
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -8,6 +9,7 @@ import timber.log.Timber
 class MocApplication: Application() {
     override fun onCreate() {
         super.onCreate()
+        AndroidThreeTen.init(this)
         Timber.plant(Timber.DebugTree())
     }
 }

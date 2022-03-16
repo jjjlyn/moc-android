@@ -2,10 +2,7 @@ package app.moc.shared.di
 
 import android.content.Context
 import app.moc.core.BuildConfig
-import app.moc.shared.data.api.AuthService
-import app.moc.shared.data.api.BusinessService
-import app.moc.shared.data.api.CommunityService
-import app.moc.shared.data.api.PlanService
+import app.moc.shared.data.api.*
 import app.moc.shared.data.prefs.PreferencesStorage
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -77,6 +74,7 @@ object ApiModule {
                     val request = chain.request().newBuilder().addHeader("Authorization", userToken).build()
                     chain.proceed(request)
                 })
+                .authenticator(TokenAuthenticator(preferencesStorage))
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                     else HttpLoggingInterceptor.Level.NONE

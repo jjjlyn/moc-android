@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    tool:text="MON"
+    android:id="@+id/textDayOfWeek"
+    android:textColor="@color/color_on_surface_400"
+    android:textAppearance="@style/TextAppearance.Moc.H6_2"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+</com.google.android.material.textview.MaterialTextView>

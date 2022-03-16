@@ -49,6 +49,7 @@ object Version {
 
     //util
     const val  timber = "4.7.1"
+    const val  threetenabp = "1.2.4"
 }
 
 object BuildPluginsVersion {
@@ -114,6 +115,7 @@ object Library {
 
     // util
     const val timber = "com.jakewharton.timber:timber:${Version.timber}"
+    const val threetenabp = "com.jakewharton.threetenabp:threetenabp:${Version.threetenabp}"
 
     // test
     const val testRules = "androidx.test:rules:${Version.androidTest}"

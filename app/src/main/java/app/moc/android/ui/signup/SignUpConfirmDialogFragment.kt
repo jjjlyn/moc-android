@@ -7,15 +7,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import app.moc.android.R
-import app.moc.android.databinding.SignUpConfirmDialogFragmentBinding
+import app.moc.android.databinding.CommonOneButtonDialogFragmentBinding
 import app.moc.model.User
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpConfirmDialogFragment: DialogFragment(R.layout.sign_up_confirm_dialog_fragment) {
+class SignUpConfirmDialogFragment: DialogFragment(R.layout.common_one_button_dialog_fragment) {
 
-    private lateinit var binding: SignUpConfirmDialogFragmentBinding
+    private lateinit var binding: CommonOneButtonDialogFragmentBinding
     private val signUpViewModel: SignUpViewModel by viewModels({ requireParentFragment() })
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -25,11 +25,12 @@ class SignUpConfirmDialogFragment: DialogFragment(R.layout.sign_up_confirm_dialo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = arguments?.get("user") as? User ?: return
-        binding = SignUpConfirmDialogFragmentBinding.bind(view).apply {
+        binding = CommonOneButtonDialogFragmentBinding.bind(view).apply {
             setOnClick {
                 signUpViewModel.onBoardingComplete(user)
                 dismiss()
             }
+            message = "회원가입이 완료되었습니다."
         }
         if (showsDialog) {
             (requireDialog() as AlertDialog).setView(binding.root)

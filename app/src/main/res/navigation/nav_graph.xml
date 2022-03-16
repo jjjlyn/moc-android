@@ -62,6 +62,36 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="app.moc.android.ui.home.HomeFragment"/>
+        android:name="app.moc.android.ui.home.HomeFragment">
+        <action
+            android:id="@+id/toCareerDetail"
+            app:destination="@id/careerDetail"/>
+        <action
+            android:id="@+id/toCareerHistory"
+            app:destination="@id/careerHistory"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/careerManage"
+        android:name="app.moc.android.ui.career.manage.CareerManageFragment">
+        <action
+            android:id="@+id/toCareerDetail"
+            app:destination="@id/careerDetail"/>
+        <action
+            android:id="@+id/toCareerHistory"
+            app:destination="@id/careerHistory"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/careerDetail"
+        android:name="app.moc.android.ui.career.detail.CareerDetailFragment"/>
+
+    <fragment
+        android:id="@+id/careerHistory"
+        android:name="app.moc.android.ui.career.history.CareerHistoryFragment">
+        <argument
+            android:name="uiModel"
+            app:argType="app.moc.android.ui.career.CareerItemUIModel"/>
+    </fragment>
 
 </navigation>

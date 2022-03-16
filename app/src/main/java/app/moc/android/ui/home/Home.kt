@@ -1,17 +1,11 @@
 package app.moc.android.ui.home
 
-import android.graphics.drawable.Drawable
-import app.moc.android.util.toFmt
+import androidx.annotation.Keep
+import app.moc.android.util.fmt
 import app.moc.model.Community
 import app.moc.model.DateTime
-import app.moc.model.Plan
 
-data class ComponentTitleUIModel(
-    val image: Drawable?,
-    val text: String,
-    val button: String
-)
-
+@Keep
 data class HomeIntroUIModel(
     val nickName: String = "",
     val leftDays: Long = 0
@@ -20,18 +14,7 @@ data class HomeIntroUIModel(
     fun getWelcome() = "${nickName}님,\n오늘도 퇴사를\n고민하셨나요?"
 }
 
-data class TodayCheckItemUIModel(
-    val id: Int,
-    val categoryId: String,
-    val title: String,
-    val duration: String,
-    val progress: Float
-)
-
-fun Plan.toUIModel() = TodayCheckItemUIModel(
-    id, categoryId, title, "$startDate ~ $endDate", 2f
-)
-
+@Keep
 data class MocTalkItemUIModel(
     val id: Int,
     val categoryID: Int,
@@ -43,7 +26,7 @@ data class MocTalkItemUIModel(
     val createDate: DateTime,
     val thumb: String?
 ) {
-    fun getCreateDateFmt() = "yyyy-MM-dd".toFmt(createDate)
+    fun getCreateDateFmt() = "yyyy-MM-dd".fmt(createDate)
 }
 
 fun Community.toUIModel() =

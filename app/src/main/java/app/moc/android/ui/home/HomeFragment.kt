@@ -4,23 +4,26 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.ItemMarginDecoration
 import app.moc.android.R
 import app.moc.android.databinding.HomeFragmentBinding
+import app.moc.android.ui.career.CareerItemUIModel
+import app.moc.android.ui.career.toUIModel
+import app.moc.android.ui.common.ComponentTitleUIModel
+import app.moc.android.util.dp
 import app.moc.android.util.getDrawableCompat
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
 import app.moc.android.util.setVisible
 import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment: Fragment(R.layout.home_fragment) {
+class HomeFragment: Fragment(R.layout.home_fragment), HomeActionHandler {
     private lateinit var binding: HomeFragmentBinding
     private lateinit var todayCheckAdapter: TodayCheckAdapter
     private lateinit var mocTalkAdapter: MocTalkAdapter
@@ -29,11 +32,14 @@ class HomeFragment: Fragment(R.layout.home_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        todayCheckAdapter = TodayCheckAdapter()
+        todayCheckAdapter = TodayCheckAdapter().apply {
+            actionHandler = this@HomeFragment
+        }
         mocTalkAdapter = MocTalkAdapter()
         binding = HomeFragmentBinding.bind(view).apply {
             viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
+            actionHandler = this@HomeFragment
 
             todayCheckTitleUIModel = ComponentTitleUIModel(
                 image = requireActivity().getDrawableCompat(R.drawable.ic_today_check),
@@ -47,14 +53,23 @@ class HomeFragment: Fragment(R.layout.home_fragment) {
             )
             containerTodayCheck.list.apply {
                 adapter = todayCheckAdapter
+                addItemDecoration(ItemMarginDecoration(horizontal = 3.dp().toInt()))
             }
             containerMocTalk.list.apply {
                 adapter = mocTalkAdapter
                 addItemDecoration(ItemMarginDecoration(vertical = resources.getDimensionPixelOffset(R.dimen.stroke_small)))
             }
+            mocTalkAdapter.addLoadStateListener { loadState ->
+                binding.containerLoading.root.setVisible(loadState.refresh is LoadState.Loading)
+//                binding.containerError.progressBar.setVisible(loadState.refresh is LoadState.Loading)
+//                binding.containerError.buttonRefresh.setInvisible(loadState.refresh is LoadState.Loading)
+//                manageErrors(loadState)
+//                manageEmpty(loadState)
+            }
         }
 
         launchAndRepeatWithViewLifecycle {
+
             launch {
                 homeViewModel.latestCommunities.collectLatest {
                     mocTalkAdapter.submitData(it.map { community -> community.toUIModel() })
@@ -76,5 +91,13 @@ class HomeFragment: Fragment(R.layout.home_fragment) {
                 }
             }
         }
+    }
+
+    override fun navigateToCareerDetail() {
+        findNavController().navigate(HomeFragmentDirections.toCareerDetail())
+    }
+
+    override fun navigateToCareerHistory(uiModel: CareerItemUIModel) {
+        findNavController().navigate(HomeFragmentDirections.toCareerHistory(uiModel))
     }
 }

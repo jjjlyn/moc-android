@@ -1,8 +1,6 @@
 package app.moc.model
 
-import android.os.Parcelable
 import androidx.annotation.Keep
-import kotlinx.parcelize.Parcelize
 
 @Keep
 data class SignIn(
@@ -21,7 +19,6 @@ data class SignUp(
 )
 
 @Keep
-@Parcelize
 data class User(
     val result: Boolean,
     val email: String?,
@@ -33,4 +30,4 @@ data class User(
     val userTokenExpiredDate: Long,
     val deviceToken: String?,
     val notiFlag: Int
-): Parcelable
+)

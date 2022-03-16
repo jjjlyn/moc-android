@@ -12,6 +12,7 @@
     <dimen name="margin_3xlarge">32dp</dimen>
     <dimen name="margin_4xlarge">48dp</dimen>
 
+    <dimen name="text_size_h0">26dp</dimen>
     <dimen name="text_size_h1">24dp</dimen>
     <dimen name="text_size_h2">22dp</dimen>
     <dimen name="text_size_h3">20dp</dimen>

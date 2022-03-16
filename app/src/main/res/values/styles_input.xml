@@ -14,6 +14,15 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="Widget.Moc.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="backgroundColor">@color/transparent</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintTextColor">@color/color_on_surface_400</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="Widget.Moc.TextView" parent="Widget.MaterialComponents.TextView">
         <item name="android:includeFontPadding">false</item>
     </style>

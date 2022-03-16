@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="dayOfWeek"
+            type="String" />
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:id="@+id/textDayOfWeek"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_oval_contained"
+        android:backgroundTint="@{isSelected ? @color/color_primary : @color/color_on_surface_200}"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:onClick="@{onClick}"
+        android:text="@{dayOfWeek}"
+        android:textColor="@{isSelected ? @color/color_on_surface_0 : @color/color_on_surface}"
+        tool:text="월" />
+</layout>

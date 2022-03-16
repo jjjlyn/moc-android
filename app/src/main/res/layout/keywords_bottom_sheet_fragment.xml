@@ -23,7 +23,7 @@
             android:layout_marginTop="22dp"
             android:text="퇴사 고민 키워드"
             android:textAppearance="@style/TextAppearance.Moc.H3"
-            android:textColor="@color/color_on_surface_800"
+            android:textColor="?colorOnSurface"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

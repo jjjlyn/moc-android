@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="uiModel"
+            type="app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/default_header" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/stroke_small"
+            android:background="@color/color_on_surface_200"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:background="@drawable/bg_radius_large"
+                    android:backgroundTint="?colorSurface"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tool:layout_height="316dp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xlarge"
+                    android:layout_marginTop="@dimen/margin_xlarge"
+                    android:textAppearance="@style/TextAppearance.Moc.H4_2"
+                    android:textColor="@color/color_on_surface_600"
+                    app:layout_constraintLeft_toLeftOf="@id/viewPager"
+                    app:layout_constraintTop_toTopOf="@id/viewPager"
+                    tool:text="2021년 2월" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageArrowLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2xlarge"
+                    android:layout_marginEnd="40dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_arrow_left"
+                    app:layout_constraintRight_toLeftOf="@id/imageArrowRight"
+                    app:layout_constraintTop_toTopOf="@id/viewPager" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageArrowRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_xlarge"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_arrow_right"
+                    app:layout_constraintRight_toRightOf="@id/viewPager"
+                    app:layout_constraintTop_toTopOf="@id/imageArrowLeft" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:background="@drawable/bg_radius_large"
+                    android:backgroundTint="@color/color_primary_A100"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewPager">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textProgressLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_xlarge"
+                        android:layout_marginTop="@dimen/button_padding_xlarge_top"
+                        android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"
+                        android:text="현재 진행율"
+                        android:textAppearance="@style/TextAppearance.Moc.H6"
+                        android:textColor="@color/color_on_surface_600"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/textProgress"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:textAppearance="@style/TextAppearance.Moc.H5_3"
+                        android:textColor="?colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="@id/textProgressLabel"
+                        app:layout_constraintLeft_toRightOf="@id/textProgressLabel"
+                        app:layout_constraintRight_toLeftOf="@id/dividerStatus"
+                        app:layout_constraintTop_toTopOf="@id/textProgressLabel"
+                        tool:text="93%" />
+
+                    <View
+                        android:id="@+id/dividerStatus"
+                        android:layout_width="@dimen/stroke_small"
+                        android:layout_height="0dp"
+                        android:layout_marginVertical="@dimen/margin_xlarge"
+                        android:layout_marginStart="@dimen/margin_2xlarge"
+                        android:background="@color/color_primary_A200"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/textProgress"
+                        app:layout_constraintRight_toLeftOf="@id/textSatisfiedLabel"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textSatisfiedLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_2xlarge"
+                        android:text="평균 만족도"
+                        android:textAppearance="@style/TextAppearance.Moc.H6"
+                        android:textColor="@color/color_on_surface_600"
+                        app:layout_constraintBottom_toBottomOf="@id/textProgressLabel"
+                        app:layout_constraintLeft_toRightOf="@id/dividerStatus"
+                        app:layout_constraintRight_toLeftOf="@id/textSatisfied"
+                        app:layout_constraintTop_toTopOf="@id/textProgressLabel" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/textSatisfied"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/margin_xlarge"
+                        android:textAppearance="@style/TextAppearance.Moc.H5_3"
+                        android:textColor="?colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="@id/textProgressLabel"
+                        app:layout_constraintLeft_toRightOf="@id/textSatisfiedLabel"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textProgressLabel"
+                        tool:text="불만족" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_4xlarge"
+                    android:background="@drawable/bg_radius_large"
+                    android:backgroundTint="@color/color_on_surface_100"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/containerStatus">
+
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:constraint_referenced_ids="containerType, containerStart, containerEnd, containerMemo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <include
+                        android:id="@+id/containerType"
+                        layout="@layout/calendar_history_detail_item"
+                        app:uiModel="@{uiModel.type}" />
+
+                    <include
+                        android:id="@+id/containerStart"
+                        layout="@layout/calendar_history_detail_item"
+                        app:uiModel="@{uiModel.start}" />
+
+                    <include
+                        android:id="@+id/containerEnd"
+                        layout="@layout/calendar_history_detail_item"
+                        app:uiModel="@{uiModel.end}" />
+
+                    <include
+                        android:id="@+id/containerMemo"
+                        layout="@layout/calendar_history_detail_item"
+                        app:uiModel="@{uiModel.memo}" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/containerLoading"
+            layout="@layout/transparent_loading_view"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

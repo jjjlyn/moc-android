@@ -40,6 +40,7 @@ dependencies {
     implementation(Library.appcompat)
     implementation(Library.material)
     implementation(Library.constraintLayout)
+    implementation(Library.threetenabp)
     implementation(Library.fragment)
     implementation(Library.hilt)
     kapt(Library.hiltCompiler)

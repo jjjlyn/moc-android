@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="app.moc.android.ui.career.detail.CareerDetailViewModel" />
+
+        <variable
+            name="actionHandler"
+            type="app.moc.android.ui.career.CareerDetailActionHandler" />
+        <import type="android.graphics.Color"/>
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/header"
+                layout="@layout/career_detail_header"
+                app:actionHandler="@{actionHandler}"
+                app:isConfirmEnabled="@{viewModel.isConfirmEnabled()}" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textCareerNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_top"
+                android:text="플랜 이름"
+                android:textAppearance="@style/TextAppearance.Moc.H5_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextCareerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_2xlarge"
+                android:layout_marginEnd="@dimen/margin_xsmall"
+                android:background="@null"
+                android:hint="이름을 입력해주세요(30자 이내)"
+                android:includeFontPadding="false"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onCareerNameChanged(text)}"
+                android:textAppearance="@style/TextAppearance.Moc.H5"
+                android:textColor="?colorOnSurface"
+                android:textColorHint="@color/color_on_surface_400"
+                app:layout_constraintBottom_toBottomOf="@id/dividerCareerName"
+                app:layout_constraintLeft_toRightOf="@id/textCareerNameLabel"
+                app:layout_constraintRight_toLeftOf="@id/indicator"
+                app:layout_constraintTop_toBottomOf="@id/header"
+                tool:text="asdfasdfasdf" />
+
+            <View
+                android:id="@+id/indicator"
+                android:layout_width="28dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:background="@drawable/bg_oval_contained"
+                android:backgroundTint="@{Color.parseColor(viewModel.color)}"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{() -> actionHandler.showColorDialog()}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header" />
+
+            <View
+                android:id="@+id/dividerCareerName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/stroke_small"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_top"
+                android:background="@color/color_on_surface_200"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCareerNameLabel" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textCareerTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_top"
+                android:text="플랜 유형"
+                android:textAppearance="@style/TextAppearance.Moc.H5_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerCareerName" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_2xlarge"
+                app:checkedChip="@id/chipCareerType1"
+                app:layout_constraintBottom_toBottomOf="@id/textCareerTypeLabel"
+                app:layout_constraintLeft_toRightOf="@id/textCareerTypeLabel"
+                app:layout_constraintTop_toTopOf="@id/textCareerTypeLabel"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCareerType1"
+                    style="@style/Widget.Moc.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자기계발" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCareerType2"
+                    style="@style/Widget.Moc.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이직준비" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCareerType3"
+                    style="@style/Widget.Moc.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사업준비" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <View
+                android:id="@+id/dividerCareerType"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/stroke_small"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_bottom"
+                android:background="@color/color_on_surface_200"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCareerTypeLabel" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textCareerDateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_top"
+                android:text="날짜 설정"
+                android:textAppearance="@style/TextAppearance.Moc.H5_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerCareerType" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_2xlarge"
+                android:background="@drawable/bg_outlined_radius_normal"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="22dp"
+                android:paddingTop="@dimen/button_padding_small_top"
+                android:paddingBottom="@dimen/button_padding_small_bottom"
+                android:text="@{viewModel.startDate}"
+                android:onClick="@{() -> actionHandler.showStartDatePicker()}"
+                android:textAppearance="@style/TextAppearance.Moc.H6"
+                app:layout_constraintBottom_toBottomOf="@id/textCareerDateLabel"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toRightOf="@id/textCareerDateLabel"
+                app:layout_constraintRight_toLeftOf="@id/tilde"
+                app:layout_constraintTop_toTopOf="@id/textCareerDateLabel"
+                tool:text="21.12.23" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tilde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:text="~"
+                android:textAppearance="@style/TextAppearance.Moc.H4"
+                app:layout_constraintBottom_toBottomOf="@id/textStartDate"
+                app:layout_constraintLeft_toRightOf="@id/textStartDate"
+                app:layout_constraintRight_toLeftOf="@id/textEndDate"
+                app:layout_constraintTop_toTopOf="@id/textStartDate" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:background="@drawable/bg_outlined_radius_normal"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="22dp"
+                android:paddingTop="@dimen/button_padding_small_top"
+                android:paddingBottom="@dimen/button_padding_small_bottom"
+                android:onClick="@{() -> actionHandler.showEndDatePicker()}"
+                android:text="@{viewModel.endDate}"
+                android:textAppearance="@style/TextAppearance.Moc.H6"
+                app:layout_constraintBottom_toBottomOf="@id/dividerDate"
+                app:layout_constraintLeft_toRightOf="@id/tilde"
+                app:layout_constraintTop_toBottomOf="@id/dividerCareerType"
+                tool:text="21.12.23" />
+
+            <View
+                android:id="@+id/dividerDate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/stroke_small"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_bottom"
+                android:background="@color/color_on_surface_200"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCareerDateLabel" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textCareerDayOfWeekLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_top"
+                android:text="희망 인증요일"
+                android:textAppearance="@style/TextAppearance.Moc.H5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerDate" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_2xlarge"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:text="*선택한 요일에만 인증을 진행하세요"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerDate" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listDayOfWeek"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textCareerDayOfWeekLabel"
+                tool:itemCount="7" />
+
+            <View
+                android:id="@+id/dividerDayOfWeek"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/stroke_small"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginTop="@dimen/button_padding_2xlarge_top"
+                android:background="@color/color_on_surface_200"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/listDayOfWeek" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextMemo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginVertical="@dimen/margin_xlarge"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="메모하기(200자 이내)"
+                android:includeFontPadding="false"
+                android:inputType="textMultiLine"
+                android:maxLength="200"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onMemoChanged(text)}"
+                android:textAppearance="@style/TextAppearance.Moc.H6"
+                android:textColor="?colorOnSurface"
+                android:textColorHint="@color/color_on_surface_400"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerDayOfWeek" />
+
+            <include
+                android:id="@+id/containerLoading"
+                layout="@layout/transparent_loading_view"
+                android:visibility="gone" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

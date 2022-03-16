@@ -62,7 +62,7 @@ class ItemMarginDecoration : RecyclerView.ItemDecoration {
                 }
                 count - 1 -> {
                     outRect.left = margin.left
-                    outRect.right = margin.right * 2
+                    outRect.right = 0
                 }
                 else -> {
                     outRect.left = margin.left

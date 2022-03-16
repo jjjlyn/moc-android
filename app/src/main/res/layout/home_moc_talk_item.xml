@@ -13,7 +13,10 @@
         xmlns:tool="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorSurface">
+        android:background="@drawable/ripple_bg_background"
+        android:backgroundTint="?colorSurface"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textCategory"
@@ -49,7 +52,7 @@
             android:layout_marginTop="@dimen/spacing_micro"
             android:text="@{uiModel.title}"
             android:textAppearance="@style/TextAppearance.Moc.H5_2"
-            android:textColor="@color/color_on_surface_800"
+            android:textColor="?colorOnSurface"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textCategory"
             tool:text="직장상사 때문에 고민이예요" />
@@ -78,7 +81,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_large"
             android:adjustViewBounds="true"
-            android:background="@drawable/bg_radius_small"
+            android:background="@drawable/bg_outlined_radius_normal"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textDate" />

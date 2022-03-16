@@ -6,12 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.moc.android.databinding.HomeTodayCheckItemBinding
+import app.moc.android.ui.career.CareerItemUIModel
 
-class TodayCheckAdapter: ListAdapter<TodayCheckItemUIModel, TodayCheckAdapter.ViewHolder>(DIFF_CALLBACK) {
+class TodayCheckAdapter: ListAdapter<CareerItemUIModel, TodayCheckAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+    var actionHandler: HomeActionHandler? = null
+
     inner class ViewHolder(private val binding: HomeTodayCheckItemBinding): RecyclerView.ViewHolder(binding.root){
-        internal fun bind(uiModel: TodayCheckItemUIModel){
-            binding.root.clipToOutline = true
-            binding.uiModel = uiModel
+        internal fun bind(uiModel: CareerItemUIModel){
+            binding.apply {
+                root.clipToOutline = true
+                this.uiModel = uiModel
+                actionHandler = this@TodayCheckAdapter.actionHandler
+            }
         }
     }
 
@@ -25,17 +32,17 @@ class TodayCheckAdapter: ListAdapter<TodayCheckItemUIModel, TodayCheckAdapter.Vi
     }
 
     companion object {
-        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<TodayCheckItemUIModel>(){
+        private val DIFF_CALLBACK = object: DiffUtil.ItemCallback<CareerItemUIModel>(){
             override fun areItemsTheSame(
-                oldItem: TodayCheckItemUIModel,
-                newItem: TodayCheckItemUIModel
+                oldItem: CareerItemUIModel,
+                newItem: CareerItemUIModel
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: TodayCheckItemUIModel,
-                newItem: TodayCheckItemUIModel
+                oldItem: CareerItemUIModel,
+                newItem: CareerItemUIModel
             ): Boolean {
                 return oldItem == newItem
             }

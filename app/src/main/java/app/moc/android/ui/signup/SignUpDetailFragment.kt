@@ -17,7 +17,6 @@ import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -77,7 +76,7 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
                 signUpViewModel.leaveDate.collectLatest { leaveDate ->
                     if(leaveDate != null){
                         binding.leaveDate = try {
-                            "yyyy/MM/dd".toFmt(leaveDate)
+                            "yyyy/MM/dd".fmt(leaveDate)
                         } catch (e: Exception) {
                             return@collectLatest
                         }
@@ -149,7 +148,12 @@ class SignUpDetailFragment: MainNavigationFragment(R.layout.sign_up_detail_fragm
         if(childFragmentManager.isDialogShowing()) return
         binding.textInputLeaveDate.onSelect()
         LeaveDatePickerDialogFragment()
-            .apply { isCancelable = false }
+            .apply {
+                isCancelable = false
+                onDateChanged = { c, _, _, _, _ ->
+                    this.selectLeaveDate(c.time)
+                }
+            }
             .show(childFragmentManager, LeaveDatePickerDialogFragment::class.java.simpleName)
     }
 

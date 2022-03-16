@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="app.moc.android.ui.career.manage.CareerManageViewModel" />
+        <variable
+            name="actionHandler"
+            type="app.moc.android.ui.career.CareerManageActionHandler" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:id="@+id/containerCareerManage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textTodayLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xlarge"
+            android:text="Today."
+            android:textAppearance="@style/TextAppearance.Moc.H3_2"
+            android:textColor="@color/color_on_surface_400"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            android:text="@{viewModel.today}"
+            android:textAppearance="@style/TextAppearance.Moc.H0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textTodayLabel"
+            tool:text="2020 9월 6일" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:visibility="@{viewModel.isTotalCareerEmpty() ? View.GONE : View.VISIBLE}"
+            android:background="?selectableItemBackgroundBorderless"
+            android:onClick="@{() -> actionHandler.navigateToCareerDetail()}"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_career_register_normal"
+            app:layout_constraintBottom_toBottomOf="@id/textToday"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textToday" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listCareerManage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/textToday"
+            android:layout_marginTop="@dimen/margin_3xlarge"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:overScrollMode="never"
+            tool:itemCount="2"
+            android:paddingBottom="40dp"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tool:listitem="@layout/career_manage_list_item"/>
+
+        <View
+            android:id="@+id/bgRegister"
+            android:layout_width="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> actionHandler.navigateToCareerDetail()}"
+            android:visibility="@{viewModel.isTotalCareerEmpty() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textToday"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/ripple_bg_radius_xlarge"
+            android:backgroundTint="@color/color_on_surface_200"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="@dimen/margin_large"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageRegisterLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isTotalCareerEmpty() ? View.VISIBLE : View.GONE}"
+            android:src="@drawable/ic_career_register_large"
+            app:layout_constraintLeft_toLeftOf="@id/bgRegister"
+            app:layout_constraintRight_toRightOf="@id/bgRegister"
+            app:layout_constraintTop_toTopOf="@id/bgRegister"
+            app:layout_constraintBottom_toBottomOf="@id/bgRegister"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isTotalCareerEmpty() ? View.VISIBLE : View.GONE}"
+            android:text="현재 등록된 플랜이 없습니다\n퇴사플랜을 등록해주세요"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bgRegister"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.Moc.H6"/>
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/containerLoading"
+            layout="@layout/loading_view"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

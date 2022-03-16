@@ -4,4 +4,14 @@
         <item name="android:background">@drawable/bg_radius_2xlarge</item>
     </style>
 
+    <style name="Widget.Moc.Calendar" parent=""/>
+
+    <style name="Widget.Moc.Calendar.CalendarViewStyle">
+        <item name="itemHeight">36dp</item>
+    </style>
+
+    <style name="Widget.Moc.Calendar.ItemViewStyle">
+        <item name="itemTextSize">@dimen/text_size_h5</item>
+    </style>
+
 </resources>

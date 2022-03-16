@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationHost {
@@ -70,12 +71,14 @@ class MainActivity : AppCompatActivity(), NavigationHost {
                 viewModel.mainDestination.collectLatest { action ->
                     when (action) {
                         is NavigateToHome -> {
-//                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
-                            navController.navigate(R.id.toHome)
+                            if(navController.graph.startDestination == R.id.home) return@collectLatest
+                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            navController.navigate(R.id.toHome, null, navOptions)
                             navController.graph.startDestination = R.id.home
                         }
                         is NavigateToOnBoarding -> {
-                            navController.navigate(R.id.toOnBoarding)
+                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            navController.navigate(R.id.toOnBoarding, null, navOptions)
                             navController.graph.startDestination = R.id.onBoarding
                         }
                     }
@@ -109,6 +112,9 @@ class MainActivity : AppCompatActivity(), NavigationHost {
     }
 
     companion object {
-        private val TOP_LEVEL_DESTINATIONS = emptySet<Int>()
+        private val TOP_LEVEL_DESTINATIONS = setOf(
+            R.id.home,
+            R.id.careerManage
+        )
     }
 }
