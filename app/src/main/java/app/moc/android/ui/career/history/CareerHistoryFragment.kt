@@ -2,6 +2,8 @@ package app.moc.android.ui.career.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,7 +15,6 @@ import app.moc.android.ui.career.CareerItemUIModel
 import app.moc.android.ui.career.history.calendar.CalendarAdapter
 import app.moc.android.ui.career.history.calendar.CalendarHistoryItemUIModel
 import app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel
-import app.moc.android.ui.career.manage.CareerManageViewModel
 import app.moc.android.util.fmt
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
 import app.moc.android.util.setVisible
@@ -22,7 +23,6 @@ import app.moc.model.PlanCheckQueryInfo
 import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 
@@ -32,7 +32,6 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
     private lateinit var binding: CareerHistoryFragmentBinding
     private lateinit var calendarAdapter: CalendarAdapter
     private val careerHistoryViewModel: CareerHistoryViewModel by viewModels()
-    private val careerManageViewModel: CareerManageViewModel by viewModels()
     private val args: CareerHistoryFragmentArgs by navArgs()
     private lateinit var careerItemUIModel: CareerItemUIModel
 
@@ -72,6 +71,7 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
 
             launch {
                 careerHistoryViewModel.modifyCareerUseCaseResult.collectLatest { result ->
+                    binding.containerLoading.root.setVisible(result.isLoading)
 
                 }
             }
@@ -80,7 +80,11 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
                 careerHistoryViewModel.deleteCareerUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if(result is Result.Success){
-                        careerManageViewModel.getCareers()
+                        findNavController().navigateUp()
+                        setFragmentResult(
+                            CAREER_HISTORY_ACTION_RESULT_KEY,
+                            bundleOf(CAREER_HISTORY_ACTION_TYPE to "delete")
+                        )
                     }
                 }
             }
@@ -89,15 +93,11 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
                 careerHistoryViewModel.setCareerDoneUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if(result is Result.Success){
-                        careerManageViewModel.getCareers()
-                    }
-                }
-            }
-
-            launch {
-                careerManageViewModel.totalResult.collectLatest { result ->
-                    if(result is Result.Success){
                         findNavController().navigateUp()
+                        setFragmentResult(
+                            CAREER_HISTORY_ACTION_RESULT_KEY,
+                            bundleOf(CAREER_HISTORY_ACTION_TYPE to "setDone")
+                        )
                     }
                 }
             }
@@ -114,5 +114,10 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
 
     override fun setDone() {
         careerHistoryViewModel.setCareerDone(careerItemUIModel.id)
+    }
+
+    companion object {
+        val CAREER_HISTORY_ACTION_RESULT_KEY = "career_history_action_result_key"
+        val CAREER_HISTORY_ACTION_TYPE = "career_history_action_type"
     }
 }

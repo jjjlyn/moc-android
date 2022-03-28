@@ -23,7 +23,9 @@ data class CareerItemUIModel(
     val endDate: Long,
     val color: String = "#2562FF",
     val progress: Float,
-    val memo: String?
+    val memo: String?,
+    val status: String?,
+    val adapterPosition: Int = -1
 ): Parcelable {
     fun getDuration() = "${"yy년 MM월 dd일".fmt(DateTime(startDate))} ~ ${"yy년 MM월 dd일".fmt(DateTime(endDate))}"
     fun getTypeDisplayText() = when(type){
@@ -78,5 +80,5 @@ val colors = listOf(
 )
 
 fun Plan.toUIModel() = CareerItemUIModel(
-    id!!, type, title, startDate, endDate, color ?: "#2562FF", 0.2f, memo
+    id!!, type, title, startDate, endDate, color ?: "#2562FF", 0.2f, memo, status
 )

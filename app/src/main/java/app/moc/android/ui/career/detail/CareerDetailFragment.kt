@@ -2,7 +2,9 @@ package app.moc.android.ui.career.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemGapDecoration
@@ -10,6 +12,7 @@ import app.moc.android.R
 import app.moc.android.databinding.CareerDetailFragmentBinding
 import app.moc.android.ui.career.CareerDetailActionHandler
 import app.moc.android.ui.career.dayOfWeeks
+import app.moc.android.ui.career.history.CareerHistoryFragment
 import app.moc.android.ui.common.CommonDatePickerDialogFragment
 import app.moc.android.ui.common.CommonTwoButtonDialogFragment
 import app.moc.android.util.isDialogShowing
@@ -58,7 +61,11 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
                 careerDetailViewModel.registerResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if(result is Result.Success){
-                        dismiss()
+                        findNavController().navigateUp()
+                        setFragmentResult(
+                            CAREER_DETAIL_ACTION_RESULT_KEY,
+                            bundleOf(CAREER_DETAIL_ACTION_TYPE to "register")
+                        )
                     }
                 }
             }
@@ -69,15 +76,11 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
         if(childFragmentManager.isDialogShowing()) return
         CommonTwoButtonDialogFragment().apply {
             onLeftClick = { dismiss() }
-            onRightClick = { this@CareerDetailFragment.dismiss() }
+            onRightClick = { findNavController().navigateUp() }
             leftButton = "취소"
             rightButton = "나가기"
             message = "지금까지 입력하신 정보가 모두 삭제됩니다.\n그래도 나가시겠어요?"
         }.show(childFragmentManager, "career_detail_caution_dialog")
-    }
-
-    override fun dismiss() {
-        findNavController().navigateUp()
     }
 
     override fun showColorDialog() {
@@ -111,5 +114,10 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
         careerDetailViewModel.apply {
             registerCareer()
         }
+    }
+
+    companion object {
+        val CAREER_DETAIL_ACTION_RESULT_KEY = "career_detail_action_result_key"
+        val CAREER_DETAIL_ACTION_TYPE = "career_detail_action_type"
     }
 }

@@ -27,6 +27,7 @@ class CareerManageViewModel @Inject constructor(
     val today = _today.asStateFlow()
 
     private val _inProgressCareersResult = MutableStateFlow<Result<List<Plan>>>(Result.Loading)
+    val inProgressCareers = _inProgressCareersResult.map { it.data }.stateIn(viewModelScope, WhileViewSubscribed, emptyList())
     private val _completedCareersResult = MutableStateFlow<Result<List<Plan>>>(Result.Loading)
 
     val totalResult = combine(_inProgressCareersResult, _completedCareersResult){ a, b ->

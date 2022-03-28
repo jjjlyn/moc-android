@@ -11,7 +11,6 @@ interface CareerManageItemActionHandler {
 
 interface CareerDetailActionHandler {
     fun showCancelDialog()
-    fun dismiss()
     fun showColorDialog()
     fun showStartDatePicker()
     fun showEndDatePicker()

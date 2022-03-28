@@ -68,4 +68,6 @@ class CareerHistoryViewModel @Inject constructor(
             }
         }
     }
+
+    // 삭제나 완료 시 뒤로 가면서 목록이 업데이트 되어야 하는데 이건 notifyItemChanged()로 구현하면 된다.
 }

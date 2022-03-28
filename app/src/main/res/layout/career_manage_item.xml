@@ -2,91 +2,107 @@
 <layout>
 
     <data>
+
         <variable
             name="uiModel"
             type="app.moc.android.ui.career.CareerItemUIModel" />
+
         <variable
             name="actionHandler"
             type="app.moc.android.ui.career.CareerManageItemActionHandler" />
-        <import type="android.graphics.Color"/>
+
+        <import type="android.graphics.Color" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_bg_radius_xlarge"
-        android:backgroundTint="?colorSurface"
-        android:onClick="@{() -> actionHandler.navigateToCareerHistory(uiModel)}"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/indicator"
-            android:layout_width="12dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_2xlarge"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/bg_oval_contained"
-            android:backgroundTint="@{Color.parseColor(uiModel.color)}"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerCareerManageItem"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@{uiModel.title}"
-            android:textAppearance="@style/TextAppearance.Moc.H5_2"
-            android:textColor="?colorOnSurface"
-            app:layout_constraintLeft_toRightOf="@id/indicator"
             app:layout_constraintTop_toTopOf="parent"
-            tool:text="애프터이펙트 익히기" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="@{uiModel.duration}"
-            android:textAppearance="@style/TextAppearance.Moc.H7"
-            android:textColor="@color/color_on_surface_500"
-            app:layout_constraintLeft_toLeftOf="@id/textTitle"
-            app:layout_constraintTop_toBottomOf="@id/textTitle"
-            tool:text="5월 1일 ~ 22년 1월 1일" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageCareerComplete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_2xlarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/margin_2xsmall"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@drawable/ripple_bg_radius_xlarge"
+            android:backgroundTint="?colorSurface"
             android:clickable="true"
             android:focusable="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:onClick="@{() -> actionHandler.showCareerCheck(uiModel)}"
-            android:src="@drawable/ic_career_complete"
-            android:tintMode="multiply"
-            android:tint="@{Color.parseColor(uiModel.color)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:onClick="@{() -> actionHandler.navigateToCareerHistory(uiModel)}">
 
-        <app.moc.android.widget.CareerProgressBar
-            android:layout_width="0dp"
-            android:layout_height="4dp"
-            android:radius="0dp"
-            android:layout_marginTop="@dimen/margin_xlarge"
-            app:progress="@{uiModel.progress}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textDuration"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:progressBackgroundColor="@color/color_background_300"
-            app:progressForegroundColor="@{Color.parseColor(uiModel.color)}" />
+            <View
+                android:id="@+id/indicator"
+                android:layout_width="12dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_2xlarge"
+                android:layout_marginTop="21dp"
+                android:background="@drawable/bg_oval_contained"
+                android:backgroundTint="@{Color.parseColor(uiModel.color)}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_large"
+                android:text="@{uiModel.title}"
+                android:textAppearance="@style/TextAppearance.Moc.H5_2"
+                android:textColor="?colorOnSurface"
+                app:layout_constraintLeft_toRightOf="@id/indicator"
+                app:layout_constraintTop_toTopOf="parent"
+                tool:text="애프터이펙트 익히기" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="@{uiModel.duration}"
+                android:textAppearance="@style/TextAppearance.Moc.H7"
+                android:textColor="@color/color_on_surface_500"
+                app:layout_constraintLeft_toLeftOf="@id/textTitle"
+                app:layout_constraintTop_toBottomOf="@id/textTitle"
+                tool:text="5월 1일 ~ 22년 1월 1일" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageCareerComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_2xlarge"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{() -> actionHandler.showCareerCheck(uiModel)}"
+                android:src="@drawable/ic_career_complete"
+                android:tint="@{Color.parseColor(uiModel.color)}"
+                android:tintMode="multiply"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <app.moc.android.widget.CareerProgressBar
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                android:radius="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textDuration"
+                app:progress="@{uiModel.progress}"
+                app:progressBackgroundColor="@color/color_background_300"
+                app:progressForegroundColor="@{Color.parseColor(uiModel.color)}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

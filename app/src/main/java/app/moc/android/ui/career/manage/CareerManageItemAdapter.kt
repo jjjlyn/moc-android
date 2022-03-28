@@ -12,15 +12,14 @@ import app.moc.android.ui.career.CareerManageItemActionHandler
 class CareerManageItemAdapter : ListAdapter<CareerItemUIModel, CareerManageItemAdapter.ViewHolder>(
     DIFF_CALLBACK
 ) {
-
     var actionHandler: CareerManageItemActionHandler? = null
 
     inner class ViewHolder(private val binding: CareerManageItemBinding): RecyclerView.ViewHolder(binding.root){
         internal fun bind(uiModel: CareerItemUIModel){
             with(binding){
-                binding.root.clipToOutline = true
+                containerCareerManageItem.clipToOutline = true
                 actionHandler = this@CareerManageItemAdapter.actionHandler
-                this.uiModel = uiModel
+                this.uiModel = uiModel.copy(adapterPosition = bindingAdapterPosition)
             }
         }
     }
