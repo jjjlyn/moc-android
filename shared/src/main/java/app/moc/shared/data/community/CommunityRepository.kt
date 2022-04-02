@@ -8,7 +8,7 @@ import app.moc.shared.data.api.CommunityService
 import kotlinx.coroutines.flow.Flow
 
 interface CommunityRepository {
-    suspend fun getLatestCommunities(category: Int): Flow<PagingData<Community>>
+    suspend fun getLatestCommunities(category: Int = -1): Flow<PagingData<Community>>
     suspend fun getPopularCommunities()
 }
 

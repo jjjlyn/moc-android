@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationHost {
         { _, destination, _ ->
             val id = destination.id
             binding.bottomNav.visibility =
-                if (id == R.id.home || id == R.id.careerManage) {
+                if (id == R.id.home || id == R.id.careerManage || id == R.id.talkMain || id == R.id.myPage) {
                     View.VISIBLE
                 } else {
                     View.GONE

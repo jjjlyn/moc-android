@@ -12,12 +12,12 @@
         android:icon="@drawable/selector_menu_career_manage"
         android:title="커리어"/>
     <item
-        android:id="@+id/community"
+        android:id="@+id/talkMain"
         android:checkable="true"
         android:icon="@drawable/selector_menu_community"
         android:title="커뮤니티"/>
     <item
-        android:id="@+id/account"
+        android:id="@+id/myPage"
         android:checkable="true"
         android:icon="@drawable/selector_menu_account"
         android:title="내 계정"/>

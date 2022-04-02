@@ -101,5 +101,18 @@
             android:id="@+id/toCareerDetail"
             app:destination="@id/careerDetail"/>
     </fragment>
+    <fragment
+        android:id="@+id/talkMain"
+        android:name="app.moc.android.ui.talk.TalkMainFragment">
+        <action
+            android:id="@+id/toTalkWrite"
+            app:destination="@id/talkWrite"/>
+    </fragment>
+    <fragment
+        android:id="@+id/talkWrite"
+        android:name="app.moc.android.ui.talk.TalkWriteFragment"/>
+    <fragment
+        android:id="@+id/myPage"
+        android:name="app.moc.android.ui.mypage.MyPageFragment"/>
 
 </navigation>

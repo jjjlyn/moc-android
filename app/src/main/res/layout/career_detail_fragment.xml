@@ -27,7 +27,7 @@
 
             <include
                 android:id="@+id/header"
-                layout="@layout/career_detail_header"
+                layout="@layout/title_with_two_button_header"
                 app:actionHandler="@{actionHandler}"
                 app:isConfirmEnabled="@{viewModel.isConfirmEnabled()}" />
 

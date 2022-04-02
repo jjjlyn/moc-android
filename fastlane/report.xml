@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000433">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: assembleDebug" time="4.111676">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: Switch to android upload_to_slack lane" time="0.000203">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: echo Uploading app-debug.apk to Slack" time="0.006103">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: curl https://slack.com/api/files.upload -F token=&quot;xoxb-2798899399232-2800146519472-MlLu77er4bnYQ7Qmws5NUvDn&quot; -F channels=&quot;apk-file&quot; -F title=&quot;app-debug.apk&quot; -F filename=&quot;app-debug.apk&quot; -F file=@/Users/jjjlyn/Desktop/moc/app/build/outputs/apk/debug/app-debug.apk" time="13.369876">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>
