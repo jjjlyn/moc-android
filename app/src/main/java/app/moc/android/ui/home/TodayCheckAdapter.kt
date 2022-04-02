@@ -7,17 +7,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.moc.android.databinding.HomeTodayCheckItemBinding
 import app.moc.android.ui.career.CareerItemUIModel
+import app.moc.android.ui.career.CareerNavigationHandler
 
 class TodayCheckAdapter: ListAdapter<CareerItemUIModel, TodayCheckAdapter.ViewHolder>(DIFF_CALLBACK) {
-
-    var actionHandler: HomeActionHandler? = null
+    var onItemClick: ((CareerItemUIModel) -> Unit)? = null
 
     inner class ViewHolder(private val binding: HomeTodayCheckItemBinding): RecyclerView.ViewHolder(binding.root){
         internal fun bind(uiModel: CareerItemUIModel){
             binding.apply {
-                root.clipToOutline = true
+                root.also { it.clipToOutline = true }.setOnClickListener {
+                    onItemClick?.invoke(uiModel)
+                }
                 this.uiModel = uiModel
-                actionHandler = this@TodayCheckAdapter.actionHandler
             }
         }
     }

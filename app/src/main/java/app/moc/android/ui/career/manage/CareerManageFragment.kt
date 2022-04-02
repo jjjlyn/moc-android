@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import app.moc.android.R
 import app.moc.android.databinding.CareerManageFragmentBinding
 import app.moc.android.ui.career.CareerItemUIModel
-import app.moc.android.ui.career.CareerManageActionHandler
+import app.moc.android.ui.career.CareerNavigationHandler
 import app.moc.android.ui.career.CareerManageItemActionHandler
 import app.moc.android.ui.career.check.CareerCheckDialogFragment
 import app.moc.android.ui.career.detail.CareerDetailFragment
@@ -24,9 +24,10 @@ import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class CareerManageFragment: Fragment(R.layout.career_manage_fragment), CareerManageActionHandler {
+class CareerManageFragment: Fragment(R.layout.career_manage_fragment){
 
     private lateinit var binding: CareerManageFragmentBinding
     private val careerManageViewModel: CareerManageViewModel by viewModels()
@@ -35,6 +36,9 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment), CareerMan
     private lateinit var careerManageInProgressItemAdapter: CareerManageItemAdapter
     private lateinit var careerManagerCompletedHeaderAdapter: CareerManageHeaderAdapter
     private lateinit var careerManageCompletedItemAdapter: CareerManageItemAdapter
+
+    @Inject
+    lateinit var navigationHandler: CareerNavigationHandler
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,10 +55,6 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment), CareerMan
                 CareerCheckDialogFragment().apply {
                     arguments = bundleOf("careerItemUIModel" to uiModel)
                 }.show(childFragmentManager, "career_check_dialog")
-            }
-
-            override fun navigateToCareerHistory(uiModel: CareerItemUIModel) {
-                findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
             }
         }
 
@@ -74,9 +74,19 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment), CareerMan
             }
         }
         careerManageInProgressItemAdapter = CareerManageItemAdapter().apply {
+            onItemClick = {
+                navigationHandler.navigateToCareerHistory(it){ uiModel ->
+                    findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
+                }
+            }
             actionHandler = careerManageItemActionHandler
         }
         careerManageCompletedItemAdapter = CareerManageItemAdapter().apply {
+            onItemClick = {
+                navigationHandler.navigateToCareerHistory(it){ uiModel ->
+                    findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
+                }
+            }
             actionHandler = careerManageItemActionHandler
         }
 
@@ -90,9 +100,18 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment), CareerMan
         binding = CareerManageFragmentBinding.bind(view).apply {
             viewModel = careerManageViewModel
             lifecycleOwner = viewLifecycleOwner
-            actionHandler = this@CareerManageFragment
             listCareerManage.apply {
                 adapter = careerManageAdapter
+            }
+            bgRegister.setOnClickListener {
+                navigationHandler.navigateToRegisterCareerDetail {
+                    findNavController().navigate(CareerManageFragmentDirections.toCareerDetail(null))
+                }
+            }
+            imageRegister.setOnClickListener {
+                navigationHandler.navigateToRegisterCareerDetail {
+                    findNavController().navigate(CareerManageFragmentDirections.toCareerDetail(null))
+                }
             }
         }
 
@@ -111,9 +130,5 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment), CareerMan
                 }
             }
         }
-    }
-
-    override fun navigateToCareerDetail() {
-        findNavController().navigate(CareerManageFragmentDirections.toCareerDetail())
     }
 }

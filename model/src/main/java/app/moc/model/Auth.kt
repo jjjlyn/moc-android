@@ -26,6 +26,7 @@ data class User(
     val business: Int,
     val keyWords: String?,
     val leaveDate: Long,
+    val userId: String?,
     val userToken: String?,
     val userTokenExpiredDate: Long,
     val deviceToken: String?,

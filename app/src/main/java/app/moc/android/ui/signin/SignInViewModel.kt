@@ -3,6 +3,7 @@ package app.moc.android.ui.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.moc.android.ui.onboarding.OnBoardingDelegate
+import app.moc.android.util.WhileViewSubscribed
 import app.moc.model.SignIn
 import app.moc.model.User
 import app.moc.shared.domain.prefs.OnBoardingCompleteActionUseCase
@@ -26,7 +27,7 @@ class SignInViewModel @Inject constructor(
 
     val isSignInEnabled = combine(_email, _pwd){ email, pwd ->
         isSignInEnabled(email, pwd)
-    }
+    }.stateIn(viewModelScope, WhileViewSubscribed, false)
 
     private val _signInUseCaseResult = MutableSharedFlow<Result<User>>()
     val signInUseCaseResult = _signInUseCaseResult.asSharedFlow()

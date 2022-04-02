@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface OnBoardingDelegate {
-    val onBoardingCompleted: Flow<Result<Boolean>>
+    val onBoardingCompleted: StateFlow<Result<Boolean>>
     fun onBoardingComplete(user: User)
 }
 
@@ -26,7 +26,7 @@ class DefaultOnBoardingDelegate @Inject constructor(
 ) : OnBoardingDelegate {
 
     private val _onBoardingCompleted = onBoardingCompletedUseCase(Unit)
-    override val onBoardingCompleted : StateFlow<Result<Boolean>> = _onBoardingCompleted
+    override val onBoardingCompleted = _onBoardingCompleted
         .stateIn(externalScope, WhileViewSubscribed, Result.Loading)
 
     override fun onBoardingComplete(user: User) {

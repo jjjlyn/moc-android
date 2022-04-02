@@ -41,7 +41,7 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
         binding = CareerHistoryFragmentBinding.bind(view).apply {
             with(header.toolbar){
                 title = careerItemUIModel.title
-                setupCareerHistoryMenuItem(this@CareerHistoryFragment)
+                setupCareerHistoryMenuItem(careerItemUIModel, this@CareerHistoryFragment)
             }
             uiModel = CalendarHistoryListUIModel(
                 type = CalendarHistoryItemUIModel("유형", careerItemUIModel.getTypeDisplayText()),
@@ -65,14 +65,12 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
             launch {
                 careerHistoryViewModel.careerChecksUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
-
                 }
             }
 
             launch {
                 careerHistoryViewModel.modifyCareerUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
-
                 }
             }
 
@@ -104,8 +102,8 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
         }
     }
 
-    override fun modify() {
-        careerHistoryViewModel.modifyCareer(careerItemUIModel)
+    override fun navigateToModifyCareerDetail() {
+        findNavController().navigate(CareerHistoryFragmentDirections.toCareerDetail(careerItemUIModel))
     }
 
     override fun delete() {

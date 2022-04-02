@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
@@ -67,22 +68,24 @@ class MainActivity : AppCompatActivity(), NavigationHost {
         navController.graph = navGraph
 
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.mainDestination.collectLatest { action ->
+            viewModel.mainDestination
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { action ->
                     when (action) {
                         is NavigateToHome -> {
-                            if(navController.graph.startDestination == R.id.home) return@collectLatest
-                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            if (navController.graph.startDestination == R.id.home) return@collectLatest
+                            val navOptions =
+                                NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
                             navController.navigate(R.id.toHome, null, navOptions)
                             navController.graph.startDestination = R.id.home
                         }
                         is NavigateToOnBoarding -> {
-                            val navOptions = NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            val navOptions =
+                                NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
                             navController.navigate(R.id.toOnBoarding, null, navOptions)
                             navController.graph.startDestination = R.id.onBoarding
                         }
                     }
-                }
             }
         }
 

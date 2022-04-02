@@ -5,8 +5,8 @@
             name="titleUIModel"
             type="app.moc.android.ui.common.ComponentTitleUIModel" />
         <variable
-            name="actionHandler"
-            type="app.moc.android.ui.home.HomeActionHandler" />
+            name="onClick"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +16,7 @@
 
         <include
             app:uiModel="@{titleUIModel}"
-            android:onClick="@{() -> actionHandler.navigateToCareerDetail()}"
+            android:onClick="@{onClick}"
             android:id="@+id/containerTitle"
             layout="@layout/component_title_item" />
 

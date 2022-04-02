@@ -33,8 +33,8 @@ fun Plan.toRegisterRequest() = PlanRegisterRequest(
     type, title, startDate / 1000, endDate / 1000, memo, dayOfWeeks, color
 )
 
-fun Plan.toModifyRequest() = PlanModifyRequest(
-    id!!, type, title, startDate, endDate, memo, dayOfWeeks, "jjjlyn", color
+fun Plan.toModifyRequest(userId: String) = PlanModifyRequest(
+    id!!, type, title, startDate / 1000, endDate / 1000, memo, dayOfWeeks, userId, color
 )
 
 @Keep

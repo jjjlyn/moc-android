@@ -12,7 +12,8 @@
         <variable
             name="actionHandler"
             type="app.moc.android.ui.career.CareerDetailActionHandler" />
-        <import type="android.graphics.Color"/>
+
+        <import type="android.graphics.Color" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -54,6 +55,7 @@
                 android:maxLength="30"
                 android:maxLines="1"
                 android:onTextChanged="@{(text, start, before, count) -> viewModel.onCareerNameChanged(text)}"
+                android:text="@{viewModel.careerName}"
                 android:textAppearance="@style/TextAppearance.Moc.H5"
                 android:textColor="?colorOnSurface"
                 android:textColorHint="@color/color_on_surface_400"
@@ -164,11 +166,11 @@
                 android:background="@drawable/bg_outlined_radius_normal"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> actionHandler.showStartDatePicker()}"
                 android:paddingHorizontal="22dp"
                 android:paddingTop="@dimen/button_padding_small_top"
                 android:paddingBottom="@dimen/button_padding_small_bottom"
                 android:text="@{viewModel.startDate}"
-                android:onClick="@{() -> actionHandler.showStartDatePicker()}"
                 android:textAppearance="@style/TextAppearance.Moc.H6"
                 app:layout_constraintBottom_toBottomOf="@id/textCareerDateLabel"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -197,10 +199,10 @@
                 android:background="@drawable/bg_outlined_radius_normal"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="@{() -> actionHandler.showEndDatePicker()}"
                 android:paddingHorizontal="22dp"
                 android:paddingTop="@dimen/button_padding_small_top"
                 android:paddingBottom="@dimen/button_padding_small_bottom"
-                android:onClick="@{() -> actionHandler.showEndDatePicker()}"
                 android:text="@{viewModel.endDate}"
                 android:textAppearance="@style/TextAppearance.Moc.H6"
                 app:layout_constraintBottom_toBottomOf="@id/dividerDate"
@@ -277,6 +279,7 @@
                 android:inputType="textMultiLine"
                 android:maxLength="200"
                 android:onTextChanged="@{(text, start, before, count) -> viewModel.onMemoChanged(text)}"
+                android:text="@{viewModel.memo}"
                 android:textAppearance="@style/TextAppearance.Moc.H6"
                 android:textColor="?colorOnSurface"
                 android:textColorHint="@color/color_on_surface_400"

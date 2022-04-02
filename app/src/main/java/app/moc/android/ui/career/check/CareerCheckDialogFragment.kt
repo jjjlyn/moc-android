@@ -6,6 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import app.moc.android.R
 import app.moc.android.databinding.CareerCheckDialogFragmentBinding
 import app.moc.android.ui.career.CareerItemUIModel
@@ -57,16 +60,16 @@ class CareerCheckDialogFragment: DialogFragment(R.layout.career_check_dialog_fra
             (requireDialog() as AlertDialog).setView(binding.root)
         }
 
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                careerCheckDialogViewModel.registerCheckResult.collectLatest { result ->
+        lifecycleScope.launch {
+            careerCheckDialogViewModel.registerCheckResult
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
-                    if(result is Result.Success){
+                    if (result is Result.Success) {
                         // TODO: 토스트 메시지
                         dismiss()
                     }
                 }
-            }
         }
     }
 }

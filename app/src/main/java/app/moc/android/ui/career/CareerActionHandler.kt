@@ -1,12 +1,37 @@
 package app.moc.android.ui.career
 
-interface CareerManageActionHandler {
-    fun navigateToCareerDetail()
+import javax.inject.Inject
+
+interface CareerNavigationHandler {
+    fun navigateToCareerDetail(uiModel: CareerItemUIModel, navigate: (CareerItemUIModel) -> Unit)
+    fun navigateToRegisterCareerDetail(navigate: () -> Unit)
+    fun navigateToCareerHistory(uiModel: CareerItemUIModel, navigate: (CareerItemUIModel) -> Unit)
+}
+
+class DefaultCareerNavigationHandler @Inject constructor(
+
+) : CareerNavigationHandler {
+    override fun navigateToCareerDetail(
+        uiModel: CareerItemUIModel,
+        navigate: (CareerItemUIModel) -> Unit
+    ) {
+        navigate(uiModel)
+    }
+
+    override fun navigateToRegisterCareerDetail(navigate: () -> Unit) {
+        navigate()
+    }
+
+    override fun navigateToCareerHistory(
+        uiModel: CareerItemUIModel,
+        navigate: (CareerItemUIModel) -> Unit
+    ) {
+        navigate(uiModel)
+    }
 }
 
 interface CareerManageItemActionHandler {
     fun showCareerCheck(uiModel: CareerItemUIModel)
-    fun navigateToCareerHistory(uiModel: CareerItemUIModel) // 커리어 달력
 }
 
 interface CareerDetailActionHandler {
@@ -14,11 +39,11 @@ interface CareerDetailActionHandler {
     fun showColorDialog()
     fun showStartDatePicker()
     fun showEndDatePicker()
-    fun register()
+    fun onClickConfirm()
 }
 
 interface CareerHistoryActionHandler {
-    fun modify()
+    fun navigateToModifyCareerDetail()
     fun delete()
     fun setDone()
 }

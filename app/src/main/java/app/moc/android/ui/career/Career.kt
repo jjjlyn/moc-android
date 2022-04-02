@@ -23,6 +23,7 @@ data class CareerItemUIModel(
     val endDate: Long,
     val color: String = "#2562FF",
     val progress: Float,
+    val dayOfWeeks: String,
     val memo: String?,
     val status: String?,
     val adapterPosition: Int = -1
@@ -80,5 +81,5 @@ val colors = listOf(
 )
 
 fun Plan.toUIModel() = CareerItemUIModel(
-    id!!, type, title, startDate, endDate, color ?: "#2562FF", 0.2f, memo, status
+    id!!, type, title, startDate, endDate, color ?: "#2562FF", 0.2f, dayOfWeeks, memo, status
 )

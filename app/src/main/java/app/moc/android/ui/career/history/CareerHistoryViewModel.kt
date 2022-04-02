@@ -12,9 +12,7 @@ import app.moc.shared.domain.career.ModifyCareerUseCase
 import app.moc.shared.domain.career.SetCareerDoneUseCase
 import app.moc.shared.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,14 +26,14 @@ class CareerHistoryViewModel @Inject constructor(
     private val _careerChecksUseCaseResult = MutableStateFlow<Result<List<PlanCheck>>>(Result.Loading)
     val careerChecksUseCaseResult = _careerChecksUseCaseResult.asStateFlow()
 
-    private val _modifyCareerUseCaseResult = MutableStateFlow<Result<Plan>>(Result.Loading)
-    val modifyCareerUseCaseResult = _modifyCareerUseCaseResult.asStateFlow()
+    private val _modifyCareerUseCaseResult = MutableSharedFlow<Result<Plan>>()
+    val modifyCareerUseCaseResult = _modifyCareerUseCaseResult.asSharedFlow()
 
-    private val _deleteCareerUseCaseResult = MutableStateFlow<Result<Unit>>(Result.Loading)
-    val deleteCareerUseCaseResult = _deleteCareerUseCaseResult.asStateFlow()
+    private val _deleteCareerUseCaseResult = MutableSharedFlow<Result<Unit>>()
+    val deleteCareerUseCaseResult = _deleteCareerUseCaseResult.asSharedFlow()
 
-    private val _setCareerDoneUseCaseResult = MutableStateFlow<Result<Plan>>(Result.Loading)
-    val setCareerDoneUseCaseResult = _setCareerDoneUseCaseResult.asStateFlow()
+    private val _setCareerDoneUseCaseResult = MutableSharedFlow<Result<Plan>>()
+    val setCareerDoneUseCaseResult = _setCareerDoneUseCaseResult.asSharedFlow()
 
     fun getCareerChecks(planCheckQueryInfo: PlanCheckQueryInfo) {
         viewModelScope.launch {
@@ -46,17 +44,29 @@ class CareerHistoryViewModel @Inject constructor(
     }
 
     fun modifyCareer(uiModel: CareerItemUIModel){
-//        viewModelScope.launch {
-//            modifyCareerUseCase(plan).collectLatest {
-//               _modifyCareerUseCaseResult.value = it
-//            }
-//        }
+        viewModelScope.launch {
+            modifyCareerUseCase(
+                Plan(
+                    id = uiModel.id,
+                    type = uiModel.type,
+                    title = uiModel.title,
+                    startDate = uiModel.startDate,
+                    endDate = uiModel.endDate,
+                    dayOfWeeks = uiModel.dayOfWeeks,
+                    status = uiModel.status,
+                    color = uiModel.color,
+                    memo = uiModel.memo
+                )
+            ).collectLatest {
+               _modifyCareerUseCaseResult.emit(it)
+            }
+        }
     }
 
     fun deleteCareer(careerId: Int){
         viewModelScope.launch {
             deleteCareerUseCase(careerId).collectLatest {
-                _deleteCareerUseCaseResult.value = it
+                _deleteCareerUseCaseResult.emit(it)
             }
         }
     }
@@ -64,7 +74,7 @@ class CareerHistoryViewModel @Inject constructor(
     fun setCareerDone(careerId: Int){
         viewModelScope.launch {
             setCareerDoneUseCase(careerId).collectLatest {
-                _setCareerDoneUseCaseResult.value = it
+                _setCareerDoneUseCaseResult.emit(it)
             }
         }
     }

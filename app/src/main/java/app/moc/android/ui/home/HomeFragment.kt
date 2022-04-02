@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemMarginDecoration
 import app.moc.android.R
 import app.moc.android.databinding.HomeFragmentBinding
 import app.moc.android.ui.career.CareerItemUIModel
+import app.moc.android.ui.career.CareerNavigationHandler
 import app.moc.android.ui.career.toUIModel
 import app.moc.android.ui.common.ComponentTitleUIModel
 import app.moc.android.util.dp
@@ -21,25 +22,37 @@ import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment: Fragment(R.layout.home_fragment), HomeActionHandler {
+class HomeFragment: Fragment(R.layout.home_fragment) {
     private lateinit var binding: HomeFragmentBinding
     private lateinit var todayCheckAdapter: TodayCheckAdapter
     private lateinit var mocTalkAdapter: MocTalkAdapter
 
     private val homeViewModel : HomeViewModel by viewModels()
 
+    @Inject
+    lateinit var navigationHandler: CareerNavigationHandler
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         todayCheckAdapter = TodayCheckAdapter().apply {
-            actionHandler = this@HomeFragment
+            onItemClick = {
+                navigationHandler.navigateToCareerHistory(it){ uiModel ->
+                    findNavController().navigate(HomeFragmentDirections.toCareerHistory(uiModel))
+                }
+            }
         }
         mocTalkAdapter = MocTalkAdapter()
         binding = HomeFragmentBinding.bind(view).apply {
             viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
-            actionHandler = this@HomeFragment
+            containerTodayCheck.setOnClick {
+                navigationHandler.navigateToRegisterCareerDetail {
+                    findNavController().navigate(HomeFragmentDirections.toCareerDetail(null))
+                }
+            }
 
             todayCheckTitleUIModel = ComponentTitleUIModel(
                 image = requireActivity().getDrawableCompat(R.drawable.ic_today_check),
@@ -69,7 +82,6 @@ class HomeFragment: Fragment(R.layout.home_fragment), HomeActionHandler {
         }
 
         launchAndRepeatWithViewLifecycle {
-
             launch {
                 homeViewModel.latestCommunities.collectLatest {
                     mocTalkAdapter.submitData(it.map { community -> community.toUIModel() })
@@ -91,13 +103,5 @@ class HomeFragment: Fragment(R.layout.home_fragment), HomeActionHandler {
                 }
             }
         }
-    }
-
-    override fun navigateToCareerDetail() {
-        findNavController().navigate(HomeFragmentDirections.toCareerDetail())
-    }
-
-    override fun navigateToCareerHistory(uiModel: CareerItemUIModel) {
-        findNavController().navigate(HomeFragmentDirections.toCareerHistory(uiModel))
     }
 }

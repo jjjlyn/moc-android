@@ -21,4 +21,4 @@ data class AuthResponse(
     val notiFlag: Int
 )
 
-fun AuthResponse.toModel() = User(result, email, nickName, business, keyWords, leaveDate, userToken, userTokenExpiredDate, deviceToken, notiFlag)
+fun AuthResponse.toModel() = User(result, email, nickName, business, keyWords, leaveDate, userId.toString(), userToken, userTokenExpiredDate, deviceToken, notiFlag)

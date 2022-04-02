@@ -2,17 +2,25 @@ package app.moc.android.ui.career.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.moc.android.databinding.CareerDetailDayOfWeekItemBinding
 import app.moc.android.ui.career.DayOfWeek
 import app.moc.android.util.executeAfter
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class DayOfWeekAdapter : ListAdapter<DayOfWeek, DayOfWeekAdapter.ViewHolder>(DIFF_CALLBACK) {
+class DayOfWeekAdapter(private val lifecycleOwner: LifecycleOwner) : ListAdapter<DayOfWeek, DayOfWeekAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     var onDayOfWeekSelectionChanged: ((String) -> Unit)? = null
     var currentSelections = mutableSetOf<DayOfWeek>()
+    var currentSelectionsState : StateFlow<Set<DayOfWeek>>? = null
 
     inner class ViewHolder(private val binding: CareerDetailDayOfWeekItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: DayOfWeek){
@@ -29,6 +37,13 @@ class DayOfWeekAdapter : ListAdapter<DayOfWeek, DayOfWeekAdapter.ViewHolder>(DIF
                 }
                 binding.isSelected = isSelected.not()
                 onDayOfWeekSelectionChanged?.invoke(currentSelections.joinToString { it.dayOfWeekEng })
+            }
+            lifecycleOwner.lifecycleScope.launch {
+                currentSelectionsState
+                    ?.flowWithLifecycle(lifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                    ?.collectLatest {
+                        binding.isSelected = it.contains(item)
+                }
             }
         }
     }

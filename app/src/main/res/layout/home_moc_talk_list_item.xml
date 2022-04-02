@@ -4,9 +4,6 @@
         <variable
             name="titleUIModel"
             type="app.moc.android.ui.common.ComponentTitleUIModel" />
-        <variable
-            name="actionHandler"
-            type="app.moc.android.ui.home.HomeActionHandler" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

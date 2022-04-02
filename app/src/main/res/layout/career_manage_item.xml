@@ -33,8 +33,7 @@
             android:background="@drawable/ripple_bg_radius_xlarge"
             android:backgroundTint="?colorSurface"
             android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{() -> actionHandler.navigateToCareerHistory(uiModel)}">
+            android:focusable="true">
 
             <View
                 android:id="@+id/indicator"

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.moc.android.R
 import app.moc.android.databinding.CareerManageListItemBinding
+import app.moc.android.ui.career.CareerItemUIModel
 import app.moc.android.ui.career.CareerManageItemActionHandler
 import app.moc.android.ui.career.CareerManageListItemUIModel
 import app.moc.android.ui.common.ComponentTitleUIModel

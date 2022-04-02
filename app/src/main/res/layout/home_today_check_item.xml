@@ -7,10 +7,6 @@
             name="uiModel"
             type="app.moc.android.ui.career.CareerItemUIModel" />
 
-        <variable
-            name="actionHandler"
-            type="app.moc.android.ui.home.HomeActionHandler" />
-
         <import type="android.graphics.Color" />
     </data>
 
@@ -22,8 +18,7 @@
         android:background="@drawable/ripple_bg_radius_large"
         android:backgroundTint="?colorSurface"
         android:clickable="true"
-        android:focusable="true"
-        android:onClick="@{() -> actionHandler.navigateToCareerHistory(uiModel)}">
+        android:focusable="true">
 
         <View
             android:id="@+id/indicator"

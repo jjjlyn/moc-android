@@ -13,13 +13,16 @@ class CareerManageItemAdapter : ListAdapter<CareerItemUIModel, CareerManageItemA
     DIFF_CALLBACK
 ) {
     var actionHandler: CareerManageItemActionHandler? = null
+    var onItemClick: ((CareerItemUIModel) -> Unit)? = null
 
     inner class ViewHolder(private val binding: CareerManageItemBinding): RecyclerView.ViewHolder(binding.root){
         internal fun bind(uiModel: CareerItemUIModel){
             with(binding){
-                containerCareerManageItem.clipToOutline = true
                 actionHandler = this@CareerManageItemAdapter.actionHandler
                 this.uiModel = uiModel.copy(adapterPosition = bindingAdapterPosition)
+                containerCareerManageItem.also { it.clipToOutline = true }.setOnClickListener {
+                    onItemClick?.invoke(uiModel)
+                }
             }
         }
     }

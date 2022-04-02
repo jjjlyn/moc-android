@@ -84,7 +84,12 @@
 
     <fragment
         android:id="@+id/careerDetail"
-        android:name="app.moc.android.ui.career.detail.CareerDetailFragment"/>
+        android:name="app.moc.android.ui.career.detail.CareerDetailFragment">
+        <argument
+            android:name="uiModel"
+            app:nullable="true"
+            app:argType="app.moc.android.ui.career.CareerItemUIModel"/>
+    </fragment>
 
     <fragment
         android:id="@+id/careerHistory"
@@ -92,6 +97,9 @@
         <argument
             android:name="uiModel"
             app:argType="app.moc.android.ui.career.CareerItemUIModel"/>
+        <action
+            android:id="@+id/toCareerDetail"
+            app:destination="@id/careerDetail"/>
     </fragment>
 
 </navigation>

@@ -9,6 +9,7 @@ import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREF
 import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREFS_ON_EMAIL
 import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREFS_ON_KEY_WORDS
 import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREFS_ON_NICK_NAME
+import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREFS_ON_USER_ID
 import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREFS_ON_USER_TOKEN
 import app.moc.shared.data.prefs.DataStorePreferencesStorage.PreferencesKey.PREFS_ON_USER_TOKEN_EXPIRED_DATE
 import app.moc.shared.util.millisDiffToDays
@@ -20,6 +21,7 @@ import javax.inject.Singleton
 interface PreferencesStorage {
     suspend fun completeOnBoarding(user: User)
     val onBoardingCompleted: Flow<Boolean>
+    val userID: Flow<String>
     val userToken: Flow<String>
     val nickName: Flow<String>
     val keyWords: Flow<String>
@@ -41,6 +43,7 @@ class DataStorePreferencesStorage @Inject constructor(
         val PREFS_ON_NICK_NAME = stringPreferencesKey("prefs_on_nick_name")
         val PREFS_ON_KEY_WORDS = stringPreferencesKey("prefs_on_key_words")
         val PREFS_LEAVE_DATE = longPreferencesKey("prefs_on_leave_date")
+        val PREFS_ON_USER_ID = stringPreferencesKey("prefs_on_user_id")
         val PREFS_ON_USER_TOKEN_EXPIRED_DATE = longPreferencesKey("prefs_on_user_token_expired_date")
         val PREFS_ON_USER_TOKEN = stringPreferencesKey("prefs_on_user_token")
         val PREFS_ON_DEVICE_TOKEN = stringPreferencesKey("prefs_on_device_token")
@@ -53,6 +56,7 @@ class DataStorePreferencesStorage @Inject constructor(
             it[PREFS_ON_KEY_WORDS] = user.keyWords ?: ""
             it[PREFS_LEAVE_DATE] = user.leaveDate * 1000
             it[PREFS_ON_USER_TOKEN_EXPIRED_DATE] = user.userTokenExpiredDate * 1000
+            it[PREFS_ON_USER_ID] = user.userId ?: ""
             it[PREFS_ON_USER_TOKEN] = user.userToken ?: ""
             it[PREFS_ON_DEVICE_TOKEN] = user.deviceToken ?: ""
         }
@@ -63,6 +67,10 @@ class DataStorePreferencesStorage @Inject constructor(
             val userToken = it[PREFS_ON_USER_TOKEN] ?: return@map false
             val userTokenExpiredDate = it[PREFS_ON_USER_TOKEN_EXPIRED_DATE] ?: return@map false
             userTokenExpiredDate > System.currentTimeMillis() && userToken.isNotEmpty()
+        }
+    override val userID: Flow<String> =
+        dataStore.data.map {
+            it[PREFS_ON_USER_ID] ?: return@map ""
         }
 
     override val userToken: Flow<String> =
