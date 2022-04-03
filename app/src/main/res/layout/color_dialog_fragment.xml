@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_xlarge"
             android:text="컬러를 선택해주세요"
-            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textAppearance="@style/TextAppearance.Moc.H4_2"
             android:textColor="?colorOnSurface"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

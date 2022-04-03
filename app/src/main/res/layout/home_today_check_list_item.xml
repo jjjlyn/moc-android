@@ -18,7 +18,7 @@
             app:uiModel="@{titleUIModel}"
             android:onClick="@{onClick}"
             android:id="@+id/containerTitle"
-            layout="@layout/component_title_item" />
+            layout="@layout/item_component_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"

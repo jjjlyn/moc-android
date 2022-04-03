@@ -53,6 +53,9 @@ class HomeFragment: Fragment(R.layout.home_fragment) {
                     findNavController().navigate(HomeFragmentDirections.toCareerDetail(null))
                 }
             }
+            containerMocTalk.setOnClick {
+                findNavController().navigate(HomeFragmentDirections.toTalkMain())
+            }
 
             todayCheckTitleUIModel = ComponentTitleUIModel(
                 image = requireActivity().getDrawableCompat(R.drawable.ic_today_check),

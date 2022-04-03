@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="selectedAlbum"
+            type="app.moc.model.Album" />
+        <variable
+            name="isOpened"
+            type="boolean" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:visibility="@{(selectedAlbum != null) ? View.VISIBLE : View.GONE}"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2xsmall"
+            android:maxWidth="120dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@{selectedAlbum.name}"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="전체보기" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@{selectedAlbum.displayMediaCount}"
+            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textColor="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/textTitle"
+            app:layout_constraintLeft_toRightOf="@id/textTitle"
+            app:layout_constraintTop_toTopOf="@id/textTitle"
+            tool:text="20" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            tool:src="@drawable/ic_drop_arrow_down"
+            android:src="@{isOpened ? @drawable/ic_drop_arrow_up : @drawable/ic_drop_arrow_down}"
+            app:layout_constraintBottom_toBottomOf="@id/textTitle"
+            app:layout_constraintLeft_toRightOf="@id/textCount"
+            app:layout_constraintTop_toTopOf="@id/textTitle"
+            app:tint="?colorOnSurface" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

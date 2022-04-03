@@ -41,7 +41,7 @@
 
     <include
         android:id="@+id/containerTitle"
-        layout="@layout/component_title_item" />
+        layout="@layout/item_component_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listCareerManage"

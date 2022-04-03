@@ -16,7 +16,9 @@ class TalkWriteFragment : Fragment(R.layout.talk_write_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = TalkWriteFragmentBinding.bind(view)
         with(binding){
-
+            header.apply {
+                header.textTitle.text = "글쓰기"
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/header"
-            layout="@layout/default_header" />
+            layout="@layout/header_default" />
 
         <View
             android:id="@+id/divider"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_xlarge"
                     android:layout_marginTop="@dimen/margin_xlarge"
-                    android:textAppearance="@style/TextAppearance.Moc.H4_2"
+                    android:textAppearance="@style/TextAppearance.Moc.H4_3"
                     android:textColor="@color/color_on_surface_600"
                     app:layout_constraintLeft_toLeftOf="@id/viewPager"
                     app:layout_constraintTop_toTopOf="@id/viewPager"

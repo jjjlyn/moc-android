@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph">
 
     <fragment
@@ -69,6 +70,9 @@
         <action
             android:id="@+id/toCareerHistory"
             app:destination="@id/careerHistory"/>
+        <action
+            android:id="@+id/toTalkMain"
+            app:destination="@id/talkMain"/>
     </fragment>
 
     <fragment
@@ -107,12 +111,25 @@
         <action
             android:id="@+id/toTalkWrite"
             app:destination="@id/talkWrite"/>
+        <action
+            android:id="@+id/toTalkSearch"
+            app:destination="@id/talkSearch"/>
     </fragment>
     <fragment
         android:id="@+id/talkWrite"
         android:name="app.moc.android.ui.talk.TalkWriteFragment"/>
     <fragment
+        android:id="@+id/talkSearch"
+        android:name="app.moc.android.ui.talk.TalkSearchFragment"/>
+    <fragment
         android:id="@+id/myPage"
-        android:name="app.moc.android.ui.mypage.MyPageFragment"/>
-
+        android:name="app.moc.android.ui.mypage.MyPageFragment">
+        <action
+            android:id="@+id/toSettings"
+            app:destination="@id/settings"/>
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="app.moc.android.ui.mypage.SettingsFragment"
+        android:label="앱 설정"/>
 </navigation>

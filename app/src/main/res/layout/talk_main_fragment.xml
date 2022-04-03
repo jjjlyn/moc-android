@@ -6,8 +6,7 @@
 
     <include
         android:id="@+id/header"
-        layout="@layout/talk_search_header" />
-
+        layout="@layout/header_title_with_one_icon" />
 
 <!--    <include-->
 <!--        android:id="@+id/containerFilter"-->

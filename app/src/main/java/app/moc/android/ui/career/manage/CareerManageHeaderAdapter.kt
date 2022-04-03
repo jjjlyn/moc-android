@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.moc.android.R
-import app.moc.android.databinding.ComponentTitleItemBinding
+import app.moc.android.databinding.ItemComponentTitleBinding
 import app.moc.android.ui.common.ComponentTitleUIModel
 import app.moc.android.util.executeAfter
 import app.moc.android.util.setVisible
@@ -15,7 +15,7 @@ class CareerManageHeaderAdapter: ListAdapter<ComponentTitleUIModel, CareerManage
 
     var onArrowClick: ((Boolean) -> Unit)? = null
 
-    inner class ViewHolder(private val binding: ComponentTitleItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ItemComponentTitleBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(uiModel: ComponentTitleUIModel) {
             with(binding) {
                 imageTitle.setVisible(false)
@@ -39,7 +39,7 @@ class CareerManageHeaderAdapter: ListAdapter<ComponentTitleUIModel, CareerManage
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ComponentTitleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(ItemComponentTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

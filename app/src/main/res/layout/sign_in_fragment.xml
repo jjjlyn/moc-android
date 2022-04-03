@@ -23,7 +23,7 @@
 
         <include
             android:id="@+id/header"
-            layout="@layout/default_header" />
+            layout="@layout/header_default" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textLoginLabel"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_xlarge"
-            app:endIconDrawable="@drawable/ic_text_clear"
+            app:endIconDrawable="@drawable/ic_clear"
             app:endIconMode="clear_text"
             app:endIconTint="@null"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -127,7 +127,7 @@
             android:enabled="@{isSignInEnabled}"
             android:onClick="@{() -> viewModel.onSignIn()}"
             android:text="로그인"
-            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textAppearance="@style/TextAppearance.Moc.H4_2"
             android:textColor="@color/color_on_surface_0"
             app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

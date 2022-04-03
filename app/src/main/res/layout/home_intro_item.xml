@@ -95,7 +95,7 @@
                 android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"
                 tool:text="D-897"
                 android:text="@{uiModel.ddays}"
-                android:textAppearance="@style/TextAppearance.Moc.H4"
+                android:textAppearance="@style/TextAppearance.Moc.H4_2"
                 android:textColor="?colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/textLeftDaysLabel"

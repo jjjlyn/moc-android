@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/button_padding_2xlarge_top"
             android:layout_marginBottom="@dimen/button_padding_2xlarge_bottom"
             android:text="플랜 등록"
-            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textAppearance="@style/TextAppearance.Moc.H4_2"
             android:textColor="?colorOnSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

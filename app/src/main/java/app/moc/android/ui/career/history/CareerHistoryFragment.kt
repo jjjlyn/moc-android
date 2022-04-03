@@ -17,6 +17,7 @@ import app.moc.android.ui.career.history.calendar.CalendarHistoryItemUIModel
 import app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel
 import app.moc.android.util.fmt
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
+import app.moc.android.util.setTitleAlignCenter
 import app.moc.android.util.setVisible
 import app.moc.model.DateTime
 import app.moc.model.PlanCheckQueryInfo
@@ -40,7 +41,10 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
         careerItemUIModel = args.uiModel
         binding = CareerHistoryFragmentBinding.bind(view).apply {
             with(header.toolbar){
+//                setTitleAlignCenter()
+                setTitleTextAppearance(requireActivity(), R.style.TextAppearance_Moc_H5_2)
                 title = careerItemUIModel.title
+                background = null
                 setupCareerHistoryMenuItem(careerItemUIModel, this@CareerHistoryFragment)
             }
             uiModel = CalendarHistoryListUIModel(

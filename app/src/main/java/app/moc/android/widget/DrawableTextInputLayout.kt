@@ -13,7 +13,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import app.moc.android.R
-import app.moc.android.util.dp
 import app.moc.android.util.setMargins
 import app.moc.android.util.setVisible
 import com.google.android.material.textfield.TextInputLayout
@@ -79,7 +78,7 @@ class DrawableTextInputLayout @JvmOverloads constructor(
             frameLayout.removeView(it)
         }
         val editText = editText ?: return
-        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_text_clear) ?: return
+        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_clear) ?: return
 
         val clearTextIcon = LayoutInflater.from(context).inflate(R.layout.text_clear_item, frameLayout, false) as ImageView
         with(clearTextIcon) {

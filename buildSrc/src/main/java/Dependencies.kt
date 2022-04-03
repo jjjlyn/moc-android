@@ -48,8 +48,8 @@ object Version {
     const val hiltNavigation ="1.0.0-alpha03"
 
     //util
-    const val  timber = "4.7.1"
-    const val  threetenabp = "1.2.4"
+    const val timber = "4.7.1"
+    const val threetenabp = "1.2.4"
 }
 
 object BuildPluginsVersion {

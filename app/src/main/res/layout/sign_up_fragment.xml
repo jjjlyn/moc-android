@@ -28,7 +28,7 @@
 
         <include
             android:id="@+id/header"
-            layout="@layout/default_header" />
+            layout="@layout/header_default" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textStep1"
@@ -149,7 +149,7 @@
             android:enabled="@{isNextEnabled}"
             android:onClick="@{() -> viewModel.onNextClick()}"
             android:text="확인"
-            android:textAppearance="@style/TextAppearance.Moc.H4"
+            android:textAppearance="@style/TextAppearance.Moc.H4_2"
             android:textColor="@color/color_on_surface_0"
             app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

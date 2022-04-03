@@ -27,7 +27,7 @@
 
             <include
                 android:id="@+id/header"
-                layout="@layout/title_with_two_button_header"
+                layout="@layout/header_title_with_two_button"
                 app:actionHandler="@{actionHandler}"
                 app:isConfirmEnabled="@{viewModel.isConfirmEnabled()}" />
 
@@ -185,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_large"
                 android:text="~"
-                android:textAppearance="@style/TextAppearance.Moc.H4"
+                android:textAppearance="@style/TextAppearance.Moc.H4_2"
                 app:layout_constraintBottom_toBottomOf="@id/textStartDate"
                 app:layout_constraintLeft_toRightOf="@id/textStartDate"
                 app:layout_constraintRight_toLeftOf="@id/textEndDate"

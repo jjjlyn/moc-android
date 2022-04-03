@@ -70,6 +70,8 @@ dependencies {
     implementation(Library.paging)
     implementation(Library.timber)
     implementation(Library.threetenabp)
+    implementation(Library.glide)
+//    implementation(Library.glideCompiler)
     testImplementation(Library.junit)
     androidTestImplementation(Library.testExtJunit)
     androidTestImplementation(Library.espressoCore)

@@ -4,6 +4,9 @@
         <variable
             name="titleUIModel"
             type="app.moc.android.ui.common.ComponentTitleUIModel" />
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,8 +17,9 @@
 
     <include
         app:uiModel="@{titleUIModel}"
+        android:onClick="@{onClick}"
         android:id="@+id/containerTitle"
-        layout="@layout/component_title_item" />
+        layout="@layout/item_component_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
