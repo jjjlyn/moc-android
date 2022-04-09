@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.ItemMarginDecoration
 import app.moc.android.R
 import app.moc.android.databinding.TalkMainFragmentBinding
 import app.moc.android.ui.home.MocTalkAdapter
+import app.moc.android.ui.home.MocTalkItemUIModel
 import app.moc.android.ui.home.toUIModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TalkMainFragment : Fragment(R.layout.talk_main_fragment) {
+class TalkMainFragment : Fragment(R.layout.talk_main_fragment), TalkActionHandler {
 
     private lateinit var binding: TalkMainFragmentBinding
     private lateinit var talkMainAdapter: ConcatAdapter
@@ -31,7 +32,9 @@ class TalkMainFragment : Fragment(R.layout.talk_main_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         filterAdapter = TalkFilterAdapter()
-        mocTalkAdapter = MocTalkAdapter()
+        mocTalkAdapter = MocTalkAdapter().apply {
+            actionHandler = this@TalkMainFragment
+        }
         talkMainAdapter = ConcatAdapter(filterAdapter, mocTalkAdapter)
         binding = TalkMainFragmentBinding.bind(view)
         with(binding){
@@ -42,7 +45,7 @@ class TalkMainFragment : Fragment(R.layout.talk_main_fragment) {
                 }
             }
             listTalk.apply {
-//                addItemDecoration(ItemMarginDecoration(vertical = resources.getDimensionPixelOffset(R.dimen.stroke_small)))
+                addItemDecoration(ItemMarginDecoration(vertical = resources.getDimensionPixelOffset(R.dimen.stroke_small)))
                 adapter = talkMainAdapter
             }
             fab.setOnClickListener {
@@ -57,5 +60,9 @@ class TalkMainFragment : Fragment(R.layout.talk_main_fragment) {
                 mocTalkAdapter.submitData(it.map { item -> item.toUIModel() })
             }
         }
+    }
+
+    override fun navigateToDetail(uiModel: MocTalkItemUIModel) {
+        findNavController().navigate(TalkMainFragmentDirections.toTalkDetail(uiModel))
     }
 }

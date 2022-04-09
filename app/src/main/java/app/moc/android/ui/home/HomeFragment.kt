@@ -14,6 +14,7 @@ import app.moc.android.ui.career.CareerItemUIModel
 import app.moc.android.ui.career.CareerNavigationHandler
 import app.moc.android.ui.career.toUIModel
 import app.moc.android.ui.common.ComponentTitleUIModel
+import app.moc.android.ui.talk.TalkActionHandler
 import app.moc.android.util.dp
 import app.moc.android.util.getDrawableCompat
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment: Fragment(R.layout.home_fragment) {
+class HomeFragment: Fragment(R.layout.home_fragment), TalkActionHandler {
     private lateinit var binding: HomeFragmentBinding
     private lateinit var todayCheckAdapter: TodayCheckAdapter
     private lateinit var mocTalkAdapter: MocTalkAdapter
@@ -44,7 +45,9 @@ class HomeFragment: Fragment(R.layout.home_fragment) {
                 }
             }
         }
-        mocTalkAdapter = MocTalkAdapter()
+        mocTalkAdapter = MocTalkAdapter().apply {
+            actionHandler = this@HomeFragment
+        }
         binding = HomeFragmentBinding.bind(view).apply {
             viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
@@ -106,5 +109,9 @@ class HomeFragment: Fragment(R.layout.home_fragment) {
                 }
             }
         }
+    }
+
+    override fun navigateToDetail(uiModel: MocTalkItemUIModel) {
+        findNavController().navigate(HomeFragmentDirections.toTalkDetail(uiModel))
     }
 }

@@ -1,8 +1,11 @@
 package app.moc.model
 
+import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 
 @Keep
+@Parcelize
 data class Community(
     val boardID: Int,
     val userID: Int,
@@ -17,4 +20,4 @@ data class Community(
     val imageTag: String,
     val createDate: Long,
     val modifyDate: Long
-)
+): Parcelable

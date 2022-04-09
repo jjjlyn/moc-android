@@ -17,7 +17,12 @@ class TalkWriteFragment : Fragment(R.layout.talk_write_fragment) {
         binding = TalkWriteFragmentBinding.bind(view)
         with(binding){
             header.apply {
+                header.buttonCancel.text = "취소"
                 header.textTitle.text = "글쓰기"
+                header.buttonConfirm.text = "완료"
+            }
+            imageCamera.setOnClickListener {
+
             }
         }
     }

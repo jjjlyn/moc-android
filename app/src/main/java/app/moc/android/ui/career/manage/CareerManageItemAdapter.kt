@@ -1,5 +1,6 @@
 package app.moc.android.ui.career.manage
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -20,6 +21,7 @@ class CareerManageItemAdapter : ListAdapter<CareerItemUIModel, CareerManageItemA
             with(binding){
                 actionHandler = this@CareerManageItemAdapter.actionHandler
                 this.uiModel = uiModel.copy(adapterPosition = bindingAdapterPosition)
+                textTitle.paintFlags = if(uiModel.getIsCompleted()) Paint.STRIKE_THRU_TEXT_FLAG else 0
                 containerCareerManageItem.also { it.clipToOutline = true }.setOnClickListener {
                     onItemClick?.invoke(uiModel)
                 }

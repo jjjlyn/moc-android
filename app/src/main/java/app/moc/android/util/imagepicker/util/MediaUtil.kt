@@ -138,7 +138,8 @@ class MediaUtil {
         private fun getRealPathFromUri(context: Context, uris: List<Uri>): List<String> {
             val list = arrayListOf<String>()
             uris.forEach { uri ->
-                val cursor: Cursor? = context.contentResolver.query(uri, null, null, null, null)
+                val cursor: Cursor? =
+                    context.contentResolver.query(uri, null, null, null, null)
 
                 if(cursor != null && cursor.count > 0){
                     cursor.moveToNext()

@@ -6,14 +6,21 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.moc.android.databinding.HomeMocTalkItemBinding
+import app.moc.android.ui.talk.TalkActionHandler
 
 class MocTalkAdapter: PagingDataAdapter<MocTalkItemUIModel, MocTalkAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+    var actionHandler: TalkActionHandler? = null
 
     inner class ViewHolder(private val binding: HomeMocTalkItemBinding): RecyclerView.ViewHolder(binding.root){
         internal fun bind(uiModel: MocTalkItemUIModel?){
             if(uiModel == null){
+
             } else {
                 binding.uiModel = uiModel
+                binding.root.setOnClickListener {
+                    actionHandler?.navigateToDetail(uiModel)
+                }
             }
         }
     }

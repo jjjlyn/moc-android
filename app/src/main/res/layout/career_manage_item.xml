@@ -12,6 +12,7 @@
             type="app.moc.android.ui.career.CareerManageItemActionHandler" />
 
         <import type="android.graphics.Color" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -80,6 +81,7 @@
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="@{uiModel.isCompleted ? View.GONE : View.VISIBLE}"
                 android:onClick="@{() -> actionHandler.showCareerCheck(uiModel)}"
                 android:src="@drawable/ic_career_complete"
                 android:tint="@{Color.parseColor(uiModel.color)}"

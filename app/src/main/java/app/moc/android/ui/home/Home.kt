@@ -1,9 +1,11 @@
 package app.moc.android.ui.home
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import app.moc.android.util.fmt
 import app.moc.model.Community
 import app.moc.model.DateTime
+import kotlinx.parcelize.Parcelize
 
 @Keep
 data class HomeIntroUIModel(
@@ -15,6 +17,7 @@ data class HomeIntroUIModel(
 }
 
 @Keep
+@Parcelize
 data class MocTalkItemUIModel(
     val id: Int,
     val categoryID: Int,
@@ -25,7 +28,7 @@ data class MocTalkItemUIModel(
     val hits: String,
     val createDate: DateTime,
     val thumb: String?
-) {
+) : Parcelable {
     fun getCreateDateFmt() = "yyyy-MM-dd".fmt(createDate)
 }
 

@@ -35,6 +35,7 @@ data class CareerItemUIModel(
         "3" -> "사업준비"
         else -> "기타"
     }
+    fun getIsCompleted() = "COMP" == status
 }
 
 @Keep

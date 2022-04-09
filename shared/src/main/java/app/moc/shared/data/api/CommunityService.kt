@@ -20,4 +20,9 @@ interface CommunityService {
         @Query("count") count: Int,
         @Query("category") category: Int
     ): List<CommunityResponse>
+
+    @GET("community/search")
+    suspend fun fetchSearchResults(@Query("keyword") keywords: List<String>): List<CommunityResponse>
+
+
 }

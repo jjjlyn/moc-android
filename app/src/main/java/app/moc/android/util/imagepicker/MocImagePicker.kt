@@ -53,7 +53,6 @@ class MocImagePicker {
                     onSelected(uris)
                 }
             }
-
             start(onGranted)
         }
 

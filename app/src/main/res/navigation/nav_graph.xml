@@ -73,6 +73,9 @@
         <action
             android:id="@+id/toTalkMain"
             app:destination="@id/talkMain"/>
+        <action
+            android:id="@+id/toTalkDetail"
+            app:destination="@id/talkDetail"/>
     </fragment>
 
     <fragment
@@ -114,13 +117,27 @@
         <action
             android:id="@+id/toTalkSearch"
             app:destination="@id/talkSearch"/>
+        <action
+            android:id="@+id/toTalkDetail"
+            app:destination="@id/talkDetail"/>
+    </fragment>
+    <fragment
+        android:id="@+id/talkDetail"
+        android:name="app.moc.android.ui.talk.TalkDetailFragment">
+        <argument
+            android:name="uiModel"
+            app:argType="app.moc.android.ui.home.MocTalkItemUIModel" />
     </fragment>
     <fragment
         android:id="@+id/talkWrite"
         android:name="app.moc.android.ui.talk.TalkWriteFragment"/>
     <fragment
         android:id="@+id/talkSearch"
-        android:name="app.moc.android.ui.talk.TalkSearchFragment"/>
+        android:name="app.moc.android.ui.talk.TalkSearchFragment">
+        <action
+            android:id="@+id/toTalkDetail"
+            app:destination="@id/talkDetail"/>
+    </fragment>
     <fragment
         android:id="@+id/myPage"
         android:name="app.moc.android.ui.mypage.MyPageFragment">
