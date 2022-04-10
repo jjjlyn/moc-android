@@ -176,6 +176,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:id="@+id/containerComment"
-            layout="@layout/talk_comment_footer"/>
+            layout="@layout/talk_write_comment_footer"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

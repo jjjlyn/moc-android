@@ -24,5 +24,4 @@ interface CommunityService {
     @GET("community/search")
     suspend fun fetchSearchResults(@Query("keyword") keywords: List<String>): List<CommunityResponse>
 
-
 }

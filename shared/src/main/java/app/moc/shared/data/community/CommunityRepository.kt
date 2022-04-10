@@ -5,11 +5,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import app.moc.model.Community
 import app.moc.shared.data.api.CommunityService
+import app.moc.shared.data.api.response.toModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface CommunityRepository {
     suspend fun getLatestCommunities(category: Int = -1): Flow<PagingData<Community>>
     suspend fun getPopularCommunities()
+    suspend fun getSearchResults(keyword: List<String>): List<Community>
 }
 
 class DefaultCommunityRepository(
@@ -27,6 +30,12 @@ class DefaultCommunityRepository(
 
     override suspend fun getPopularCommunities() {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getSearchResults(keyword: List<String>): List<Community> {
+        return runCatching { service.fetchSearchResults(keyword) }
+            .getOrThrow()
+            .map { it.toModel() }
     }
 
 }

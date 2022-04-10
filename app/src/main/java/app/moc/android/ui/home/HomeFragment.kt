@@ -10,7 +10,6 @@ import androidx.paging.map
 import androidx.recyclerview.widget.ItemMarginDecoration
 import app.moc.android.R
 import app.moc.android.databinding.HomeFragmentBinding
-import app.moc.android.ui.career.CareerItemUIModel
 import app.moc.android.ui.career.CareerNavigationHandler
 import app.moc.android.ui.career.toUIModel
 import app.moc.android.ui.common.ComponentTitleUIModel

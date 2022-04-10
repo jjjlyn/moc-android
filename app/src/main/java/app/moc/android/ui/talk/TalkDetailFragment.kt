@@ -2,15 +2,15 @@ package app.moc.android.ui.talk
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import app.moc.android.MainNavigationFragment
 import app.moc.android.R
 import app.moc.android.databinding.TalkDetailFragmentBinding
 import app.moc.android.util.getDrawableCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TalkDetailFragment: Fragment(R.layout.talk_detail_fragment) {
+class TalkDetailFragment: MainNavigationFragment(R.layout.talk_detail_fragment) {
     private lateinit var binding: TalkDetailFragmentBinding
     private val args: TalkDetailFragmentArgs by navArgs()
 
