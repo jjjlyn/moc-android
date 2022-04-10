@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar android:id="@+id/toolbar"
-    android:layout_height="?actionBarSize"
-    android:layout_width="match_parent"
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:navigationIcon="@drawable/ic_arrow_back"
-    tool:title="앱 설정"
-    app:titleTextAppearance="@style/TextAppearance.Moc.H4_3"
-    app:titleTextColor="?colorOnSurface"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools" />
+    android:id="@+id/appBar"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:background="?android:colorBackground"
+    app:elevation="0dp">
+
+    <androidx.appcompat.widget.Toolbar xmlns:tool="http://schemas.android.com/tools"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextAppearance="@style/TextAppearance.Moc.H4_3"
+        app:titleTextColor="?colorOnSurface"
+        tool:title="앱 설정" />
+
+</com.google.android.material.appbar.AppBarLayout>

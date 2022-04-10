@@ -6,10 +6,15 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.ItemMarginDecoration
 import app.moc.android.R
 import app.moc.android.databinding.TalkSearchFragmentBinding
+import app.moc.android.ui.home.MocTalkItemUIModel
 import app.moc.android.ui.home.toUIModel
+import app.moc.android.ui.signup.keyWords
+import app.moc.android.util.dp
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
 import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TalkSearchFragment : Fragment(R.layout.talk_search_fragment){
+class TalkSearchFragment : Fragment(R.layout.talk_search_fragment), TalkActionHandler {
 
     private lateinit var binding: TalkSearchFragmentBinding
     private lateinit var filterAdapter: TalkFilterAdapter
@@ -28,7 +33,9 @@ class TalkSearchFragment : Fragment(R.layout.talk_search_fragment){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         filterAdapter = TalkFilterAdapter()
-        talkSearchAdapter = TalkSearchAdapter()
+        talkSearchAdapter = TalkSearchAdapter().apply {
+            actionHandler = this@TalkSearchFragment
+        }
         concatAdapter = ConcatAdapter(filterAdapter, talkSearchAdapter)
         binding = TalkSearchFragmentBinding.bind(view)
         with(binding){
@@ -46,7 +53,10 @@ class TalkSearchFragment : Fragment(R.layout.talk_search_fragment){
                     header.textTitle.setText("")
                 }
             }
-            listResult.adapter = concatAdapter
+            listResult.apply {
+                addItemDecoration(ItemMarginDecoration(vertical = resources.getDimensionPixelOffset(R.dimen.stroke_small)))
+                adapter = concatAdapter
+            }
         }
         filterAdapter.submitList(listOf(TalkFilterUIModel(-1, "latest")))
 
@@ -67,5 +77,9 @@ class TalkSearchFragment : Fragment(R.layout.talk_search_fragment){
                 }
             }
         }
+    }
+
+    override fun navigateToDetail(uiModel: MocTalkItemUIModel) {
+        findNavController().navigate(TalkSearchFragmentDirections.toTalkDetail(uiModel))
     }
 }

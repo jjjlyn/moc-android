@@ -51,6 +51,7 @@ dependencies {
     implementation(Library.appcompat)
     implementation(Library.core)
     implementation(Library.material)
+    implementation(Library.flexbox)
     implementation(Library.constraintLayout)
     implementation(Library.fragment)
     implementation(Library.hilt)

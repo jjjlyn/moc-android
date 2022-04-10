@@ -1,89 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout>
+    <data>
+        <variable
+            name="uiModel"
+            type="app.moc.android.ui.talk.TalkCommentUIModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/indicator"
-        android:layout_width="6dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1"
-        android:layout_marginTop="@dimen/margin_small"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imageProfile"
-        android:background="@drawable/bg_oval_contained"
-        android:backgroundTint="@color/color_primary"/>
+        <View
+            android:id="@+id/indicator"
+            android:layout_width="6dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/bg_oval_contained"
+            android:backgroundTint="@color/color_primary"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/imageProfile"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageProfile"
-        android:layout_width="24dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_large"
-        android:background="@drawable/bg_oval_contained"
-        android:backgroundTint="@color/color_on_surface_400"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageProfile"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_large"
+            android:background="@drawable/bg_oval_contained"
+            android:backgroundTint="@color/color_on_surface_400"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:textAppearance="@style/TextAppearance.Moc.H6"
-        app:layout_constraintBottom_toBottomOf="@id/imageProfile"
-        app:layout_constraintStart_toEndOf="@id/imageProfile"
-        app:layout_constraintTop_toTopOf="@id/imageProfile"
-        tool:text="amet" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:text="@{uiModel.nickName}"
+            android:textAppearance="@style/TextAppearance.Moc.H6"
+            app:layout_constraintBottom_toBottomOf="@id/imageProfile"
+            app:layout_constraintStart_toEndOf="@id/imageProfile"
+            app:layout_constraintTop_toTopOf="@id/imageProfile"
+            tool:text="amet" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.Moc.H6_2"
-        android:textColor="@color/color_on_surface_400"
-        app:layout_constraintBottom_toBottomOf="@id/textProfile"
-        app:layout_constraintStart_toEndOf="@id/textProfile"
-        app:layout_constraintTop_toTopOf="@id/textProfile"
-        tool:text="20.10.01 22:10" />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:text="@{uiModel.modifyDateDisplayText}"
+            android:textAppearance="@style/TextAppearance.Moc.H6_2"
+            android:textColor="@color/color_on_surface_400"
+            app:layout_constraintBottom_toBottomOf="@id/textProfile"
+            app:layout_constraintStart_toEndOf="@id/textProfile"
+            app:layout_constraintTop_toTopOf="@id/textProfile"
+            tool:text="20.10.01 22:10" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginBottom="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.Moc.H6"
-        android:textColor="?colorOnSurface"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageProfile"
-        tool:text="불어 살 이상 속잎나고, 같이, 듣기만 인류의 부패뿐이다. 끓는 살았으며, 맺어, 인류의 아니다." />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:textAppearance="@style/TextAppearance.Moc.H6"
+            android:textColor="?colorOnSurface"
+            android:text="@{uiModel.content}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageProfile"
+            tool:text="불어 살 이상 속잎나고, 같이, 듣기만 인류의 부패뿐이다. 끓는 살았으며, 맺어, 인류의 아니다." />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageMore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="@dimen/margin_2xsmall"
-        android:alpha="0.87"
-        android:background="?selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_menu_more"
-        android:tint="@color/color_on_surface"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="@dimen/margin_2xsmall"
+            android:alpha="0.87"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_menu_more"
+            android:tint="@color/color_on_surface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="0dp"
-        android:layout_height="0.7dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:background="@color/color_on_surface_500_A100"/>
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="0.7dp"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:background="@color/color_on_surface_500_A100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

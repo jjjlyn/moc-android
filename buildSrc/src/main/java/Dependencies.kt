@@ -23,6 +23,7 @@ object Version {
     // ui
     const val material = "1.3.0"
     const val constraintLayout = "2.0.4"
+    const val flexbox = "3.0.0"
 
     // image
     const val glide = "4.12.0"
@@ -96,6 +97,7 @@ object Library {
 
     // ui
     const val material = "com.google.android.material:material:${Version.material}"
+    const val flexbox = "com.google.android.flexbox:flexbox:${Version.flexbox}"
 
     // image
     const val glide = "com.github.bumptech.glide:glide:${Version.glide}"

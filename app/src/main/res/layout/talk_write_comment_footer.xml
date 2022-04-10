@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:id="@+id/textInputComment"
         style="@style/Widget.Moc.TextInputLayout.FilledBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:endIconDrawable="@drawable/ic_text_submit"
+        app:endIconMode="custom"
+        app:endIconTint="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:hint="댓글을 남겨주세요"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?colorSurface" />
+            android:layout_height="wrap_content"
+            android:background="?colorSurface"
+            android:hint="댓글을 남겨주세요"
+            android:maxLines="5"
+            android:minHeight="52dp"
+            tool:text="일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를 일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를  일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를  일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를  일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를 " />
     </com.google.android.material.textfield.TextInputLayout>
 
     <View

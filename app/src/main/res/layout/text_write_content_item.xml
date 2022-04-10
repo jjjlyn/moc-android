@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatEditText xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/textContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:gravity="top"
+    android:includeFontPadding="false"
+    android:paddingHorizontal="@dimen/margin_large"
+    android:paddingTop="@dimen/button_padding_large_top"
+    android:paddingBottom="@dimen/button_padding_large_bottom"
+    android:textAppearance="@style/TextAppearance.Moc.H6"
+    android:textColor="?colorOnSurface"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tool:text="일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를 방황하여도, 풀이 것이다. 밥을 우리는 뜨거운지라, 현저하게 그러므로 쓸쓸한 말이다." />
+

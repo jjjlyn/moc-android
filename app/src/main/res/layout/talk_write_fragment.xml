@@ -24,6 +24,48 @@
         app:layout_constraintTop_toBottomOf="@id/header"
         tools:text="UI/UX/GUI 디자인" />
 
+    <include
+        android:id="@+id/containerCategory"
+        layout="@layout/text_write_category_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textCategoryLabel" />
+
+    <include
+        android:id="@+id/containerTitle"
+        layout="@layout/text_write_title_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerCategory" />
+
+    <include
+        android:id="@+id/containerContent"
+        layout="@layout/text_write_content_item"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="156dp"
+        app:layout_constraintBottom_toTopOf="@id/containerFooter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerTitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listTag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/containerContent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/margin_2xsmall"
+        app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+        tools:listitem="@layout/talk_tag_item"/>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerFooter"
         android:layout_width="0dp"
@@ -54,6 +96,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_large"

@@ -1,7 +1,9 @@
 package app.moc.android.ui.talk
 
 import android.graphics.drawable.Drawable
-import androidx.annotation.DrawableRes
+import app.moc.android.util.fmt
+import app.moc.model.Comment
+import app.moc.model.DateTime
 
 data class TalkFilterUIModel(
     val category: Int,
@@ -12,3 +14,23 @@ data class TalkDetailFooterItemUIModel(
     val text: String,
     val image: Drawable?
 )
+
+data class TalkCommentUIModel(
+    val commentID : Int,
+    val parentsID: Int,
+    val boardID: Long,
+    val userID: Long,
+    val nickName: String,
+    val content: String,
+    val likes: Int,
+    val deleted: Char,
+    val createDate: Long,
+    val modifyDate: Long,
+    val isLastItem: Boolean = false
+) {
+    fun hasParent() = parentsID != 0
+    fun getModifyDateDisplayText() = "${"yy.MM.dd hh:mm".fmt(DateTime(modifyDate))} (수정됨)"
+}
+
+fun Comment.toUIModel() =
+    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate / 1000, modifyDate / 1000)

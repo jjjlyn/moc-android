@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.AppBarLayout
 
 interface NavigationHost {
     fun registerToolbarWithNavigation(toolbar: Toolbar)
@@ -34,7 +35,8 @@ open class MainNavigationFragment(@LayoutRes contentLayoutId: Int): Fragment(con
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val host = navigationHost ?: return
-        val mainToolbar: Toolbar = view.findViewById(R.id.header) ?: return
+        val appBarLayout: AppBarLayout = view.findViewById(R.id.header) ?: return
+        val mainToolbar = appBarLayout.findViewById<Toolbar>(R.id.toolbar) ?: return
         mainToolbar.apply {
             host.registerToolbarWithNavigation(this)
         }
