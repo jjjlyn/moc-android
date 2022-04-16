@@ -1,8 +1,12 @@
 package app.moc.android.util
 
+import android.app.Activity
 import android.content.res.Resources
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.MenuRes
+import androidx.appcompat.widget.PopupMenu
 
 // view.layoutParams.width = 10.dp() same in xml android:layout_width="10dp"
 fun Float.dp() = (this * Resources.getSystem().displayMetrics.density)
@@ -31,4 +35,18 @@ fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bot
         }
         this.requestLayout()
     }
+}
+
+fun View.setupMenu(
+    activity: Activity,
+    @MenuRes menu: Int,
+    onMenuItemClickListener: (MenuItem) -> Unit
+) {
+    val popUpMenu = PopupMenu(activity, this)
+    activity.menuInflater.inflate(menu, popUpMenu.menu)
+    popUpMenu.setOnMenuItemClickListener {
+        onMenuItemClickListener(it)
+        false
+    }
+    popUpMenu.show()
 }

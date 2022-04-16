@@ -24,3 +24,17 @@ sealed class Result<out R> {
 
 val <T> Result<T>.data: T?
     get() = (this as? Success)?.data
+
+fun <T, R> Result<T>.map(function: ((T) -> R)) : Result<R> {
+    return when(this){
+        is Loading -> {
+            Loading
+        }
+        is Success -> {
+            Success(function.invoke(data))
+        }
+        is Error -> {
+            Error(throwable)
+        }
+    }
+}

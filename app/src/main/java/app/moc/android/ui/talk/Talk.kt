@@ -26,6 +26,7 @@ data class TalkCommentUIModel(
     val deleted: Char,
     val createDate: Long,
     val modifyDate: Long,
+    val isMyComment: Boolean = false,
     val isLastItem: Boolean = false
 ) {
     fun hasParent() = parentsID != 0
@@ -33,4 +34,4 @@ data class TalkCommentUIModel(
 }
 
 fun Comment.toUIModel() =
-    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate / 1000, modifyDate / 1000)
+    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate / 1000, modifyDate / 1000, isMyComment = isMyComment ?: false)

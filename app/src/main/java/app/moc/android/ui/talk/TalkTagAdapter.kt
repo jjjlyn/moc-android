@@ -11,7 +11,7 @@ class TalkTagAdapter: ListAdapter<String, TalkTagAdapter.ViewHolder>(IdBasedDiff
 
     inner class ViewHolder(private val binding: TalkTagItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(tag: String){
-            binding.root.setText(tag)
+            binding.editTag.setText(tag)
         }
     }
 

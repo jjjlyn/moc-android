@@ -41,7 +41,6 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
         careerItemUIModel = args.uiModel
         binding = CareerHistoryFragmentBinding.bind(view).apply {
             with(header.toolbar){
-//                setTitleAlignCenter()
                 setTitleTextAppearance(requireActivity(), R.style.TextAppearance_Moc_H5_2)
                 title = careerItemUIModel.title
                 background = null

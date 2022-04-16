@@ -1,5 +1,6 @@
 package app.moc.android.ui.talk
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.ListAdapter
@@ -12,14 +13,14 @@ import app.moc.android.util.layoutInflater
 import app.moc.android.util.setVisible
 
 class TalkCommentAdapter: ListAdapter<TalkCommentUIModel, TalkCommentAdapter.ViewHolder>(IdBasedDiffCallback { it.commentID.toString() }) {
-    var onMoreClick: ((uiModel: TalkCommentUIModel) -> Unit)? = null
+    var onMoreClick: ((view: View, uiModel: TalkCommentUIModel) -> Unit)? = null
 
     inner class ViewHolder(private val binding: TalkCommentItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(uiModel: TalkCommentUIModel) {
             with(binding){
                 this.uiModel = uiModel
                 imageMore.setOnClickListener {
-                    onMoreClick?.invoke(uiModel)
+                    onMoreClick?.invoke(it, uiModel)
                 }
                 divider.setVisible(uiModel.isLastItem.not())
                 if(uiModel.hasParent()){

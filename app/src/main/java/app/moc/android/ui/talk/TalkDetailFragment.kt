@@ -8,9 +8,7 @@ import androidx.navigation.fragment.navArgs
 import app.moc.android.MainNavigationFragment
 import app.moc.android.R
 import app.moc.android.databinding.TalkDetailFragmentBinding
-import app.moc.android.util.getDrawableCompat
-import app.moc.android.util.launchAndRepeatWithViewLifecycle
-import app.moc.android.util.setVisible
+import app.moc.android.util.*
 import app.moc.model.CommentUpload
 import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,14 +22,35 @@ class TalkDetailFragment: MainNavigationFragment(R.layout.talk_detail_fragment) 
     private val talkDetailViewModel: TalkDetailViewModel by viewModels()
     private lateinit var talkCommentAdapter: TalkCommentAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        talkDetailViewModel.getComments(args.uiModel.id.toString())
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        talkCommentAdapter = TalkCommentAdapter()
+        talkCommentAdapter = TalkCommentAdapter().apply {
+            onMoreClick = { view, uiModel ->
+                if(uiModel.isMyComment){
+                    view.setupMenu(requireActivity(), R.menu.talk_my_comment_item_menu){ menuItem ->
+                        when(menuItem.itemId){
+                            R.id.action_modify -> {
+                                talkDetailViewModel.requestModifyCommentFocus(uiModel)
+                            }
+                            R.id.action_delete -> {
+                                talkDetailViewModel.requestDeleteComment(uiModel.boardID, uiModel.commentID)
+                            }
+                        }
+                    }
+                } else {
+                    view.setupMenu(requireActivity(), R.menu.talk_other_comment_item_menu){ menuItem ->
+                        when(menuItem.itemId){
+                            R.id.action_reply -> {
+
+                            }
+                            R.id.action_report -> {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
         binding = TalkDetailFragmentBinding.bind(view)
         with(binding){
             uiModel = args.uiModel
@@ -64,10 +83,50 @@ class TalkDetailFragment: MainNavigationFragment(R.layout.talk_detail_fragment) 
 
         lifecycleScope.launchWhenStarted {
             launch {
-                talkDetailViewModel.onCommentUpload.collectLatest { result ->
+                talkDetailViewModel.onCommentUploaded.collectLatest { result ->
                     if(result is Result.Success){
                         binding.containerComment.textInputComment.editText?.setText("")
-                        talkDetailViewModel.getComments(args.uiModel.id.toString())
+                        talkDetailViewModel.getComments()
+                    }
+                }
+            }
+
+            launch {
+                talkDetailViewModel.onCommentModify.collectLatest { uiModel ->
+                    binding.containerComment.textInputComment.apply {
+                        clearFocus()
+                        requestFocus()
+                        requireActivity().showKeyboard(this.rootView)
+                        this.editText?.let {
+                            it.setText(uiModel.content)
+                            it.setSelection(uiModel.content.length)
+                        }
+                    }
+                }
+            }
+
+            launch {
+                talkDetailViewModel.onCommentDelete.collectLatest { (boardID, commentID) ->
+                    if(childFragmentManager.isDialogShowing()) return@collectLatest
+                    CommentDeleteAlertDialog().apply {
+                        message = "댓글을 삭제하시겠어요?"
+                        leftButton = "취소"
+                        rightButton = "삭제"
+                        onLeftClick = {
+                            dismiss()
+                        }
+                        onRightClick = {
+                            talkDetailViewModel.deleteComment(boardID.toString(), commentID.toString())
+                            dismiss()
+                        }
+                    }.show(childFragmentManager, CommentDeleteAlertDialog::class.java.simpleName)
+                }
+            }
+
+            launch {
+                talkDetailViewModel.onCommentDeleted.collectLatest { result ->
+                    if(result is Result.Success) {
+                        talkDetailViewModel.getComments()
                     }
                 }
             }
@@ -79,7 +138,7 @@ class TalkDetailFragment: MainNavigationFragment(R.layout.talk_detail_fragment) 
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if(result is Result.Success){
                         val list = result.data
-                        talkCommentAdapter.submitList(list.mapIndexed { idx, item -> item.toUIModel().copy(isLastItem = list.size -1 == idx) })
+                        talkCommentAdapter.submitList(list.mapIndexed { idx, item -> item.copy(isLastItem = list.size -1 == idx) })
                         binding.containerFooter.itemCenter.uiModel = TalkDetailFooterItemUIModel(
                             list.size.toString(),
                             requireActivity().getDrawableCompat(R.drawable.ic_comment)

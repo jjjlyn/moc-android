@@ -8,6 +8,7 @@ import app.moc.shared.domain.community.GetSearchResultsUseCase
 import app.moc.shared.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -19,14 +20,17 @@ class TalkSearchViewModel @Inject constructor(
     private val _keyword = MutableStateFlow<List<String>>(emptyList())
     val keyword = _keyword.asStateFlow()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val searchResults : StateFlow<Result<List<Community>>> =
-        _keyword.transformLatest { keyword ->
-            if(keyword.isEmpty()) return@transformLatest
-            getSearchResultsUseCase(keyword).collect {
-                emit(it)
-            }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, Result.Loading)
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    val searchResults: StateFlow<Result<List<Community>>> =
+        _keyword
+            .debounce(2000L)
+            .transformLatest { keyword ->
+                if (keyword.isEmpty()) return@transformLatest
+                getSearchResultsUseCase(keyword).collect {
+                    emit(it)
+                }
+            }.stateIn(viewModelScope, WhileViewSubscribed, Result.Loading)
 
     fun onKeywordChanged(keyword: List<String>){
         _keyword.value = keyword

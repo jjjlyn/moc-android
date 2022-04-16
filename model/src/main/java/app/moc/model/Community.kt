@@ -2,6 +2,7 @@ package app.moc.model
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.io.File
 
@@ -52,7 +53,8 @@ data class Comment(
     val likes: Int,
     val deleted: Char,
     val createDate: Long,
-    val modifyDate: Long
+    val modifyDate: Long,
+    val isMyComment: Boolean? = null
 )
 
 @Keep

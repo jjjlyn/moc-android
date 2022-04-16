@@ -1,8 +1,11 @@
 package app.moc.android.ui.talk
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.moc.android.ui.home.MocTalkItemUIModel
 import app.moc.model.Comment
+import app.moc.model.CommentModify
 import app.moc.model.CommentUpload
 import app.moc.shared.domain.community.DeleteCommunityItemUseCase
 import app.moc.shared.domain.community.ModifyCommunityItemUseCase
@@ -11,6 +14,7 @@ import app.moc.shared.domain.community.comment.GetCommentsUseCase
 import app.moc.shared.domain.community.comment.ModifyCommentUseCase
 import app.moc.shared.domain.community.comment.UploadCommentUseCase
 import app.moc.shared.result.Result
+import app.moc.shared.result.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,19 +27,73 @@ class TalkDetailViewModel @Inject constructor(
     private val getCommentsUseCase: GetCommentsUseCase,
     private val uploadCommentUseCase: UploadCommentUseCase,
     private val modifyCommentUseCase: ModifyCommentUseCase,
-    private val deleteCommentUseCase: DeleteCommentUseCase
+    private val deleteCommentUseCase: DeleteCommentUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _comments = MutableStateFlow<Result<List<Comment>>>(Result.Loading)
+    private val _comments = MutableStateFlow<Result<List<TalkCommentUIModel>>>(Result.Loading)
     val comments = _comments.asStateFlow()
 
     private val _onCommentUploaded = MutableSharedFlow<Result<Comment>>()
-    val onCommentUpload = _onCommentUploaded.asSharedFlow()
+    val onCommentUploaded = _onCommentUploaded.asSharedFlow()
 
-    fun getComments(boardID: String){
+    private val _onCommentDelete = MutableSharedFlow<Pair<Long, Int>>()
+    val onCommentDelete = _onCommentDelete.asSharedFlow()
+
+    private val _onCommentDeleted = MutableSharedFlow<Result<Unit>>()
+    val onCommentDeleted = _onCommentDeleted.asSharedFlow()
+
+    private val _onCommentModified = MutableSharedFlow<Result<Comment>>()
+    val onCommentModified = _onCommentModified.asSharedFlow()
+
+    private val _onCommentModify = MutableSharedFlow<TalkCommentUIModel>() // boardID, commentID
+    val onCommentModify = _onCommentModify.asSharedFlow()
+    
+    init {
+        getComments()
+    }
+
+    fun requestDeleteComment(boardID: Long, commentID: Int){
         viewModelScope.launch {
-            getCommentsUseCase(boardID).collectLatest {
-                _comments.value = it
+            _onCommentDelete.emit(Pair(boardID, commentID))
+        }
+    }
+
+    fun requestModifyCommentFocus(uiModel: TalkCommentUIModel){
+        viewModelScope.launch {
+            _onCommentModify.emit(uiModel)
+        }
+    }
+
+    fun modifyComment(boardID: Long, commentID: Int, content: String){
+        viewModelScope.launch {
+            modifyCommentUseCase(
+                CommentModify(
+                    boardID, commentID, content
+                )
+            ).collectLatest { result ->
+                _onCommentModified.emit(result)
+            }
+        }
+    }
+
+    fun deleteComment(boardID: String, commentID: String){
+        viewModelScope.launch {
+            deleteCommentUseCase(Pair(boardID, commentID)).collectLatest { result ->
+                _onCommentDeleted.emit(result)
+            }
+        }
+    }
+
+    fun getComments(){
+        val talkItemUIModel = savedStateHandle.get<MocTalkItemUIModel>("uiModel")
+        viewModelScope.launch {
+            talkItemUIModel?.let {
+                getCommentsUseCase(it.id.toString()).collectLatest { result ->
+                    _comments.value = result.map { list ->
+                        list.map { item -> item.toUIModel() }
+                    }
+                }
             }
         }
     }
