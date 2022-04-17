@@ -19,9 +19,11 @@ class TalkCommentAdapter: ListAdapter<TalkCommentUIModel, TalkCommentAdapter.Vie
         fun bind(uiModel: TalkCommentUIModel) {
             with(binding){
                 this.uiModel = uiModel
-                imageMore.setOnClickListener {
-                    onMoreClick?.invoke(it, uiModel)
-                }
+                imageMore.apply {
+                    setOnClickListener {
+                        onMoreClick?.invoke(it, uiModel)
+                    }
+                }.setVisible(uiModel.deleted == 'N')
                 divider.setVisible(uiModel.isLastItem.not())
                 if(uiModel.hasParent()){
                     root.setPadding(

@@ -34,6 +34,9 @@ class TalkDetailViewModel @Inject constructor(
     private val _comments = MutableStateFlow<Result<List<TalkCommentUIModel>>>(Result.Loading)
     val comments = _comments.asStateFlow()
 
+    private val _onCommentUpload = MutableSharedFlow<TalkCommentUIModel>()
+    val onCommentUpload = _onCommentUpload.asSharedFlow()
+
     private val _onCommentUploaded = MutableSharedFlow<Result<Comment>>()
     val onCommentUploaded = _onCommentUploaded.asSharedFlow()
 
@@ -53,6 +56,12 @@ class TalkDetailViewModel @Inject constructor(
         getComments()
     }
 
+    fun requestUploadComment(uiModel: TalkCommentUIModel){
+        viewModelScope.launch {
+            _onCommentUpload.emit(uiModel)
+        }
+    }
+
     fun requestDeleteComment(boardID: Long, commentID: Int){
         viewModelScope.launch {
             _onCommentDelete.emit(Pair(boardID, commentID))
@@ -65,13 +74,9 @@ class TalkDetailViewModel @Inject constructor(
         }
     }
 
-    fun modifyComment(boardID: Long, commentID: Int, content: String){
+    fun modifyComment(modify: CommentModify){
         viewModelScope.launch {
-            modifyCommentUseCase(
-                CommentModify(
-                    boardID, commentID, content
-                )
-            ).collectLatest { result ->
+            modifyCommentUseCase(modify).collectLatest { result ->
                 _onCommentModified.emit(result)
             }
         }

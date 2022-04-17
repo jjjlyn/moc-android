@@ -2,6 +2,7 @@ package app.moc.android.util
 
 import android.app.Activity
 import android.content.res.Resources
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -39,11 +40,13 @@ fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bot
 
 fun View.setupMenu(
     activity: Activity,
-    @MenuRes menu: Int,
+    @MenuRes menuRes: Int,
+    onMenuInflate: ((Menu) -> Unit)? = null,
     onMenuItemClickListener: (MenuItem) -> Unit
 ) {
     val popUpMenu = PopupMenu(activity, this)
-    activity.menuInflater.inflate(menu, popUpMenu.menu)
+    activity.menuInflater.inflate(menuRes, popUpMenu.menu)
+    onMenuInflate?.invoke(popUpMenu.menu)
     popUpMenu.setOnMenuItemClickListener {
         onMenuItemClickListener(it)
         false

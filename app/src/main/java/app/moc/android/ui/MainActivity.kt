@@ -5,16 +5,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -22,13 +19,10 @@ import app.moc.android.NavigationHost
 import app.moc.android.R
 import app.moc.android.databinding.MainActivityBinding
 import app.moc.android.ui.MainNavigationAction.*
-import app.moc.android.util.setVisible
-import app.moc.shared.result.Result
+import app.moc.android.util.registerKeyboardHandler
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationHost {
@@ -60,6 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationHost {
             bottomNav.itemIconTintList = null
         }
         setContentView(binding.root)
+        registerKeyboardHandler()
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController

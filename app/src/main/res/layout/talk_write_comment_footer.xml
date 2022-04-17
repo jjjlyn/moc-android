@@ -24,7 +24,9 @@
             android:hint="댓글을 남겨주세요"
             android:maxLines="3"
             android:maxLength="1000"
+            android:imeOptions="actionDone"
             android:minHeight="52dp"
+            android:bufferType="spannable"
             tool:text="일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를 일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를  일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를  일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를  일월과 별과 그들에게 따뜻한 그들은 가치를 간에 아니다. 천고에 예수는 맺어, 현저하게 열매를 " />
     </com.google.android.material.textfield.TextInputLayout>
 

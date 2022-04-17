@@ -1,5 +1,7 @@
 package app.moc.android.util
 
+import android.content.Context
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -36,4 +38,8 @@ fun FragmentManager.isDialogShowing(): Boolean{
         }
     }
     return false
+}
+
+fun Fragment.showToast(message: String){
+    Toast.makeText(this.requireActivity(), message, Toast.LENGTH_SHORT).show()
 }
