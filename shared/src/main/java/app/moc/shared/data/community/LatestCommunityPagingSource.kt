@@ -11,37 +11,69 @@ import java.io.IOException
 class LatestCommunityPagingSource(
     private val service: CommunityService,
     private val category: Int
-): PagingSource<Int, Community>() {
+) : PagingSource<Int, Community>() {
+    private var isAlreadyExecutedOnce = false
+
     companion object {
         private const val PAGING_LIMIT = 10
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Community> {
-        val from = params.key ?: -1
-        return try {
-            val response = service.fetchLatestCommunities(from, PAGING_LIMIT, category)
-            val nextKey =
-                if (response.isEmpty()) {
-                    null
-                } else {
-                    // initial load size = 3 * NETWORK_PAGE_SIZE
-                    // ensure we're not requesting duplicating items, at the 2nd request
-                    val totalCount = response[0].boardID
-                    if(totalCount - PAGING_LIMIT < -1){
+        val from = params.key
+        return if (from == null) {
+            if(isAlreadyExecutedOnce){
+                LoadResult.Page(
+                    data = emptyList(),
+                    prevKey = params.key,
+                    nextKey = null
+                )
+            } else {
+                isAlreadyExecutedOnce = true
+
+                val response = service.fetchLatestCommunities(-1, PAGING_LIMIT, category)
+                val nextKey =
+                    if (response.isEmpty()) {
                         null
                     } else {
-                        totalCount - PAGING_LIMIT
+                        val totalCount = response[0].boardID
+                        if (totalCount - PAGING_LIMIT < -1) {
+                            null
+                        } else {
+                            totalCount - PAGING_LIMIT
+                        }
                     }
-                }
-            LoadResult.Page(
-                data = response.map { it.toModel() },
-                prevKey = if (from == -1 || from == 0) null else from,
-                nextKey = nextKey
-            )
-        } catch (exception: IOException) {
-            return LoadResult.Error(exception)
-        } catch (exception: HttpException) {
-            return LoadResult.Error(exception)
+                LoadResult.Page(
+                    data = response.map { it.toModel() },
+                    prevKey = params.key,
+                    nextKey = nextKey
+                )
+            }
+        } else {
+            return try {
+                val response = service.fetchLatestCommunities(from, PAGING_LIMIT, category)
+                val nextKey =
+                    if (response.isEmpty()) {
+                        null
+                    } else {
+                        // initial load size = 3 * NETWORK_PAGE_SIZE
+                        // ensure we're not requesting duplicating items, at the 2nd request
+                        val totalCount = response[0].boardID
+                        if (totalCount - PAGING_LIMIT < 0) {
+                            null
+                        } else {
+                            totalCount - PAGING_LIMIT
+                        }
+                    }
+                LoadResult.Page(
+                    data = response.map { it.toModel() },
+                    prevKey = from,
+                    nextKey = nextKey
+                )
+            } catch (exception: IOException) {
+                return LoadResult.Error(exception)
+            } catch (exception: HttpException) {
+                return LoadResult.Error(exception)
+            }
         }
     }
 
