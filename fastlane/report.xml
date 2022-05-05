@@ -5,27 +5,27 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000394">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000577">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: assembleDebug" time="59.338111">
+      <testcase classname="fastlane.lanes" name="1: assembleDebug" time="4.013643">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: Switch to android upload_to_slack lane" time="0.000321">
+      <testcase classname="fastlane.lanes" name="2: Switch to android upload_to_slack lane" time="0.000222">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: echo Uploading app-debug.apk to Slack" time="0.011628">
+      <testcase classname="fastlane.lanes" name="3: echo Uploading app-debug.apk to Slack" time="0.006186">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: curl https://slack.com/api/files.upload -F token=&quot;xoxb-2798899399232-2800146519472-MlLu77er4bnYQ7Qmws5NUvDn&quot; -F channels=&quot;apk-file&quot; -F title=&quot;app-debug.apk&quot; -F filename=&quot;app-debug.apk&quot; -F file=@/Users/jjjlyn/Desktop/moc/app/build/outputs/apk/debug/app-debug.apk" time="9.369753">
+      <testcase classname="fastlane.lanes" name="4: curl https://slack.com/api/files.upload -F token=&quot;xoxb-2798899399232-2800146519472-MlLu77er4bnYQ7Qmws5NUvDn&quot; -F channels=&quot;apk-file&quot; -F title=&quot;app-debug.apk&quot; -F filename=&quot;app-debug.apk&quot; -F file=@/Users/hayd/Desktop/moc/moc_android/app/build/outputs/apk/debug/app-debug.apk" time="35.731976">
         
       </testcase>
     
