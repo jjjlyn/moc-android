@@ -69,16 +69,16 @@ class MainActivity : AppCompatActivity(), NavigationHost {
                     when (action) {
                         is NavigateToHome -> {
                             if (navController.graph.startDestination == R.id.home) return@collectLatest
-                            val navOptions =
-                                NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
-                            navController.navigate(R.id.toHome, null, navOptions)
-                            navController.graph.startDestination = R.id.home
+//                            val navOptions =
+//                                NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            navGraph.startDestination = R.id.home
+                            navController.graph = navGraph
                         }
                         is NavigateToOnBoarding -> {
-                            val navOptions =
-                                NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
-                            navController.navigate(R.id.toOnBoarding, null, navOptions)
-                            navController.graph.startDestination = R.id.onBoarding
+//                            val navOptions =
+//                                NavOptions.Builder().setPopUpTo(R.id.loading, true).build()
+                            navGraph.startDestination = R.id.onBoarding
+                            navController.graph = navGraph
                         }
                     }
             }
