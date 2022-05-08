@@ -8,15 +8,10 @@ import app.moc.shared.util.toLocalDate
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoField
 
-class CalendarAdapter(fm: Fragment): FragmentStateAdapter(fm){
-
-    private val start = LocalDate.now()
-        .withDayOfMonth(1)
-        .atStartOfDay()
-        .toMillis()
+class CalendarAdapter(fm: Fragment, private val startDate: LocalDate, private val monthDiff: Int) : FragmentStateAdapter(fm) {
 
     override fun getItemCount(): Int {
-        return Int.MAX_VALUE
+        return monthDiff
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -25,19 +20,15 @@ class CalendarAdapter(fm: Fragment): FragmentStateAdapter(fm){
     }
 
     override fun getItemId(position: Int): Long {
-        return DateTime(start)
-            .toLocalDate()
-            .plusMonths((position - START_POSITION).toLong())
+        return startDate
+            .withDayOfMonth(1)
+            .plusMonths(position.toLong())
             .atStartOfDay()
             .toMillis()
     }
 
-//    override fun containsItem(itemId: Long): Boolean {
-//        val date = DateTime(itemId).toLocalDate()
-//        return date.dayOfMonth == 1 && date.getLong(ChronoField.MILLI_OF_DAY) == 0L
-//    }
-
-    companion object {
-        const val START_POSITION = Int.MAX_VALUE / 2
+    override fun containsItem(itemId: Long): Boolean {
+        val date = DateTime(itemId).toLocalDate()
+        return date.dayOfMonth == 1
     }
 }

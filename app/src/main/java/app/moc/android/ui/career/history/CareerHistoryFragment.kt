@@ -6,7 +6,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import app.moc.android.MainNavigationFragment
 import app.moc.android.R
 import app.moc.android.databinding.CareerHistoryFragmentBinding
@@ -17,15 +16,16 @@ import app.moc.android.ui.career.history.calendar.CalendarHistoryItemUIModel
 import app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel
 import app.moc.android.util.fmt
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
-import app.moc.android.util.setTitleAlignCenter
 import app.moc.android.util.setVisible
 import app.moc.model.DateTime
 import app.moc.model.PlanCheckQueryInfo
 import app.moc.shared.result.Result
+import app.moc.shared.util.toLocalDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
+import java.util.*
 
 @AndroidEntryPoint
 class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fragment), CareerHistoryActionHandler {
@@ -52,9 +52,15 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
                 memo = CalendarHistoryItemUIModel("메모", careerItemUIModel.memo)
             )
             containerMemo.divider.visibility = View.GONE
-            calendarAdapter = CalendarAdapter(this@CareerHistoryFragment)
+
+            val startDate = Date(careerItemUIModel.startDate).toLocalDate()
+            val endDate = Date(careerItemUIModel.endDate).toLocalDate()
+            val monthDiff = endDate.monthValue - startDate.monthValue + 1
+            val startOffset = LocalDate.now().monthValue - startDate.monthValue
+
+            calendarAdapter = CalendarAdapter(this@CareerHistoryFragment, startDate, monthDiff)
             viewPager.adapter = calendarAdapter
-            viewPager.setCurrentItem(CalendarAdapter.START_POSITION, false)
+            viewPager.setCurrentItem(startOffset, false)
         }
         val now = LocalDate.now()
         careerHistoryViewModel.getCareerChecks(

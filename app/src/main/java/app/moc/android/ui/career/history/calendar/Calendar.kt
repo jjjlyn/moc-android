@@ -1,6 +1,7 @@
 package app.moc.android.ui.career.history.calendar
 
 import androidx.annotation.Keep
+import app.moc.android.util.fmt
 import org.threeten.bp.LocalDate
 
 @Keep
@@ -21,5 +22,9 @@ data class CalendarHistoryItemUIModel(
 data class CalendarItemUIModel(
     val localDate: LocalDate,
     val hasSchedule: Boolean
-)
+) {
+    fun getDateDisplayText(): String {
+        return "yyyy년 MM월 yy일".fmt(localDate)
+    }
+}
 

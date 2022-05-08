@@ -39,8 +39,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_xlarge"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_marginStart="@dimen/margin_2xsmall"
             android:text="@{careerItemUIModel.title}"
             android:textAppearance="@style/TextAppearance.Moc.H5_3"
@@ -63,6 +67,18 @@
             app:layout_constraintTop_toBottomOf="@id/textTitle" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/textDateLabel"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="?colorOnSurface"
+            tool:text="2022년 05월 08일"
+            android:text="@{calendarItemUIModel.dateDisplayText}"
+            android:layout_marginStart="@dimen/margin_small"
+            app:layout_constraintTop_toTopOf="@id/textDateLabel"
+            app:layout_constraintBottom_toBottomOf="@id/textDateLabel"/>
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textSatisfiedLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,6 +88,18 @@
             android:textColor="@color/color_on_surface_500"
             app:layout_constraintStart_toStartOf="@id/textCategory"
             app:layout_constraintTop_toBottomOf="@id/textDateLabel" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/textSatisfiedLabel"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="?colorOnSurface"
+            android:text="@{careerItemUIModel.satisfiedDisplayText}"
+            tool:text="만족"
+            android:layout_marginStart="@dimen/margin_small"
+            app:layout_constraintTop_toTopOf="@id/textSatisfiedLabel"
+            app:layout_constraintBottom_toBottomOf="@id/textSatisfiedLabel"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
