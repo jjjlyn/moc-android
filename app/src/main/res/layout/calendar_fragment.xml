@@ -28,6 +28,7 @@
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginBottom="@dimen/margin_normal"
         app:itemHeight="44dp"
+        android:layout_marginTop="@dimen/margin_xsmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

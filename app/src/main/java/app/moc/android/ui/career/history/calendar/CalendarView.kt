@@ -50,12 +50,14 @@ class CalendarView @JvmOverloads constructor(
         }
     }
 
-    fun initCalendar(firstDayOfMonth: LocalDate, list: List<LocalDate>){
+    fun initCalendar(firstDayOfMonth: LocalDate, list: List<CalendarItemUIModel>){
         list.forEach {
             addView(DayItemView(
                 context = context,
-                date = it,
-                firstDayOfMonth = firstDayOfMonth
+                date = it.localDate,
+                firstDayOfMonth = firstDayOfMonth,
+                hasSchedule = it.hasSchedule,
+                isToday = it.localDate == LocalDate.now()
             ))
         }
     }
