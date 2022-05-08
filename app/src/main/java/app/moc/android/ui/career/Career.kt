@@ -36,6 +36,20 @@ data class CareerItemUIModel(
         else -> "기타"
     }
     fun getIsCompleted() = "COMP" == status
+    companion object {
+        val EMPTY = CareerItemUIModel(
+            0,
+            "",
+            "",
+            0,
+            0,
+            "",
+            0f,
+            "",
+            null,
+            null
+        )
+    }
 }
 
 @Keep

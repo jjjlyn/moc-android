@@ -71,4 +71,5 @@
     <color name="color_on_surface_800">#333333</color>
     <color name="color_on_surface_900">#212121</color>
     <color name="color_on_surface_500_A100">#26bdbdbd</color>
+    <color name="color_on_surface_300_A300">#4dc4c4c4</color>
 </resources>

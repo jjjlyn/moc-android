@@ -35,9 +35,10 @@
     <dimen name="button_padding_2xlarge_top">22dp</dimen>
     <dimen name="button_padding_2xlarge_bottom">24dp</dimen>
 
-    <dimen name="radius_xsmall">4dp</dimen>
-    <dimen name="radius_small">6dp</dimen>
-    <dimen name="radius_normal">8dp</dimen>
+    <dimen name="radius_2xsmall">4dp</dimen>
+    <dimen name="radius_xsmall">6dp</dimen>
+    <dimen name="radius_small">8dp</dimen>
+    <dimen name="radius_normal">12dp</dimen>
     <dimen name="radius_large">14dp</dimen>
     <dimen name="radius_xlarge">16dp</dimen>
     <dimen name="radius_2xlarge">20dp</dimen>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="careerItemUIModel"
+            type="app.moc.android.ui.career.CareerItemUIModel" />
+
+        <variable
+            name="calendarItemUIModel"
+            type="app.moc.android.ui.career.history.calendar.CalendarItemUIModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:background="?colorSurface"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_radius_normal"
+            android:backgroundTint="@color/color_primary_A200"
+            android:paddingHorizontal="9dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:text="@{careerItemUIModel.typeDisplayText}"
+            android:textAppearance="@style/TextAppearance.Moc.H6_2"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="자기계발" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_2xsmall"
+            android:text="@{careerItemUIModel.title}"
+            android:textAppearance="@style/TextAppearance.Moc.H5_3"
+            android:textColor="?colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@id/textCategory"
+            app:layout_constraintStart_toEndOf="@id/textCategory"
+            app:layout_constraintTop_toTopOf="@id/textCategory"
+            tool:text="에프터이팩트 익히기" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textDateLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_2xlarge"
+            android:text="인증날짜"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintEnd_toEndOf="@id/textSatisfiedLabel"
+            app:layout_constraintStart_toStartOf="@id/textCategory"
+            app:layout_constraintTop_toBottomOf="@id/textTitle" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textSatisfiedLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_micro"
+            android:text="수행 만족도"
+            android:textAppearance="@style/TextAppearance.Moc.H5_2"
+            android:textColor="@color/color_on_surface_500"
+            app:layout_constraintStart_toStartOf="@id/textCategory"
+            app:layout_constraintTop_toBottomOf="@id/textDateLabel" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/margin_xlarge"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"
+            android:background="@drawable/bg_radius_normal"
+            android:backgroundTint="@color/color_on_surface_300_A300"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textSatisfiedLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

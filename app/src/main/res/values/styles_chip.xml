@@ -15,7 +15,7 @@
 
     <style name="Widget.Moc.Chip.Choice.Outlined" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipMinTouchTargetSize">0dp</item>
-        <item name="chipCornerRadius">@dimen/radius_normal</item>
+        <item name="chipCornerRadius">@dimen/radius_small</item>
         <item name="android:checkable">true</item>
         <item name="android:singleLine">true</item>
         <item name="checkedIconVisible">false</item>

@@ -17,6 +17,8 @@ import app.moc.android.util.dp
 import app.moc.android.util.getColorCompat
 import org.threeten.bp.LocalDate
 
+typealias ShowHistory = (date: LocalDate, hasSchedule: Boolean) -> Unit
+
 class DayItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -33,6 +35,7 @@ class DayItemView @JvmOverloads constructor(
     private lateinit var textPaint: Paint
     private lateinit var dayItemBackgroundPaint: Paint
     private lateinit var todayItemPaint: Paint
+    var showHistory: ShowHistory? = null
 
     init {
         context.withStyledAttributes(attrs, R.styleable.CalendarView, defStyleAttr, defStyleRes){
@@ -54,6 +57,13 @@ class DayItemView @JvmOverloads constructor(
                 color = context.getColorCompat(R.color.color_primary)
                 style = Paint.Style.STROKE
             }
+        }
+
+        setOnClickListener {
+            if(date.isAfter(LocalDate.now())){
+                return@setOnClickListener
+            }
+            showHistory?.invoke(date, hasSchedule)
         }
     }
 

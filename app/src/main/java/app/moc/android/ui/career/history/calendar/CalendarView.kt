@@ -23,6 +23,7 @@ class CalendarView @JvmOverloads constructor(
 ) : ViewGroup(ContextThemeWrapper(context, defStyleRes), attrs, defStyleAttr) {
 
     private var _height: Float = 0f
+    var showHistory: ShowHistory? = null
 
     init {
         context.withStyledAttributes(attrs, R.styleable.CalendarView, defStyleAttr, defStyleRes){
@@ -58,7 +59,9 @@ class CalendarView @JvmOverloads constructor(
                 firstDayOfMonth = firstDayOfMonth,
                 hasSchedule = it.hasSchedule,
                 isToday = it.localDate == LocalDate.now()
-            ))
+            ).apply {
+                showHistory = this@CalendarView.showHistory
+            })
         }
     }
 }

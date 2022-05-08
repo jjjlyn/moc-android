@@ -10,12 +10,15 @@ import androidx.fragment.app.viewModels
 import app.moc.android.databinding.CalendarFragmentBinding
 import app.moc.android.ui.career.history.CareerHistoryViewModel
 import app.moc.android.ui.career.history.calendar.CalendarUtils.getMonthList
+import app.moc.android.util.isDialogShowing
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
+import app.moc.android.util.showToast
 import app.moc.model.DateTime
 import app.moc.shared.result.Result
 import app.moc.shared.util.toLocalDate
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
 
 class CalendarFragment: Fragment() {
 
@@ -39,6 +42,20 @@ class CalendarFragment: Fragment() {
         calendarDayOfWeekAdapter = CalendarDayOfWeekAdapter()
         binding = CalendarFragmentBinding.inflate(inflater, container, false).apply {
             listDayOfWeek.adapter = calendarDayOfWeekAdapter
+            calendarView.showHistory = { date, hasSchedule ->
+                if(hasSchedule){
+                    if(childFragmentManager.isDialogShowing().not()){
+                        CalendarItemDialogFragment(
+                            careerItemUIModel = careerHistoryViewModel.careerItemUIModel.value,
+                            calendarItemUIModel = CalendarItemUIModel(date, hasSchedule)
+                        ).show(
+                            childFragmentManager, CalendarItemDialogFragment::class.java.simpleName
+                        )
+                    }
+                } else {
+                    showToast("인증내역이 없어요.")
+                }
+            }
         }
         calendarDayOfWeekAdapter.submitList(listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"))
 
@@ -66,7 +83,6 @@ class CalendarFragment: Fragment() {
 
 
     companion object {
-
         private const val MILLIS = "MILLIS"
 
         fun newInstance(millis: Long) = CalendarFragment().apply {

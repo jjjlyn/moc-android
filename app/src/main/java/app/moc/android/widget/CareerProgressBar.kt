@@ -32,7 +32,7 @@ class CareerProgressBar @JvmOverloads constructor(
         }
 
     @Px
-    var radius = context.resources.getDimension(R.dimen.radius_xsmall)
+    var radius = context.resources.getDimension(R.dimen.radius_2xsmall)
         set(value){
             field = value
             updateProgressBar()

@@ -6,7 +6,7 @@
             <stroke
                 android:width="@dimen/stroke_small"
                 android:color="@color/color_on_surface_200" />
-            <corners android:radius="@dimen/radius_small" />
+            <corners android:radius="@dimen/radius_xsmall" />
         </shape>
     </item>
 </ripple>

@@ -33,12 +33,11 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
     private lateinit var binding: CareerHistoryFragmentBinding
     private lateinit var calendarAdapter: CalendarAdapter
     private val careerHistoryViewModel: CareerHistoryViewModel by viewModels()
-    private val args: CareerHistoryFragmentArgs by navArgs()
     private lateinit var careerItemUIModel: CareerItemUIModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        careerItemUIModel = args.uiModel
+        careerItemUIModel = careerHistoryViewModel.careerItemUIModel.value
         binding = CareerHistoryFragmentBinding.bind(view).apply {
             with(header.toolbar){
                 setTitleTextAppearance(requireActivity(), R.style.TextAppearance_Moc_H5_2)

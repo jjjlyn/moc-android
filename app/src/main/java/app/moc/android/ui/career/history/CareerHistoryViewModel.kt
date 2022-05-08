@@ -1,5 +1,6 @@
 package app.moc.android.ui.career.history
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.moc.android.ui.career.CareerItemUIModel
@@ -21,7 +22,8 @@ class CareerHistoryViewModel @Inject constructor(
     private val getCareerChecksUseCase: GetCareerChecksUseCase,
     private val modifyCareerUseCase: ModifyCareerUseCase,
     private val deleteCareerUseCase: DeleteCareerUseCase,
-    private val setCareerDoneUseCase: SetCareerDoneUseCase
+    private val setCareerDoneUseCase: SetCareerDoneUseCase,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
     private val _careerChecksUseCaseResult = MutableStateFlow<Result<List<PlanCheck>>>(Result.Loading)
     val careerChecksUseCaseResult = _careerChecksUseCaseResult.asStateFlow()
@@ -34,6 +36,20 @@ class CareerHistoryViewModel @Inject constructor(
 
     private val _setCareerDoneUseCaseResult = MutableSharedFlow<Result<Plan>>()
     val setCareerDoneUseCaseResult = _setCareerDoneUseCaseResult.asSharedFlow()
+
+    private val _careerItemUIModel = MutableStateFlow(CareerItemUIModel.EMPTY)
+    val careerItemUIModel = _careerItemUIModel.asStateFlow()
+
+    init {
+        setCareerItemUIModel()
+    }
+
+    private fun setCareerItemUIModel(){
+        val uiModel = savedStateHandle.get<CareerItemUIModel>("uiModel")
+        if(uiModel != null){
+            _careerItemUIModel.value = uiModel
+        }
+    }
 
     fun getCareerChecks(planCheckQueryInfo: PlanCheckQueryInfo) {
         viewModelScope.launch {
@@ -79,5 +95,4 @@ class CareerHistoryViewModel @Inject constructor(
         }
     }
 
-    // 삭제나 완료 시 뒤로 가면서 목록이 업데이트 되어야 하는데 이건 notifyItemChanged()로 구현하면 된다.
 }
