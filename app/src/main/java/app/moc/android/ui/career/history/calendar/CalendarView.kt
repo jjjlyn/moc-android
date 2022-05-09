@@ -11,7 +11,6 @@ import androidx.core.view.children
 import app.moc.android.R
 import app.moc.android.ui.career.history.calendar.CalendarUtils.DAYS_PER_WEEK
 import app.moc.android.ui.career.history.calendar.CalendarUtils.WEEKS_PER_MONTH
-import app.moc.model.DateTime
 import org.threeten.bp.LocalDate
 import kotlin.math.max
 
@@ -55,10 +54,11 @@ class CalendarView @JvmOverloads constructor(
         list.forEach {
             addView(DayItemView(
                 context = context,
-                date = it.localDate,
+                startDate = it.startDate,
+                date = it.date,
                 firstDayOfMonth = firstDayOfMonth,
                 hasSchedule = it.hasSchedule,
-                isToday = it.localDate == LocalDate.now()
+                isToday = it.date == LocalDate.now()
             ).apply {
                 showHistory = this@CalendarView.showHistory
             })

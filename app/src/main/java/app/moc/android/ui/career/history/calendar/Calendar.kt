@@ -6,6 +6,8 @@ import org.threeten.bp.LocalDate
 
 @Keep
 data class CalendarHistoryListUIModel(
+    val satisfactDisplayText: String = "만족",
+    val totalProgressDisplayText: String = "",
     val type: CalendarHistoryItemUIModel,
     val start: CalendarHistoryItemUIModel,
     val end: CalendarHistoryItemUIModel,
@@ -20,11 +22,12 @@ data class CalendarHistoryItemUIModel(
 
 @Keep
 data class CalendarItemUIModel(
-    val localDate: LocalDate,
+    val startDate: LocalDate,
+    val date: LocalDate,
     val hasSchedule: Boolean
 ) {
     fun getDateDisplayText(): String {
-        return "yyyy년 MM월 yy일".fmt(localDate)
+        return "yyyy년 MM월 yy일".fmt(date)
     }
 }
 

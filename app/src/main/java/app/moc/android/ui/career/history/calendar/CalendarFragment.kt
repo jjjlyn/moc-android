@@ -18,7 +18,6 @@ import app.moc.shared.result.Result
 import app.moc.shared.util.toLocalDate
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
 
 class CalendarFragment: Fragment() {
 
@@ -44,10 +43,12 @@ class CalendarFragment: Fragment() {
             listDayOfWeek.adapter = calendarDayOfWeekAdapter
             calendarView.showHistory = { date, hasSchedule ->
                 if(hasSchedule){
+                    val careerItemUIModel = careerHistoryViewModel.careerItemUIModel.value
+                    val startDate = DateTime(careerItemUIModel.startDate).toLocalDate()
                     if(childFragmentManager.isDialogShowing().not()){
                         CalendarItemDialogFragment(
-                            careerItemUIModel = careerHistoryViewModel.careerItemUIModel.value,
-                            calendarItemUIModel = CalendarItemUIModel(date, hasSchedule)
+                            careerItemUIModel = careerItemUIModel,
+                            calendarItemUIModel = CalendarItemUIModel(startDate, date, hasSchedule)
                         ).show(
                             childFragmentManager, CalendarItemDialogFragment::class.java.simpleName
                         )
@@ -69,12 +70,17 @@ class CalendarFragment: Fragment() {
                 careerHistoryViewModel.careerChecksUseCaseResult.collectLatest { result ->
                     if(result is Result.Success){
                         val data = result.data.map { it.copy(date = it.date * 1000) }
-                        val localDate = DateTime(millis).toLocalDate()
-                        val filteredValue = getMonthList(localDate).map { date ->
-                            val hasSchedule = data.find { DateTime(it.date).toLocalDate() == date } != null
-                            CalendarItemUIModel(date, hasSchedule)
+                        val date = DateTime(millis).toLocalDate()
+                        val startDate = DateTime(careerHistoryViewModel.careerItemUIModel.value.startDate).toLocalDate()
+                        val filteredValue = getMonthList(date).map { item ->
+                            val hasSchedule = data.find { DateTime(it.date).toLocalDate() == item } != null
+                            CalendarItemUIModel(
+                                startDate = startDate,
+                                date = item,
+                                hasSchedule = hasSchedule
+                            )
                         }
-                        binding.calendarView.initCalendar(localDate, filteredValue)
+                        binding.calendarView.initCalendar(date, filteredValue)
                     }
                 }
             }

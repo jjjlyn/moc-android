@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="onLeftClick"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="onRightClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_radius_large">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xlarge"
+            android:text="태그를 입력해주세요."
+            android:textAppearance="@style/TextAppearance.Moc.H4_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editTextTag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textTitle"
+            tool:text="sdfsdfsdfsdf" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCancel"
+            style="@style/Widget.Moc.Button.FilledBox.Ghost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_2xsmall"
+            android:text="취소"
+            android:onClick="@{onLeftClick}"
+            app:layout_constraintBottom_toBottomOf="@id/buttonConfirm"
+            app:layout_constraintEnd_toStartOf="@id/buttonConfirm"
+            app:layout_constraintTop_toTopOf="@id/buttonConfirm" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonConfirm"
+            style="@style/Widget.Moc.Button.FilledBox.Ghost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_2xsmall"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="확인"
+            android:onClick="@{onRightClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextTag" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

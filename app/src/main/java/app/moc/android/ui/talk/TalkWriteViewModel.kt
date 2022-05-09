@@ -21,6 +21,15 @@ class TalkWriteViewModel @Inject constructor(
     private val _onCommunityItemUploaded = MutableSharedFlow<Result<Community>>()
     val onCommunityItemUploaded = _onCommunityItemUploaded.asSharedFlow()
 
+    private val _onTagAdded = MutableSharedFlow<String>()
+    val onTagAdded = _onTagAdded.asSharedFlow()
+
+    fun addTag(tag: String){
+        viewModelScope.launch {
+            _onTagAdded.emit(tag)
+        }
+    }
+
     fun uploadCommunityItem(upload: CommunityItemUpload){
         viewModelScope.launch {
             uploadCommunityItemUseCase(upload).collectLatest {

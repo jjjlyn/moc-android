@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/editTag"
-        android:layout_marginHorizontal="@dimen/spacing_micro"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginVertical="@dimen/spacing_micro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <data>
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_bg_radius_small"
-        android:backgroundTint="#e5e5e5"
-        android:clickable="true"
-        android:focusable="true"
-        android:includeFontPadding="false"
-        android:paddingHorizontal="@dimen/margin_2xsmall"
-        android:paddingTop="2dp"
-        android:paddingBottom="4dp"
-        android:textAppearance="@style/TextAppearance.Moc.H7"
-        android:textColor="@color/color_on_surface_600"
-        tool:text="# 태그" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTag"
+            style="@style/Widget.Moc.Chip.Entry"
+            app:closeIcon="@drawable/ic_remove"
+            app:closeIconTint="@color/color_on_surface_500"
+            app:closeIconEnabled="true"
+            app:checkedIconVisible="false"
+            app:checkedIconEnabled="false"
+            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:onClick="@{onClick}"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Moc.H7"
+            android:paddingHorizontal="@dimen/margin_2xsmall"
+            android:textColor="@color/color_on_surface_600"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="# 태그태그태rmdsgesermrmrmdmrekfejskejefske그태" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

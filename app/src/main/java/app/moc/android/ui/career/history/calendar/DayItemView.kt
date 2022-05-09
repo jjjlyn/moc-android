@@ -25,6 +25,7 @@ class DayItemView @JvmOverloads constructor(
     @AttrRes private val defStyleAttr: Int = R.attr.itemViewStyle,
     @StyleRes private val defStyleRes: Int = R.style.Widget_Moc_Calendar_ItemViewStyle,
     private val date: LocalDate = LocalDate.now(),
+    private val startDate: LocalDate,
     private val firstDayOfMonth: LocalDate = LocalDate.now(),
     private val hasSchedule: Boolean = false,
     private val isToday: Boolean = false
@@ -36,6 +37,7 @@ class DayItemView @JvmOverloads constructor(
     private lateinit var dayItemBackgroundPaint: Paint
     private lateinit var todayItemPaint: Paint
     var showHistory: ShowHistory? = null
+    val isDisabled = date.isBefore(startDate) || date.isAfter(LocalDate.now())
 
     init {
         context.withStyledAttributes(attrs, R.styleable.CalendarView, defStyleAttr, defStyleRes){
@@ -44,6 +46,9 @@ class DayItemView @JvmOverloads constructor(
             textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
                 textSize = itemTextSize
                 color = context.getColorCompat(R.color.color_on_surface_600)
+                if(isDisabled){
+                    color = context.getColorCompat(R.color.color_on_surface_300)
+                }
                 if(isSameMonth(date, firstDayOfMonth).not()){
                     color = context.getColorCompat(R.color.color_on_surface_0)
                 }
@@ -60,7 +65,7 @@ class DayItemView @JvmOverloads constructor(
         }
 
         setOnClickListener {
-            if(date.isAfter(LocalDate.now())){
+            if(isDisabled){
                 return@setOnClickListener
             }
             showHistory?.invoke(date, hasSchedule)

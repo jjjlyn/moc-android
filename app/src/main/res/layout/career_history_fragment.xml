@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="uiModel"
             type="app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel" />
@@ -120,6 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_normal"
+                        android:text="@{uiModel.totalProgressDisplayText}"
                         android:textAppearance="@style/TextAppearance.Moc.H5_3"
                         android:textColor="?colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/textProgressLabel"
@@ -159,6 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginEnd="@dimen/margin_xlarge"
+                        android:text="@{uiModel.satisfactDisplayText}"
                         android:textAppearance="@style/TextAppearance.Moc.H5_3"
                         android:textColor="?colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@id/textProgressLabel"
@@ -217,8 +221,8 @@
         </androidx.core.widget.NestedScrollView>
 
         <include
-            android:visibility="gone"
             android:id="@+id/containerLoading"
-            layout="@layout/transparent_loading_view"/>
+            layout="@layout/transparent_loading_view"
+            android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

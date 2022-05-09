@@ -55,14 +55,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listTag"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerContent"
+        app:layout_constraintBottom_toTopOf="@id/containerFooter"
+        android:layout_marginBottom="@dimen/margin_2xsmall"
         android:orientation="horizontal"
+        tools:itemCount="3"
         android:paddingHorizontal="@dimen/margin_2xsmall"
-        app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/talk_tag_item"/>
 
 

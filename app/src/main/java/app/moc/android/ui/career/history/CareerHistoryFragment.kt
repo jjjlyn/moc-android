@@ -17,15 +17,18 @@ import app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel
 import app.moc.android.util.fmt
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
 import app.moc.android.util.setVisible
+import app.moc.android.util.tryOrDefault
 import app.moc.model.DateTime
 import app.moc.model.PlanCheckQueryInfo
 import app.moc.shared.result.Result
+import app.moc.shared.util.millisDiffToDays
 import app.moc.shared.util.toLocalDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import java.util.*
+import kotlin.math.round
 
 @AndroidEntryPoint
 class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fragment), CareerHistoryActionHandler {
@@ -53,8 +56,8 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
             )
             containerMemo.divider.visibility = View.GONE
 
-            val startDate = Date(careerItemUIModel.startDate).toLocalDate()
-            val endDate = Date(careerItemUIModel.endDate).toLocalDate()
+            val startDate = DateTime(careerItemUIModel.startDate).toLocalDate()
+            val endDate = DateTime(careerItemUIModel.endDate).toLocalDate()
             val monthDiff = endDate.monthValue - startDate.monthValue + 1
             val startOffset = LocalDate.now().monthValue - startDate.monthValue
 
@@ -73,6 +76,24 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
             launch {
                 careerHistoryViewModel.careerChecksUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
+                    if(result is Result.Success){
+                        val data = result.data
+                        val satisfact = tryOrDefault(0) { data.maxOf { it.satisfact } }
+                        val diffDays = millisDiffToDays(
+                            careerItemUIModel.startDate,
+                            careerItemUIModel.endDate
+                        ).toFloat()
+                        val progress = (data.count() / diffDays) * 100
+                        binding.uiModel = binding.uiModel?.copy(
+                            totalProgressDisplayText = "${round(progress).toInt()}%",
+                            satisfactDisplayText = when(satisfact) {
+                                1 -> "만족"
+                                2 -> "보통"
+                                3 -> "불만족"
+                                else -> "없음"
+                            }
+                        )
+                    }
                 }
             }
 
