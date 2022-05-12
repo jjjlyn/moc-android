@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import app.moc.android.databinding.CalendarFragmentBinding
+import app.moc.android.ui.career.detail.CareerDetailFragment
 import app.moc.android.ui.career.history.CareerHistoryViewModel
 import app.moc.android.ui.career.history.calendar.CalendarUtils.getMonthList
 import app.moc.android.util.isDialogShowing

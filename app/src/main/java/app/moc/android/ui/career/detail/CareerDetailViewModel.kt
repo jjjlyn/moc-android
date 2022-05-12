@@ -1,7 +1,9 @@
 package app.moc.android.ui.career.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.moc.android.ui.career.CareerItemUIModel
 import app.moc.android.ui.career.DayOfWeek
 import app.moc.android.ui.career.dayOfWeeks
 import app.moc.android.util.WhileViewSubscribed
@@ -21,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CareerDetailViewModel @Inject constructor(
     private val registerCareerUseCase: RegisterCareerUseCase,
-    private val modifyCareerUseCase: ModifyCareerUseCase
+    private val modifyCareerUseCase: ModifyCareerUseCase,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     private val _careerName = MutableStateFlow("")
@@ -64,38 +67,68 @@ class CareerDetailViewModel @Inject constructor(
         careerName.isNotEmpty() && dayOfWeeks.isNotEmpty() && endDate.after(startDate)
     }.stateIn(viewModelScope, WhileViewSubscribed, false)
 
+    private val _careerItemUIModel = MutableStateFlow<CareerItemUIModel?>(null)
+    val careerItemUIModel = _careerItemUIModel.asStateFlow()
+
     private val _registerResult = MutableSharedFlow<Result<Plan>>()
     val registerResult = _registerResult.asSharedFlow()
 
     private val _modifyResult = MutableSharedFlow<Result<Plan>>()
     val modifyResult = _modifyResult.asSharedFlow()
 
+    init {
+        setCareerItemUIModel()
+    }
+
+    private fun setCareerItemUIModel(){
+        val uiModel = savedStateHandle.get("uiModel") as? CareerItemUIModel ?: return
+        _careerItemUIModel.value = uiModel
+    }
+
+    private fun modifyCareerItemUIModel(uiModel: CareerItemUIModel){
+        _careerItemUIModel.value = uiModel
+    }
+
     fun onColorChanged(color: String){
         _color.value = color
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(color = color))
     }
 
     fun onCareerNameChanged(careerName: CharSequence) {
         _careerName.value = careerName.toString()
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(title = careerName.toString()))
     }
 
     fun setCareerType(careerType: Int) {
         _careerType.value = careerType
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(type = careerType.toString()))
     }
 
     fun setStartDate(startDate: DateTime) {
         _startDate.value = startDate
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(startDate = startDate.time))
     }
 
     fun setEndDate(endDate: DateTime) {
         _endDate.value = endDate
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(endDate = endDate.time))
     }
 
     fun setDayOfWeeks(dayOfWeeks: String) {
         _dayOfWeeks.value = dayOfWeeks
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(dayOfWeeks = dayOfWeeks))
     }
 
     fun onMemoChanged(memo: CharSequence) {
         _memo.value = memo.toString()
+        val uiModel = _careerItemUIModel.value ?: return
+        modifyCareerItemUIModel(uiModel.copy(memo = memo.toString()))
     }
 
     fun registerCareer() {

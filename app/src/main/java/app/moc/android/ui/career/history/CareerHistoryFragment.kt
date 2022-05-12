@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import app.moc.android.MainNavigationFragment
@@ -11,6 +12,9 @@ import app.moc.android.R
 import app.moc.android.databinding.CareerHistoryFragmentBinding
 import app.moc.android.ui.career.CareerHistoryActionHandler
 import app.moc.android.ui.career.CareerItemUIModel
+import app.moc.android.ui.career.detail.CareerDetailFragment.Companion.CAREER_DETAIL_ACTION_DATA
+import app.moc.android.ui.career.detail.CareerDetailFragment.Companion.CAREER_DETAIL_ACTION_RESULT_KEY
+import app.moc.android.ui.career.detail.CareerDetailFragment.Companion.CAREER_DETAIL_ACTION_TYPE
 import app.moc.android.ui.career.history.calendar.CalendarAdapter
 import app.moc.android.ui.career.history.calendar.CalendarHistoryItemUIModel
 import app.moc.android.ui.career.history.calendar.CalendarHistoryListUIModel
@@ -36,28 +40,24 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
     private lateinit var binding: CareerHistoryFragmentBinding
     private lateinit var calendarAdapter: CalendarAdapter
     private val careerHistoryViewModel: CareerHistoryViewModel by viewModels()
-    private lateinit var careerItemUIModel: CareerItemUIModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        careerItemUIModel = careerHistoryViewModel.careerItemUIModel.value
-        binding = CareerHistoryFragmentBinding.bind(view).apply {
-            with(header.toolbar){
-                setTitleTextAppearance(requireActivity(), R.style.TextAppearance_Moc_H5_2)
-                title = careerItemUIModel.title
-                background = null
-                setupCareerHistoryMenuItem(careerItemUIModel, this@CareerHistoryFragment)
+        setFragmentResultListener(CAREER_DETAIL_ACTION_RESULT_KEY) { _, bundle ->
+            val type = bundle.get(CAREER_DETAIL_ACTION_TYPE) as String
+            if(type == "modify"){
+                val uiModel = bundle.get(CAREER_DETAIL_ACTION_DATA) as CareerItemUIModel?
+                if(uiModel != null){
+                    careerHistoryViewModel.updateCareerItemUIModel(uiModel)
+                }
             }
-            uiModel = CalendarHistoryListUIModel(
-                type = CalendarHistoryItemUIModel("유형", careerItemUIModel.getTypeDisplayText()),
-                start = CalendarHistoryItemUIModel("시작", "yyyy년 MM월 dd일".fmt(DateTime(careerItemUIModel.startDate))),
-                end = CalendarHistoryItemUIModel("종료", "yyyy년 MM월 dd일".fmt(DateTime(careerItemUIModel.endDate))),
-                memo = CalendarHistoryItemUIModel("메모", careerItemUIModel.memo)
-            )
+        }
+        val itemUIModel = careerHistoryViewModel.careerItemUIModel.value
+        binding = CareerHistoryFragmentBinding.bind(view).apply {
             containerMemo.divider.visibility = View.GONE
 
-            val startDate = DateTime(careerItemUIModel.startDate).toLocalDate()
-            val endDate = DateTime(careerItemUIModel.endDate).toLocalDate()
+            val startDate = DateTime(itemUIModel.startDate).toLocalDate()
+            val endDate = DateTime(itemUIModel.endDate).toLocalDate()
             val monthDiff = endDate.monthValue - startDate.monthValue + 1
             val startOffset = LocalDate.now().monthValue - startDate.monthValue
 
@@ -65,14 +65,33 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
             viewPager.adapter = calendarAdapter
             viewPager.setCurrentItem(startOffset, false)
         }
-        val now = LocalDate.now()
-        careerHistoryViewModel.getCareerChecks(
-            PlanCheckQueryInfo(
-                careerItemUIModel.id, now.year, now.monthValue
-            )
-        )
 
         launchAndRepeatWithViewLifecycle {
+            launch {
+                careerHistoryViewModel.careerItemUIModel.collectLatest { itemUIModel ->
+                    binding.apply {
+                        with(header.toolbar){
+                            setTitleTextAppearance(requireActivity(), R.style.TextAppearance_Moc_H5_2)
+                            title = itemUIModel.title
+                            background = null
+                            setupCareerHistoryMenuItem(itemUIModel, this@CareerHistoryFragment)
+                        }
+                        uiModel = CalendarHistoryListUIModel(
+                            type = CalendarHistoryItemUIModel("유형", itemUIModel.getTypeDisplayText()),
+                            start = CalendarHistoryItemUIModel("시작", "yyyy년 MM월 dd일".fmt(DateTime(itemUIModel.startDate))),
+                            end = CalendarHistoryItemUIModel("종료", "yyyy년 MM월 dd일".fmt(DateTime(itemUIModel.endDate))),
+                            memo = CalendarHistoryItemUIModel("메모", itemUIModel.memo)
+                        )
+                    }
+                    val now = LocalDate.now()
+                    careerHistoryViewModel.getCareerChecks(
+                        PlanCheckQueryInfo(
+                            itemUIModel.id, now.year, now.monthValue
+                        )
+                    )
+                }
+            }
+
             launch {
                 careerHistoryViewModel.careerChecksUseCaseResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
@@ -80,8 +99,8 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
                         val data = result.data
                         val satisfact = tryOrDefault(0) { data.maxOf { it.satisfact } }
                         val diffDays = millisDiffToDays(
-                            careerItemUIModel.startDate,
-                            careerItemUIModel.endDate
+                            itemUIModel.startDate,
+                            itemUIModel.endDate
                         ).toFloat()
                         val progress = (data.count() / diffDays) * 100
                         binding.uiModel = binding.uiModel?.copy(
@@ -132,19 +151,22 @@ class CareerHistoryFragment : MainNavigationFragment(R.layout.career_history_fra
     }
 
     override fun navigateToModifyCareerDetail() {
-        findNavController().navigate(CareerHistoryFragmentDirections.toCareerDetail(careerItemUIModel))
+        val uiModel = careerHistoryViewModel.careerItemUIModel.value
+        findNavController().navigate(CareerHistoryFragmentDirections.toCareerDetail(uiModel))
     }
 
     override fun delete() {
-        careerHistoryViewModel.deleteCareer(careerItemUIModel.id)
+        val uiModel = careerHistoryViewModel.careerItemUIModel.value
+        careerHistoryViewModel.deleteCareer(uiModel.id)
     }
 
     override fun setDone() {
-        careerHistoryViewModel.setCareerDone(careerItemUIModel.id)
+        val uiModel = careerHistoryViewModel.careerItemUIModel.value
+        careerHistoryViewModel.setCareerDone(uiModel.id)
     }
 
     companion object {
-        val CAREER_HISTORY_ACTION_RESULT_KEY = "career_history_action_result_key"
-        val CAREER_HISTORY_ACTION_TYPE = "career_history_action_type"
+        const val CAREER_HISTORY_ACTION_RESULT_KEY = "career_history_action_result_key"
+        const val CAREER_HISTORY_ACTION_TYPE = "career_history_action_type"
     }
 }

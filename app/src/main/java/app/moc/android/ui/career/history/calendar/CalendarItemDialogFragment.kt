@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import app.moc.android.R
 import app.moc.android.databinding.CalendarItemDialogFragmentBinding
 import app.moc.android.ui.career.CareerItemUIModel
+import app.moc.android.ui.common.CommonAlertDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,13 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class CalendarItemDialogFragment(
     private val careerItemUIModel: CareerItemUIModel,
     private val calendarItemUIModel: CalendarItemUIModel
-): DialogFragment(R.layout.calendar_item_dialog_fragment) {
+): CommonAlertDialogFragment(R.layout.calendar_item_dialog_fragment) {
 
     private lateinit var binding: CalendarItemDialogFragmentBinding
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialAlertDialogBuilder(requireContext()).create()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,9 +26,6 @@ class CalendarItemDialogFragment(
         with(binding){
             careerItemUIModel = this@CalendarItemDialogFragment.careerItemUIModel
             calendarItemUIModel = this@CalendarItemDialogFragment.calendarItemUIModel
-        }
-        if (showsDialog) {
-            (requireDialog() as AlertDialog).setView(binding.root)
         }
     }
 }

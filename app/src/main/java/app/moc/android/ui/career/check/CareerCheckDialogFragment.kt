@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import app.moc.android.R
 import app.moc.android.databinding.CareerCheckDialogFragmentBinding
 import app.moc.android.ui.career.CareerItemUIModel
+import app.moc.android.ui.common.CommonAlertDialogFragment
 import app.moc.android.util.imagepicker.MocImagePicker
 import app.moc.android.util.imagepicker.MocImagePickerActivity
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
@@ -31,7 +32,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class CareerCheckDialogFragment: DialogFragment(R.layout.career_check_dialog_fragment) {
+class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check_dialog_fragment) {
 
     private lateinit var binding: CareerCheckDialogFragmentBinding
     private val careerCheckDialogViewModel: CareerCheckDialogViewModel by viewModels()

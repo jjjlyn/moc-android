@@ -29,7 +29,6 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
     private lateinit var binding: CareerDetailFragmentBinding
     private lateinit var dayOfWeekAdapter: DayOfWeekAdapter
     private val careerDetailViewModel: CareerDetailViewModel by viewModels()
-    private val args: CareerDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +54,7 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
                     }
                 )
             }
-            val careerItemUIModel = args.uiModel
+            val careerItemUIModel = careerDetailViewModel.careerItemUIModel.value
             textStartDate.isEnabled = careerItemUIModel == null
             textEndDate.isEnabled = careerItemUIModel == null
             header.textTitle.text = if(careerItemUIModel == null) "플랜 등록" else "플랜 수정"
@@ -104,11 +103,14 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
                 careerDetailViewModel.modifyResult.collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if (result is Result.Success) {
-                        findNavController().navigateUp()
                         setFragmentResult(
                             CAREER_DETAIL_ACTION_RESULT_KEY,
-                            bundleOf(CAREER_DETAIL_ACTION_TYPE to "modify")
+                            bundleOf(
+                                CAREER_DETAIL_ACTION_TYPE to "modify",
+                                CAREER_DETAIL_ACTION_DATA to careerDetailViewModel.careerItemUIModel.value
+                            )
                         )
+                        findNavController().navigateUp()
                     }
                 }
             }
@@ -128,7 +130,7 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
 
     override fun showColorDialog() {
         if(childFragmentManager.isDialogShowing()) return
-        ColorDialogFragment().show(childFragmentManager, "color_dialog")
+        ColorDialogFragment().show(childFragmentManager, ColorDialogFragment::class.java.simpleName)
     }
 
     override fun showStartDatePicker() {
@@ -154,7 +156,7 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
     }
 
     override fun onClickConfirm() {
-        val careerItemUIModel = args.uiModel
+        val careerItemUIModel = careerDetailViewModel.careerItemUIModel.value
         if(careerItemUIModel == null){
             careerDetailViewModel.registerCareer()
         } else {
@@ -165,5 +167,6 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
     companion object {
         val CAREER_DETAIL_ACTION_RESULT_KEY = "career_detail_action_result_key"
         val CAREER_DETAIL_ACTION_TYPE = "career_detail_action_type"
+        val CAREER_DETAIL_ACTION_DATA = "career_detail_aciton_data"
     }
 }

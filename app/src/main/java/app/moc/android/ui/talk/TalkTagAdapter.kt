@@ -10,12 +10,12 @@ import app.moc.android.util.layoutInflater
 class TalkTagAdapter: ListAdapter<String, TalkTagAdapter.ViewHolder>(IdBasedDiffCallback { it }) {
 
     var onTagDeleted: ((String) -> Unit)? = null
-    var onTagModified: ((String) -> Unit)? = null
+    var onTagModified: ((Int, String) -> Unit)? = null
 
     inner class ViewHolder(private val binding: TalkTagItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(tag: String){
             binding.setOnClick {
-                onTagModified?.invoke(tag)
+                onTagModified?.invoke(absoluteAdapterPosition, tag)
             }
             with(binding.chipTag){
                 text = tag

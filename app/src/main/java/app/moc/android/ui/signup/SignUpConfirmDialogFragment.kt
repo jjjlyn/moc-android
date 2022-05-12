@@ -8,19 +8,16 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import app.moc.android.R
 import app.moc.android.databinding.CommonOneButtonDialogFragmentBinding
+import app.moc.android.ui.common.CommonAlertDialogFragment
 import app.moc.model.User
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpConfirmDialogFragment: DialogFragment(R.layout.common_one_button_dialog_fragment) {
+class SignUpConfirmDialogFragment: CommonAlertDialogFragment(R.layout.common_one_button_dialog_fragment) {
 
     private lateinit var binding: CommonOneButtonDialogFragmentBinding
     private val signUpViewModel: SignUpViewModel by viewModels({ requireParentFragment() })
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialAlertDialogBuilder(requireContext()).create()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,9 +28,6 @@ class SignUpConfirmDialogFragment: DialogFragment(R.layout.common_one_button_dia
                 dismiss()
             }
             message = "회원가입이 완료되었습니다."
-        }
-        if (showsDialog) {
-            (requireDialog() as AlertDialog).setView(binding.root)
         }
     }
 }

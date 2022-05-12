@@ -35,3 +35,8 @@ data class TalkCommentUIModel(
 
 fun Comment.toUIModel() =
     TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate / 1000, modifyDate / 1000, isMyComment = isMyComment ?: false)
+
+sealed class TagAction {
+    object Add : TagAction()
+    data class Modify(val position: Int, val oldTag: String) : TagAction()
+}

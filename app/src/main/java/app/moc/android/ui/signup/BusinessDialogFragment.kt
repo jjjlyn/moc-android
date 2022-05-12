@@ -1,30 +1,23 @@
 package app.moc.android.ui.signup
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import app.moc.android.R
 import app.moc.android.databinding.BusinessDialogFragmentBinding
+import app.moc.android.ui.common.CommonAlertDialogFragment
 import app.moc.model.Business
 import app.moc.model.businessMain
 import app.moc.model.businessSub
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BusinessDialogFragment: DialogFragment(R.layout.business_dialog_fragment) {
+class BusinessDialogFragment: CommonAlertDialogFragment(R.layout.business_dialog_fragment) {
 
     private lateinit var binding: BusinessDialogFragmentBinding
     private val signUpViewModel: SignUpViewModel by viewModels({ requireParentFragment() })
     private lateinit var businessMainAdapter: BusinessAdapter
     private lateinit var businessSubAdapter: BusinessAdapter
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialAlertDialogBuilder(requireContext()).create()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,9 +27,6 @@ class BusinessDialogFragment: DialogFragment(R.layout.business_dialog_fragment) 
                     selectBusiness(it)
                 }
             }
-        }
-        if (showsDialog) {
-            (requireDialog() as AlertDialog).setView(binding.root)
         }
         setupUI()
         loadData()

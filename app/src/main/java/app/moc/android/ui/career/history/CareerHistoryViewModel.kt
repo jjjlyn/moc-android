@@ -51,6 +51,10 @@ class CareerHistoryViewModel @Inject constructor(
         }
     }
 
+    fun updateCareerItemUIModel(uiModel: CareerItemUIModel){
+        _careerItemUIModel.value = uiModel
+    }
+
     fun getCareerChecks(planCheckQueryInfo: PlanCheckQueryInfo) {
         viewModelScope.launch {
             getCareerChecksUseCase(planCheckQueryInfo).collectLatest {

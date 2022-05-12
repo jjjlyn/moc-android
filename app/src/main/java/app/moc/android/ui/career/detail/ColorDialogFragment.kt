@@ -11,16 +11,13 @@ import app.moc.android.R
 import app.moc.android.databinding.ColorDialogFragmentBinding
 import app.moc.android.ui.career.ColorActionHandler
 import app.moc.android.ui.career.colors
+import app.moc.android.ui.common.CommonAlertDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ColorDialogFragment: DialogFragment(R.layout.color_dialog_fragment), ColorActionHandler {
+class ColorDialogFragment: CommonAlertDialogFragment(R.layout.color_dialog_fragment), ColorActionHandler {
     private lateinit var binding: ColorDialogFragmentBinding
     private lateinit var colorAdapter: ColorAdapter
     private val careerDetailViewModel: CareerDetailViewModel by viewModels({requireParentFragment()})
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialAlertDialogBuilder(requireContext()).create()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,10 +37,6 @@ class ColorDialogFragment: DialogFragment(R.layout.color_dialog_fragment), Color
         }
         colorAdapter.submitList(colors)
         colorAdapter.currentSelection = careerDetailViewModel.color.value
-
-        if (showsDialog) {
-            (requireDialog() as AlertDialog).setView(binding.root)
-        }
     }
 
     override fun chooseColor() {

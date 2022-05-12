@@ -2,9 +2,11 @@
 <layout>
 
     <data>
+
         <variable
             name="onLeftClick"
             type="android.view.View.OnClickListener" />
+
         <variable
             name="onRightClick"
             type="android.view.View.OnClickListener" />
@@ -13,58 +15,71 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_radius_large">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textTitle"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_2xlarge"
-            android:text="태그를 입력해주세요."
-            android:textAppearance="@style/TextAppearance.Moc.H4_2"
+            android:background="@drawable/bg_radius_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/editTextTag"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_2xsmall"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textTitle"
-            tool:text="sdfsdfsdfsdf" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_2xlarge"
+                android:text="태그를 입력해주세요"
+                android:textAppearance="@style/TextAppearance.Moc.H4_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonCancel"
-            style="@style/Widget.Moc.Button.FilledBox.Ghost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_2xsmall"
-            android:text="취소"
-            android:onClick="@{onLeftClick}"
-            app:layout_constraintBottom_toBottomOf="@id/buttonConfirm"
-            app:layout_constraintEnd_toStartOf="@id/buttonConfirm"
-            app:layout_constraintTop_toTopOf="@id/buttonConfirm" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_2xsmall"
+                android:hint="20자 이내로 입력해주세요"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_h6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTitle"
+                tool:text="sdfsdfsdfsdf" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonConfirm"
-            style="@style/Widget.Moc.Button.FilledBox.Ghost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_2xsmall"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:layout_marginBottom="@dimen/margin_large"
-            android:text="확인"
-            android:onClick="@{onRightClick}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextTag" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonCancel"
+                style="@style/Widget.Moc.Button.FilledBox.Ghost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_2xsmall"
+                android:onClick="@{onLeftClick}"
+                android:text="취소"
+                app:layout_constraintBottom_toBottomOf="@id/buttonConfirm"
+                app:layout_constraintEnd_toStartOf="@id/buttonConfirm"
+                app:layout_constraintTop_toTopOf="@id/buttonConfirm" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonConfirm"
+                style="@style/Widget.Moc.Button.FilledBox.Ghost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_2xsmall"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:onClick="@{onRightClick}"
+                android:text="확인"
+                android:textColor="?colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextTag" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

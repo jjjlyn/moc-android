@@ -31,9 +31,11 @@ class TalkWriteFragment : Fragment(R.layout.talk_write_fragment) {
                 }
                 talkTagAdapter.submitList(newList.toList())
             }
-            onTagModified = { tag ->
-
-
+            onTagModified = { position, tag ->
+                if(childFragmentManager.isDialogShowing().not()){
+                    TagWriteDialogFragment(TagAction.Modify(position, tag.substring(2)))
+                        .show(childFragmentManager, TagWriteDialogFragment::class.java.simpleName)
+                }
             }
         }
         binding = TalkWriteFragmentBinding.bind(view)
@@ -50,11 +52,12 @@ class TalkWriteFragment : Fragment(R.layout.talk_write_fragment) {
 
             }
             textTag.setOnClickListener {
+                // 태그 입력창으로 이동
                 if(childFragmentManager.isDialogShowing()) {
                     return@setOnClickListener
                 }
-                // 태그 입력창으로 이동
-                TagWriteDialogFragment().show(childFragmentManager, TagWriteDialogFragment::class.java.simpleName)
+                TagWriteDialogFragment(TagAction.Add)
+                    .show(childFragmentManager, TagWriteDialogFragment::class.java.simpleName)
             }
             listTag.apply {
                 addItemDecoration(
@@ -69,6 +72,17 @@ class TalkWriteFragment : Fragment(R.layout.talk_write_fragment) {
                         val oldList = talkTagAdapter.currentList.toMutableList()
                         val newList = oldList.apply {
                             add("# $tag")
+                        }
+                        talkTagAdapter.submitList(newList.toList())
+                    }
+                }
+
+                launch {
+                    talkWriteViewModel.onTagModified.collectLatest { (position, tag) ->
+                        val oldList = talkTagAdapter.currentList.toMutableList()
+                        val newList = oldList.apply {
+                            removeAt(position)
+                            add(position, "# $tag")
                         }
                         talkTagAdapter.submitList(newList.toList())
                     }

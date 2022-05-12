@@ -24,9 +24,18 @@ class TalkWriteViewModel @Inject constructor(
     private val _onTagAdded = MutableSharedFlow<String>()
     val onTagAdded = _onTagAdded.asSharedFlow()
 
+    private val _onTagModified = MutableSharedFlow<Pair<Int, String>>()
+    val onTagModified = _onTagModified.asSharedFlow()
+
     fun addTag(tag: String){
         viewModelScope.launch {
             _onTagAdded.emit(tag)
+        }
+    }
+
+    fun modifyTag(position: Int, tag: String){
+        viewModelScope.launch {
+            _onTagModified.emit(Pair(position, tag))
         }
     }
 

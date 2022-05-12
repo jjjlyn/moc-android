@@ -3,6 +3,7 @@ package app.moc.android.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -11,6 +12,11 @@ import androidx.recyclerview.widget.ItemMarginDecoration
 import app.moc.android.R
 import app.moc.android.databinding.HomeFragmentBinding
 import app.moc.android.ui.career.CareerNavigationHandler
+import app.moc.android.ui.career.detail.CareerDetailFragment
+import app.moc.android.ui.career.detail.CareerDetailFragment.Companion.CAREER_DETAIL_ACTION_RESULT_KEY
+import app.moc.android.ui.career.detail.CareerDetailFragment.Companion.CAREER_DETAIL_ACTION_TYPE
+import app.moc.android.ui.career.history.CareerHistoryFragment.Companion.CAREER_HISTORY_ACTION_RESULT_KEY
+import app.moc.android.ui.career.history.CareerHistoryFragment.Companion.CAREER_HISTORY_ACTION_TYPE
 import app.moc.android.ui.career.toUIModel
 import app.moc.android.ui.common.ComponentTitleUIModel
 import app.moc.android.ui.talk.TalkActionHandler
@@ -37,6 +43,13 @@ class HomeFragment: Fragment(R.layout.home_fragment), TalkActionHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setFragmentResultListener(CAREER_HISTORY_ACTION_RESULT_KEY) { _, _ ->
+            homeViewModel.getTodayChecks()
+        }
+        setFragmentResultListener(CAREER_DETAIL_ACTION_RESULT_KEY) { _, _ ->
+            homeViewModel.getTodayChecks()
+        }
+
         todayCheckAdapter = TodayCheckAdapter().apply {
             onItemClick = {
                 navigationHandler.navigateToCareerHistory(it){ uiModel ->
