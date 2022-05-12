@@ -4,6 +4,7 @@
         <variable
             name="uiModel"
             type="app.moc.android.ui.home.HomeIntroUIModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -78,7 +79,10 @@
                 android:layout_marginStart="@dimen/margin_xsmall"
                 android:layout_marginTop="@dimen/button_padding_xlarge_top"
                 android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"
-                android:text="남은 퇴사일"
+                android:text="@{uiModel.title}"
+                tool:visibility="visible"
+                tool:text="남은 퇴사일"
+                android:visibility="@{uiModel.leftDays &lt; 0 ? View.GONE : View.VISIBLE}"
                 android:textAppearance="@style/TextAppearance.Moc.H5"
                 android:textColor="?colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +97,7 @@
                 android:layout_marginStart="@dimen/spacing_micro"
                 android:layout_marginTop="@dimen/button_padding_xlarge_top"
                 android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"
+                app:layout_goneMarginStart="@dimen/margin_2xsmall"
                 tool:text="D-897"
                 android:text="@{uiModel.ddays}"
                 android:textAppearance="@style/TextAppearance.Moc.H4_2"

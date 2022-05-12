@@ -33,9 +33,6 @@ class HomeViewModel @Inject constructor(
     private val _latestCommunities = MutableStateFlow<PagingData<Community>>(PagingData.empty())
     val latestCommunities = _latestCommunities.asStateFlow()
 
-    private val _inProgressCareerResult = MutableStateFlow<Result<List<Plan>>>(Result.Loading)
-    val inProgressCareerResult = _inProgressCareerResult.asStateFlow()
-
     val homeIntroUIModel = combine(getNickNameUseCase(Unit), getLeftDaysUseCase(Unit)) { nickNameResult, leftDaysResult ->
         HomeIntroUIModel(nickNameResult.data ?: "", leftDaysResult.data ?: 0)
     }.stateIn(viewModelScope, WhileViewSubscribed, HomeIntroUIModel())

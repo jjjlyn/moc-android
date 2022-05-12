@@ -91,7 +91,8 @@ class DataStorePreferencesStorage @Inject constructor(
     override val leftDays: Flow<Long> =
         dataStore.data.map {
             val leaveDate = it[PREFS_LEAVE_DATE] ?: return@map 0
-            millisDiffToDays(leaveDate, DateTime().time)
+            val dDay = millisDiffToDays(DateTime().time, leaveDate)
+            if(dDay < 0) -1L else dDay
         }
 
     override val email: Flow<String> =

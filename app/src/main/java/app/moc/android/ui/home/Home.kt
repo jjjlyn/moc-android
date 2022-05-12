@@ -12,7 +12,8 @@ data class HomeIntroUIModel(
     val nickName: String = "",
     val leftDays: Long = 0
 ) {
-    fun getDdays() = "D-$leftDays"
+    fun getTitle() = if(leftDays == 0L) "퇴사일" else "남은 퇴사일"
+    fun getDdays() = if(leftDays == 0L) "D-day" else if(leftDays < 0) "퇴사일이 지났어요!" else "D-$leftDays"
     fun getWelcome() = "${nickName}님,\n오늘도 퇴사를\n고민하셨나요?"
 }
 
