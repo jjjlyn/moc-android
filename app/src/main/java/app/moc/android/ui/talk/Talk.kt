@@ -30,11 +30,17 @@ data class TalkCommentUIModel(
     val isLastItem: Boolean = false
 ) {
     fun hasParent() = parentsID != 0
-    fun getModifyDateDisplayText() = "${"yy.MM.dd hh:mm".fmt(DateTime(modifyDate))} (수정됨)"
-}
+    private fun getFormattedModifiedDate() = "${"yy.MM.dd hh:mm".fmt(DateTime(modifyDate))}"
+    fun getModifyDateDisplayText() =
+        if (createDate == modifyDate) {
+            getFormattedModifiedDate()
+        } else {
+            "${getFormattedModifiedDate()} (수정됨)"
+        }
+    }
 
 fun Comment.toUIModel() =
-    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate / 1000, modifyDate / 1000, isMyComment = isMyComment ?: false)
+    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate * 1000, modifyDate * 1000, isMyComment = isMyComment ?: false)
 
 sealed class TagAction {
     object Add : TagAction()
