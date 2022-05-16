@@ -13,6 +13,7 @@ import app.moc.android.R
 import app.moc.android.databinding.CareerDetailFragmentBinding
 import app.moc.android.ui.career.CareerDetailActionHandler
 import app.moc.android.ui.career.dayOfWeeks
+import app.moc.android.ui.common.CancelAlertDialogFragment
 import app.moc.android.ui.common.CommonDatePickerDialogFragment
 import app.moc.android.ui.common.CommonTwoButtonDialogFragment
 import app.moc.android.util.isDialogShowing
@@ -118,14 +119,10 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
     }
 
     override fun showCancelDialog() {
-        if(childFragmentManager.isDialogShowing()) return
-        CommonTwoButtonDialogFragment().apply {
-            onLeftClick = { dismiss() }
-            onRightClick = { findNavController().navigateUp() }
-            leftButton = "취소"
-            rightButton = "나가기"
-            message = "지금까지 입력하신 정보가 모두 삭제됩니다.\n그래도 나가시겠어요?"
-        }.show(childFragmentManager, "career_detail_caution_dialog")
+        if(childFragmentManager.isDialogShowing().not()){
+            CancelAlertDialogFragment()
+                .show(childFragmentManager, CancelAlertDialogFragment::class.java.simpleName)
+        }
     }
 
     override fun showColorDialog() {
@@ -155,7 +152,7 @@ class CareerDetailFragment : Fragment(R.layout.career_detail_fragment), CareerDe
             .show(childFragmentManager, "end_date_picker_fragment")
     }
 
-    override fun onClickConfirm() {
+    override fun onConfirmClick() {
         val careerItemUIModel = careerDetailViewModel.careerItemUIModel.value
         if(careerItemUIModel == null){
             careerDetailViewModel.registerCareer()

@@ -39,7 +39,7 @@ interface CareerDetailActionHandler {
     fun showColorDialog()
     fun showStartDatePicker()
     fun showEndDatePicker()
-    fun onClickConfirm()
+    fun onConfirmClick()
 }
 
 interface CareerHistoryActionHandler {

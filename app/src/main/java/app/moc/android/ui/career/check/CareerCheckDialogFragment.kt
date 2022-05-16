@@ -9,6 +9,8 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -52,10 +54,6 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
             }
         }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialAlertDialogBuilder(requireContext()).create()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -76,20 +74,19 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
                 ))
             }
             chipGroup.setOnCheckedChangeListener { group, checkedId ->
-                val idx = group.checkedChipIds.indexOf(checkedId)
-                careerCheckDialogViewModel.setSatisfact(idx + 1)
+                val child = group.children.find { it.id == checkedId }
+                child?.let {
+                    val idx = group.children.indexOf(it)
+                    careerCheckDialogViewModel.setSatisfact(idx + 1)
+                }
             }
             containerCamera.root.setOnClickListener {
                 showImagePicker()
             }
         }
-        if (showsDialog) {
-            (requireDialog() as AlertDialog).setView(binding.root)
-        }
 
         lifecycleScope.launch {
             careerCheckDialogViewModel.registerCheckResult
-                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if (result is Result.Success) {

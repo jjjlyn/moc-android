@@ -28,7 +28,8 @@
             <include
                 android:id="@+id/header"
                 layout="@layout/header_title_with_two_button"
-                app:actionHandler="@{actionHandler}"
+                app:onConfirmClick="@{() -> actionHandler.onConfirmClick()}"
+                app:onCancelClick="@{() -> actionHandler.showCancelDialog()}"
                 app:isConfirmEnabled="@{viewModel.isConfirmEnabled()}" />
 
             <com.google.android.material.textview.MaterialTextView

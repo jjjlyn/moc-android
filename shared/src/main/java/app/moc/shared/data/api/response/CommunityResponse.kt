@@ -47,4 +47,4 @@ data class CommentResponse(
 )
 
 fun CommentResponse.toModel() =
-    Comment(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate / 1000, modifyDate / 1000)
+    Comment(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate, modifyDate)

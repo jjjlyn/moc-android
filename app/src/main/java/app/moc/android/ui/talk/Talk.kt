@@ -30,7 +30,7 @@ data class TalkCommentUIModel(
     val isLastItem: Boolean = false
 ) {
     fun hasParent() = parentsID != 0
-    private fun getFormattedModifiedDate() = "${"yy.MM.dd hh:mm".fmt(DateTime(modifyDate))}"
+    private fun getFormattedModifiedDate() = "${"yy.MM.dd hh:mm".fmt(DateTime(modifyDate * 1000))}"
     fun getModifyDateDisplayText() =
         if (createDate == modifyDate) {
             getFormattedModifiedDate()
@@ -40,9 +40,13 @@ data class TalkCommentUIModel(
     }
 
 fun Comment.toUIModel() =
-    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate * 1000, modifyDate * 1000, isMyComment = isMyComment ?: false)
+    TalkCommentUIModel(commentID, parentsID, boardID, userID, nickname, content, likes, deleted, createDate, modifyDate, isMyComment = isMyComment ?: false)
 
 sealed class TagAction {
     object Add : TagAction()
     data class Modify(val position: Int, val oldTag: String) : TagAction()
+}
+
+enum class TalkCategory(val label: String) {
+    DAILY("일상"), QUESTION("질문"), WORRIES("고민"), RESIGNATION_REVIEW("퇴사후기")
 }

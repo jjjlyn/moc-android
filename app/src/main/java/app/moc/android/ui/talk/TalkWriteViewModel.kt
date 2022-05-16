@@ -7,9 +7,7 @@ import app.moc.model.CommunityItemUpload
 import app.moc.shared.domain.community.UploadCommunityItemUseCase
 import app.moc.shared.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +24,13 @@ class TalkWriteViewModel @Inject constructor(
 
     private val _onTagModified = MutableSharedFlow<Pair<Int, String>>()
     val onTagModified = _onTagModified.asSharedFlow()
+
+    private val _talkCategory = MutableStateFlow(TalkCategory.DAILY)
+    val talkCategory = _talkCategory.asStateFlow()
+
+    fun setTalkCategory(category: TalkCategory){
+        _talkCategory.value = category
+    }
 
     fun addTag(tag: String){
         viewModelScope.launch {

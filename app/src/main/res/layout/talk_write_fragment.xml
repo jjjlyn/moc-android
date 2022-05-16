@@ -1,120 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
+    <data>
+        <variable
+            name="actionHandler"
+            type="app.moc.android.ui.talk.TalkWriteActionHandler" />
+    </data>
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header_title_with_two_button" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textCategoryLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary_A100"
-        android:paddingHorizontal="@dimen/margin_2xsmall"
-        android:paddingTop="@dimen/button_padding_small_top"
-        android:paddingBottom="@dimen/button_padding_small_bottom"
-        android:textAppearance="@style/TextAppearance.Moc.H6_2"
-        android:textColor="@color/color_on_surface_900"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        tools:text="UI/UX/GUI 디자인" />
-
-    <include
-        android:id="@+id/containerCategory"
-        layout="@layout/text_write_category_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textCategoryLabel" />
-
-    <include
-        android:id="@+id/containerTitle"
-        layout="@layout/text_write_title_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerCategory" />
-
-    <include
-        android:id="@+id/containerContent"
-        layout="@layout/text_write_content_item"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/listTag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/containerTitle" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/containerFooter"
-        android:paddingVertical="@dimen/margin_large"
-        android:orientation="horizontal"
-        tools:itemCount="3"
-        android:stateListAnimator="@null"
-        android:paddingHorizontal="@dimen/margin_2xsmall"
-        android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/talk_tag_item"/>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerFooter"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/stroke_small"
-            android:background="@color/color_on_surface_200"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_large"
-            android:layout_marginStart="@dimen/margin_large"
-            android:background="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include
+            android:id="@+id/header"
+            app:onConfirmClick="@{() -> actionHandler.onConfirmClick()}"
+            app:onCancelClick="@{() -> actionHandler.showCancelDialog()}"
+            layout="@layout/header_title_with_two_button" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textTag"
+            android:id="@+id/textCategoryLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/color_primary_A100"
+            android:paddingHorizontal="@dimen/margin_2xsmall"
+            android:paddingTop="@dimen/button_padding_small_top"
+            android:paddingBottom="@dimen/button_padding_small_bottom"
+            android:textAppearance="@style/TextAppearance.Moc.H6_2"
+            android:textColor="@color/color_on_surface_900"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            tools:text="UI/UX/GUI 디자인" />
+
+        <include
+            android:id="@+id/containerCategory"
+            layout="@layout/text_write_category_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textCategoryLabel" />
+
+        <include
+            android:id="@+id/containerTitle"
+            layout="@layout/text_write_title_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/containerCategory" />
+
+        <include
+            android:id="@+id/containerContent"
+            layout="@layout/text_write_content_item"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/listTag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/containerTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:background="@drawable/ripple_bg_outlined_radius_small"
-            android:clickable="true"
-            android:focusable="true"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
             android:paddingHorizontal="@dimen/margin_2xsmall"
-            android:paddingTop="4dp"
-            android:paddingBottom="6dp"
-            android:text="# 태그"
-            android:textAppearance="@style/TextAppearance.Moc.H6"
-            android:textColor="?colorOnSurface"
+            android:paddingVertical="@dimen/margin_large"
+            android:stateListAnimator="@null"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/containerFooter"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:itemCount="3"
+            tools:listitem="@layout/talk_tag_item" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerFooter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/stroke_small"
+                android:background="@color/color_on_surface_200"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_large"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_camera"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:background="@drawable/ripple_bg_outlined_radius_small"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="@dimen/margin_2xsmall"
+                android:paddingTop="4dp"
+                android:paddingBottom="6dp"
+                android:text="# 태그"
+                android:textAppearance="@style/TextAppearance.Moc.H6"
+                android:textColor="?colorOnSurface"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,13 +1,9 @@
 package app.moc.android.ui.common
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import app.moc.android.R
 import app.moc.android.databinding.CommonTwoButtonDialogFragmentBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 open class CommonTwoButtonDialogFragment: CommonAlertDialogFragment(R.layout.common_two_button_dialog_fragment) {
     internal lateinit var binding: CommonTwoButtonDialogFragmentBinding
