@@ -1,15 +1,14 @@
 package app.moc.shared.di
 
-import app.moc.shared.data.api.AuthService
-import app.moc.shared.data.api.BusinessService
-import app.moc.shared.data.api.CommunityService
-import app.moc.shared.data.api.PlanService
+import app.moc.shared.data.api.*
 import app.moc.shared.data.auth.AuthRepository
 import app.moc.shared.data.auth.DefaultAuthRepository
 import app.moc.shared.data.business.BusinessRepository
 import app.moc.shared.data.business.DefaultBusinessRepository
 import app.moc.shared.data.community.CommunityRepository
 import app.moc.shared.data.community.DefaultCommunityRepository
+import app.moc.shared.data.image.DefaultImageRepository
+import app.moc.shared.data.image.ImageRepository
 import app.moc.shared.data.plan.DefaultPlanRepository
 import app.moc.shared.data.plan.PlanRepository
 import dagger.Module
@@ -57,5 +56,13 @@ object RepositoryModule {
         service: CommunityService
     ): CommunityRepository {
         return DefaultCommunityRepository(service)
+    }
+
+    @Provides
+    @Singleton
+    fun imageRepository(
+        service: ImageService
+    ): ImageRepository {
+        return DefaultImageRepository(service)
     }
 }

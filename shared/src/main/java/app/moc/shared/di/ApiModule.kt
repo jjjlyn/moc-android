@@ -57,6 +57,14 @@ object ApiModule {
         return retrofit.create(CommunityService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideImageService(
+        retrofit: Retrofit
+    ): ImageService {
+        return retrofit.create(ImageService::class.java)
+    }
+
     @InstallIn(SingletonComponent::class)
     @Module
     internal object Providers {

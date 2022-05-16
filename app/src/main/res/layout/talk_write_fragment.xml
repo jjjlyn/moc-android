@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="actionHandler"
             type="app.moc.android.ui.talk.TalkWriteActionHandler" />
@@ -14,9 +16,9 @@
 
         <include
             android:id="@+id/header"
-            app:onConfirmClick="@{() -> actionHandler.onConfirmClick()}"
+            layout="@layout/header_title_with_two_button"
             app:onCancelClick="@{() -> actionHandler.showCancelDialog()}"
-            layout="@layout/header_title_with_two_button" />
+            app:onConfirmClick="@{() -> actionHandler.onConfirmClick()}" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textCategoryLabel"

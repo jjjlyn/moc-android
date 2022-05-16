@@ -50,7 +50,9 @@ class TalkWriteFragment : Fragment(R.layout.talk_write_fragment), TalkWriteActio
                 header.buttonCancel.text = "취소"
             }
             containerCategory
-                .apply { textCategory.hint = "카테고리를 선택해주세요" }
+                .apply {
+                    textCategory.hint = "카테고리를 선택해주세요"
+                }
                 .root
                 .setOnClickListener {
                     if(childFragmentManager.isDialogShowing()) {
