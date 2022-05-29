@@ -274,7 +274,7 @@ class MocImagePickerActivity : AppCompatActivity() {
 
     private fun updateButtonUI() {
         binding.buttonConfirm.setVisible(mediaAdapter.selectedUris.isNullOrEmpty().not())
-        binding.buttonConfirm.text = "다음(${mediaAdapter.selectedUris.size}/10)"
+        binding.buttonConfirm.text = "다음(${mediaAdapter.selectedUris.size}/3)"
     }
 
     private fun setupSelectedMediaView() {

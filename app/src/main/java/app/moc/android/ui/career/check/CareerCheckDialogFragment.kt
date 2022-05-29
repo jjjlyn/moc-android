@@ -1,20 +1,14 @@
 package app.moc.android.ui.career.check
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
-import androidx.core.view.get
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import app.moc.android.R
 import app.moc.android.databinding.CareerCheckDialogFragmentBinding
@@ -22,12 +16,14 @@ import app.moc.android.ui.career.CareerItemUIModel
 import app.moc.android.ui.common.CommonAlertDialogFragment
 import app.moc.android.util.imagepicker.MocImagePicker
 import app.moc.android.util.imagepicker.MocImagePickerActivity
+import app.moc.android.util.imagepicker.util.MediaUtil
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
 import app.moc.android.util.setVisible
+import app.moc.android.util.showToast
+import app.moc.android.util.tryOrDefault
 import app.moc.model.DateTime
-import app.moc.model.PlanCheck
+import app.moc.shared.data.api.request.PlanCheckRegisterRequest
 import app.moc.shared.result.Result
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -59,18 +55,29 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
         arguments?.let {
             careerItemUIModel = it.get("careerItemUIModel") as CareerItemUIModel
         }
-        careerCheckAdapter = CareerCheckAdapter()
+        careerCheckDialogViewModel.getCurrentCareerChecksUseCase(careerItemUIModel.id)
+        careerCheckAdapter = CareerCheckAdapter().apply {
+            onImageRemove = { uri ->
+                val oldList = selectedUris.toMutableList()
+                val newList = oldList.apply {
+                    if(oldList.contains(uri)){
+                        remove(uri)
+                    }
+                }
+                showMultiImage(newList)
+            }
+        }
         binding = CareerCheckDialogFragmentBinding.bind(view).apply {
             setOnLeftClick {
                 dismiss()
             }
             setOnRightClick {
-                careerCheckDialogViewModel.registerCareerCheck(PlanCheck(
-                    id = careerItemUIModel.id,
-                    date = DateTime().time,
-                    type = careerItemUIModel.type,
+                careerCheckDialogViewModel.registerCareerCheck(PlanCheckRegisterRequest(
+                    planId = careerItemUIModel.id,
+                    type = tryOrDefault(0) { careerItemUIModel.type.toInt() },
+                    date = DateTime().time / 1000,
                     satisfact = careerCheckDialogViewModel.satisfact.value,
-                    imageTag = null
+                    images = MediaUtil.uriToFile(requireActivity(), careerCheckAdapter.selectedUris)
                 ))
             }
             chipGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -83,6 +90,7 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
             containerCamera.root.setOnClickListener {
                 showImagePicker()
             }
+            listPicture.adapter = careerCheckAdapter
         }
 
         lifecycleScope.launch {
@@ -90,10 +98,29 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
                 .collectLatest { result ->
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if (result is Result.Success) {
-                        // TODO: 토스트 메시지
                         dismiss()
+                        showToast("인증되었어요 :)")
                     }
                 }
+        }
+
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                careerCheckDialogViewModel.alreadyCheckedItem.collectLatest { alreadyCheckedItem ->
+                    val isAlreadyChecked = alreadyCheckedItem != null
+                    binding.isAlreadyChecked = isAlreadyChecked
+                    binding.textTitle.text =
+                        if(isAlreadyChecked) {
+                            "오늘 인증이 완료되었어요."
+                        } else {
+                            "오늘의 수행 만족도와\n인증사진을 남겨주세요 :)"
+                        }
+                    if(alreadyCheckedItem != null){
+                        val chip = binding.chipGroup.getChildAt(alreadyCheckedItem.satisfact - 1)
+                        binding.chipGroup.check(chip.id)
+                    }
+                }
+            }
         }
     }
 
@@ -103,7 +130,7 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
 
             }
             .min(1, minCountMessage = "미만")
-            .max(maxCount = 10, maxCountMessage = "초과")
+            .max(maxCount = 3, maxCountMessage = "초과")
             .selectedUris(careerCheckAdapter.selectedUris)
             .startMultiImage(
                 onSelected = { list ->
@@ -126,10 +153,6 @@ class CareerCheckDialogFragment: CommonAlertDialogFragment(R.layout.career_check
 
     private fun updateSelectedUris(uris: List<Uri>) {
         careerCheckAdapter.selectedUris = uris.toMutableList()
-        updateSelectedUriExist()
-    }
-
-    private fun updateSelectedUriExist(){
-//        binding.isSelectedUriExist = careerCheckAdapter.selectedUris.isNotEmpty()
+        binding.isConfirmEnabled = uris.isNotEmpty()
     }
 }

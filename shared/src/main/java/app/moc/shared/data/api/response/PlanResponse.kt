@@ -31,7 +31,7 @@ data class PlanCheckResponse(
     val type: Int,
     val satisfact: Int,
     @Json(name = "image_tag")
-    val imageTag: String?
+    val imageTags: String?
 )
 
 fun PlanResponse.toModel() = Plan(
@@ -41,5 +41,5 @@ fun PlanResponse.toModel() = Plan(
 )
 
 fun PlanCheckResponse.toModel() = PlanCheck(
-    id = planId, date = date, type = type.toString(), satisfact = satisfact, imageTag = imageTag
+    id = planId, date = date * 1000, type = type.toString(), satisfact = satisfact, imageTags = imageTags
 )

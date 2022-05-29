@@ -10,6 +10,12 @@
         <variable
             name="calendarItemUIModel"
             type="app.moc.android.ui.career.history.calendar.CalendarItemUIModel" />
+
+        <variable
+            name="isImageEmpty"
+            type="Boolean" />
+
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -96,25 +102,52 @@
             app:layout_constraintStart_toEndOf="@id/textSatisfiedLabel"
             android:textAppearance="@style/TextAppearance.Moc.H5_2"
             android:textColor="?colorOnSurface"
-            android:text="@{careerItemUIModel.satisfiedDisplayText}"
+            android:text="@{calendarItemUIModel.satisfiedDisplayText}"
             tool:text="만족"
             android:layout_marginStart="@dimen/margin_small"
             app:layout_constraintTop_toTopOf="@id/textSatisfiedLabel"
             app:layout_constraintBottom_toBottomOf="@id/textSatisfiedLabel"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listImage"
             android:layout_width="240dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/margin_xlarge"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"
             android:background="@drawable/bg_radius_normal"
+            android:orientation="horizontal"
+            tool:visibility="gone"
+            android:overScrollMode="never"
+            tool:itemCount="1"
+            android:visibility="@{isImageEmpty ? View.GONE : View.VISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:backgroundTint="@color/color_on_surface_300_A300"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textSatisfiedLabel" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textNoData"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.Moc.H6"
+            android:textColor="?colorOnSurface"
+            android:layout_width="240dp"
+            android:layout_height="0dp"
+            android:visibility="@{isImageEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textSatisfiedLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/bg_outlined_radius_normal"
+            android:text="인증 이미지가 없어요"
+            android:layout_marginHorizontal="@dimen/margin_xlarge"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/button_padding_xlarge_bottom"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

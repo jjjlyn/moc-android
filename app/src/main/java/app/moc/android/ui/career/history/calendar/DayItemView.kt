@@ -17,7 +17,7 @@ import app.moc.android.util.dp
 import app.moc.android.util.getColorCompat
 import org.threeten.bp.LocalDate
 
-typealias ShowHistory = (date: LocalDate, hasSchedule: Boolean) -> Unit
+typealias ShowHistory = (date: LocalDate, hasSchedule: Boolean, imageTag: String?, satisfact: Int) -> Unit
 
 class DayItemView @JvmOverloads constructor(
     context: Context,
@@ -26,9 +26,12 @@ class DayItemView @JvmOverloads constructor(
     @StyleRes private val defStyleRes: Int = R.style.Widget_Moc_Calendar_ItemViewStyle,
     private val date: LocalDate = LocalDate.now(),
     private val startDate: LocalDate,
+    private val endDate: LocalDate,
     private val firstDayOfMonth: LocalDate = LocalDate.now(),
     private val hasSchedule: Boolean = false,
-    private val isToday: Boolean = false
+    private val imageTag: String?,
+    private val isToday: Boolean = false,
+    private val satisfact: Int
 ) : View(ContextThemeWrapper(context, defStyleRes), attrs, defStyleAttr) {
 
     private val bounds = Rect()
@@ -37,7 +40,8 @@ class DayItemView @JvmOverloads constructor(
     private lateinit var dayItemBackgroundPaint: Paint
     private lateinit var todayItemPaint: Paint
     var showHistory: ShowHistory? = null
-    val isDisabled = date.isBefore(startDate) || date.isAfter(LocalDate.now())
+    private val isDisabled = date.isBefore(startDate) || date.isAfter(endDate)
+    private val isSameMonth = isSameMonth(date,firstDayOfMonth)
 
     init {
         context.withStyledAttributes(attrs, R.styleable.CalendarView, defStyleAttr, defStyleRes){
@@ -49,7 +53,7 @@ class DayItemView @JvmOverloads constructor(
                 if(isDisabled){
                     color = context.getColorCompat(R.color.color_on_surface_300)
                 }
-                if(isSameMonth(date, firstDayOfMonth).not()){
+                if(isSameMonth.not()){
                     color = context.getColorCompat(R.color.color_on_surface_0)
                 }
             }
@@ -68,7 +72,7 @@ class DayItemView @JvmOverloads constructor(
             if(isDisabled){
                 return@setOnClickListener
             }
-            showHistory?.invoke(date, hasSchedule)
+            showHistory?.invoke(date, hasSchedule, imageTag, satisfact)
         }
     }
 
@@ -84,10 +88,10 @@ class DayItemView @JvmOverloads constructor(
             (height / 2 + bounds.height() / 2).toFloat(),
             textPaint
         )
-        if(hasSchedule){
+        if(hasSchedule && isSameMonth){
             addScheduledDayItem(canvas)
         }
-        if(isToday){
+        if(isToday && isSameMonth){
             addTodayItem(canvas)
         }
     }

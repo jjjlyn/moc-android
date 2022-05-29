@@ -32,9 +32,11 @@ class CareerManageAdapter : ListAdapter<CareerManageListItemUIModel, CareerManag
             binding.apply {
                 with(containerTitle){
                     this.uiModel = ComponentTitleUIModel(text = uiModel.title, button = "접기")
-                    buttonOption.apply {
-                        setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
-                    }.setVisible("진행중" != uiModel.title)
+                    buttonOption
+                        .apply {
+                            setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_up, 0)
+                        }
+                        .setVisible("진행중" != uiModel.title && uiModel.list.isNotEmpty())
 
                     setOnClick {
                         listCareerManage.isVisible = listCareerManage.isVisible.not()

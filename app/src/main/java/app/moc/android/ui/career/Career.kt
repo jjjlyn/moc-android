@@ -34,8 +34,8 @@ data class CareerItemUIModel(
         "3" -> "사업준비"
         else -> "기타"
     }
-    fun getSatisfiedDisplayText() = "만족"
     fun getIsCompleted() = "COMP" == status
+    fun getIsCheckDisabled() = getIsCompleted() || DateTime().after(DateTime(endDate))
     companion object {
         val EMPTY = CareerItemUIModel(
             0,

@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 import app.moc.model.Plan
 import app.moc.model.PlanCheck
 import com.squareup.moshi.Json
+import java.io.File
 
 @Keep
 data class PlanRegisterRequest(
@@ -42,9 +43,6 @@ data class PlanCheckRegisterRequest(
     val planId: Int,
     val type: Int,
     val date: Long,
-    val satisfact: Int
-)
-
-fun PlanCheck.toRegisterRequest() = PlanCheckRegisterRequest(
-    planId = id, type.toInt(), date / 1000, satisfact
+    val satisfact: Int,
+    val images: List<File>
 )

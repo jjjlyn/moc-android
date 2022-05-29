@@ -11,7 +11,7 @@ import app.moc.android.ui.common.ComponentTitleUIModel
 import app.moc.android.util.executeAfter
 import app.moc.android.util.setVisible
 
-class CareerManageHeaderAdapter: ListAdapter<ComponentTitleUIModel, CareerManageHeaderAdapter.ViewHolder>(DIFF_CALLBACK) {
+class CareerManageHeaderAdapter(): ListAdapter<ComponentTitleUIModel, CareerManageHeaderAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     var onArrowClick: ((Boolean) -> Unit)? = null
 
@@ -29,7 +29,8 @@ class CareerManageHeaderAdapter: ListAdapter<ComponentTitleUIModel, CareerManage
                             if (isExpanded) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up,
                             0
                         )
-                    }.setVisible("진행중" != uiModel.text)
+                    }
+                        .setVisible("진행중" != uiModel.text && uiModel.isListEmpty.not())
                 }
                 setOnClick {
                     onArrowClick?.invoke(isExpanded)

@@ -14,13 +14,14 @@ class MyPageFragment: Fragment(R.layout.my_page_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = MyPageFragmentBinding.bind(view)
-        with(binding){
-            header.apply {
-                header.textTitle.text = "마이페이지"
-                header.imageOption.also { it.setImageResource(R.drawable.ic_settings) }.setOnClickListener {
-                    findNavController().navigate(MyPageFragmentDirections.toSettings())
-                }
+        binding = MyPageFragmentBinding.bind(view).apply {
+            headerSearch.header.apply {
+                textTitle.text = "마이페이지"
+                imageOption
+                    .apply { setImageResource(R.drawable.ic_settings) }
+                    .setOnClickListener {
+                        findNavController().navigate(MyPageFragmentDirections.toSettings())
+                    }
             }
         }
     }

@@ -18,6 +18,7 @@ import app.moc.android.util.dp
 import app.moc.android.util.launchAndRepeatWithViewLifecycle
 import app.moc.shared.result.Result
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -37,10 +38,9 @@ class TalkSearchFragment : Fragment(R.layout.talk_search_fragment), TalkActionHa
             actionHandler = this@TalkSearchFragment
         }
         concatAdapter = ConcatAdapter(filterAdapter, talkSearchAdapter)
-        binding = TalkSearchFragmentBinding.bind(view)
-        with(binding){
-            header.apply {
-                header.textTitle.addTextChangedListener(object : TextWatcher {
+        binding = TalkSearchFragmentBinding.bind(view).apply {
+            headerSearch.header.apply {
+                textTitle.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {}
                     override fun onTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {
                         talkSearchViewModel.onKeywordChanged(
@@ -49,9 +49,11 @@ class TalkSearchFragment : Fragment(R.layout.talk_search_fragment), TalkActionHa
                     }
                     override fun afterTextChanged(p0: Editable) {}
                 })
-                header.buttonOption.also { it.text = "취소" }.setOnClickListener {
-                    header.textTitle.setText("")
-                }
+                buttonOption
+                    .apply { text = "취소" }
+                    .setOnClickListener {
+                        textTitle.setText("")
+                    }
             }
             listResult.apply {
                 addItemDecoration(ItemMarginDecoration(vertical = resources.getDimensionPixelOffset(R.dimen.stroke_small)))

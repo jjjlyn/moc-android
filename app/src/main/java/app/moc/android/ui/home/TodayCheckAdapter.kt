@@ -14,11 +14,11 @@ class TodayCheckAdapter: ListAdapter<CareerItemUIModel, TodayCheckAdapter.ViewHo
 
     inner class ViewHolder(private val binding: HomeTodayCheckItemBinding): RecyclerView.ViewHolder(binding.root){
         internal fun bind(uiModel: CareerItemUIModel){
-            binding.apply {
-                root.also { it.clipToOutline = true }.setOnClickListener {
-                    onItemClick?.invoke(uiModel)
-                }
-                this.uiModel = uiModel
+            binding.uiModel = uiModel
+            binding.root.apply {
+                clipToOutline = true
+            }.setOnClickListener {
+                onItemClick?.invoke(uiModel)
             }
         }
     }

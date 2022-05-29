@@ -41,10 +41,10 @@ class CareerHistoryViewModel @Inject constructor(
     val careerItemUIModel = _careerItemUIModel.asStateFlow()
 
     init {
-        setCareerItemUIModel()
+        getCareerItemUIModel()
     }
 
-    private fun setCareerItemUIModel(){
+    private fun getCareerItemUIModel(){
         val uiModel = savedStateHandle.get<CareerItemUIModel>("uiModel")
         if(uiModel != null){
             _careerItemUIModel.value = uiModel

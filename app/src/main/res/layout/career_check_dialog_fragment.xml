@@ -4,12 +4,22 @@
     <data>
 
         <variable
+            name="isConfirmEnabled"
+            type="Boolean" />
+
+        <variable
+            name="isAlreadyChecked"
+            type="Boolean" />
+
+        <variable
             name="onLeftClick"
             type="android.view.View.OnClickListener" />
 
         <variable
             name="onRightClick"
             type="android.view.View.OnClickListener" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,7 +45,7 @@
                 android:text="오늘의 수행 만족도와\n인증사진을 남겨주세요 :)"
                 android:textAppearance="@style/TextAppearance.Moc.H4_3"
                 android:textColor="@color/color_on_surface_900"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -47,7 +57,7 @@
                 android:text="수행 만족도"
                 android:textAppearance="@style/TextAppearance.Moc.H4_3"
                 android:textColor="@color/color_on_surface_900"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textTitle" />
 
             <com.google.android.material.chip.ChipGroup
@@ -57,7 +67,7 @@
                 android:layout_marginStart="@dimen/margin_xlarge"
                 android:layout_marginTop="@dimen/margin_2xsmall"
                 app:checkedChip="@id/chipSatisfiedType1"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textSatisfiedLabel"
                 app:selectionRequired="true"
                 app:singleSelection="true">
@@ -65,6 +75,7 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipSatisfiedType1"
                     style="@style/Widget.Moc.Chip.Choice.Outlined"
+                    android:checkable="@{isAlreadyChecked ? false : true}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/career_check_satisfied_type1" />
@@ -72,6 +83,7 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipSatisfiedType2"
                     style="@style/Widget.Moc.Chip.Choice.Outlined"
+                    android:checkable="@{isAlreadyChecked ? false : true}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/career_check_satisfied_type2" />
@@ -79,6 +91,7 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipSatisfiedType3"
                     style="@style/Widget.Moc.Chip.Choice.Outlined"
+                    android:checkable="@{isAlreadyChecked ? false : true}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/career_check_satisfied_type3" />
@@ -93,15 +106,16 @@
                 android:text="인증사진"
                 android:textAppearance="@style/TextAppearance.Moc.H4_3"
                 android:textColor="@color/color_on_surface_900"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/chipGroup" />
 
             <include
                 android:id="@+id/containerCamera"
                 layout="@layout/career_check_camera_item"
+                android:visibility="@{isAlreadyChecked ? View.GONE : View.VISIBLE}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/margin_xlarge"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/listPicture" />
 
@@ -112,6 +126,7 @@
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_marginTop="@dimen/margin_2xsmall"
                 android:layout_marginEnd="@dimen/margin_2xlarge"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/containerCamera"
@@ -132,9 +147,10 @@
                 android:text="취소"
                 android:textAppearance="@style/TextAppearance.Moc.H5_2"
                 android:textColor="@color/color_on_surface_800"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{isAlreadyChecked ? View.GONE : View.VISIBLE}"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintRight_toLeftOf="@id/buttonConfirm"
+                app:layout_constraintEnd_toStartOf="@id/buttonConfirm"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/listPicture" />
 
             <com.google.android.material.button.MaterialButton
@@ -143,12 +159,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_large"
+                android:enabled="@{isConfirmEnabled}"
                 android:onClick="@{onRightClick}"
                 android:text="확인"
                 android:textAppearance="@style/TextAppearance.Moc.H5_2"
-                android:textColor="?colorPrimary"
+                android:textColor="@color/selector_button_text_primary"
+                android:visibility="@{isAlreadyChecked ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/buttonCancel"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/buttonCancel" />
 
             <include

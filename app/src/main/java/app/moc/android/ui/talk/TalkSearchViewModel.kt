@@ -24,7 +24,7 @@ class TalkSearchViewModel @Inject constructor(
     @FlowPreview
     val searchResults: StateFlow<Result<List<Community>>> =
         _keyword
-            .debounce(2000L)
+            .debounce(200L)
             .transformLatest { keyword ->
                 if (keyword.isEmpty()) return@transformLatest
                 getSearchResultsUseCase(keyword).collect {

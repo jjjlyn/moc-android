@@ -7,7 +7,9 @@ import app.moc.shared.data.api.request.PlanCheckRegisterRequest
 import app.moc.shared.data.api.request.PlanModifyRequest
 import app.moc.shared.data.api.request.PlanRegisterRequest
 import app.moc.shared.data.api.response.toModel
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 interface PlanRepository {
@@ -67,7 +69,10 @@ class DefaultPlanRepository(
                 planId = planCheckRegisterRequest.planId.toString().toRequestBody(MultipartBody.FORM),
                 type = planCheckRegisterRequest.type.toString().toRequestBody(MultipartBody.FORM),
                 date = planCheckRegisterRequest.date.toString().toRequestBody(MultipartBody.FORM),
-                satisfact = planCheckRegisterRequest.satisfact.toString().toRequestBody(MultipartBody.FORM)
+                satisfact = planCheckRegisterRequest.satisfact.toString().toRequestBody(MultipartBody.FORM),
+                images = planCheckRegisterRequest.images.map {
+                    MultipartBody.Part.createFormData("multipartFile", it.name, it.asRequestBody("multipart/form-data".toMediaTypeOrNull()))
+                }
             )
         }.getOrThrow().toModel()
     }

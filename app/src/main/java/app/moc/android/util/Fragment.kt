@@ -41,5 +41,5 @@ fun FragmentManager.isDialogShowing(): Boolean{
 }
 
 fun Fragment.showToast(message: String){
-    Toast.makeText(this.requireActivity(), message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
 }

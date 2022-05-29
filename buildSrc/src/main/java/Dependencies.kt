@@ -26,7 +26,7 @@ object Version {
     const val flexbox = "3.0.0"
 
     // image
-    const val glide = "4.12.0"
+    const val glide = "4.11.0"
     const val lottie ="3.6.1"
 
     // network

@@ -3,6 +3,7 @@ package app.moc.model
 import android.os.Parcelable
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
+import java.io.File
 
 @Keep
 @Parcelize
@@ -28,7 +29,7 @@ data class PlanCheck(
     val date: Long,
     val type: String,
     val satisfact: Int,
-    val imageTag: String?
+    val imageTags: String?
 )
 
 @Keep

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="imageTag"
+            type="String" />
+    </data>
+
+    <androidx.appcompat.widget.AppCompatImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/textNoData"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:background="@drawable/bg_outlined_radius_normal"
+        android:gravity="center"
+        android:text="인증 이미지가 없어요"
+        app:src="@{imageTag}"
+        android:textAppearance="@style/TextAppearance.Moc.H6"
+        android:textColor="?colorOnSurface" />
+
+</layout>

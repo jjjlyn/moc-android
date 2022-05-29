@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import app.moc.android.databinding.CalendarFragmentBinding
-import app.moc.android.ui.career.detail.CareerDetailFragment
 import app.moc.android.ui.career.history.CareerHistoryViewModel
 import app.moc.android.ui.career.history.calendar.CalendarUtils.getMonthList
 import app.moc.android.util.isDialogShowing
@@ -43,14 +41,15 @@ class CalendarFragment: Fragment() {
         calendarDayOfWeekAdapter = CalendarDayOfWeekAdapter()
         binding = CalendarFragmentBinding.inflate(inflater, container, false).apply {
             listDayOfWeek.adapter = calendarDayOfWeekAdapter
-            calendarView.showHistory = { date, hasSchedule ->
+            calendarView.showHistory = { date, hasSchedule, imageTag, satisfact ->
                 if(hasSchedule){
                     val careerItemUIModel = careerHistoryViewModel.careerItemUIModel.value
                     val startDate = DateTime(careerItemUIModel.startDate).toLocalDate()
+                    val endDate = DateTime(careerItemUIModel.endDate).toLocalDate()
                     if(childFragmentManager.isDialogShowing().not()){
                         CalendarItemDialogFragment(
                             careerItemUIModel = careerItemUIModel,
-                            calendarItemUIModel = CalendarItemUIModel(startDate, date, hasSchedule)
+                            calendarItemUIModel = CalendarItemUIModel(startDate, endDate, date, hasSchedule, imageTag, satisfact)
                         ).show(
                             childFragmentManager, CalendarItemDialogFragment::class.java.simpleName
                         )
@@ -71,15 +70,19 @@ class CalendarFragment: Fragment() {
             launch {
                 careerHistoryViewModel.careerChecksUseCaseResult.collectLatest { result ->
                     if(result is Result.Success){
-                        val data = result.data.map { it.copy(date = it.date * 1000) }
+                        val data = result.data
                         val date = DateTime(millis).toLocalDate()
                         val startDate = DateTime(careerHistoryViewModel.careerItemUIModel.value.startDate).toLocalDate()
+                        val endDate = DateTime(careerHistoryViewModel.careerItemUIModel.value.endDate).toLocalDate()
                         val filteredValue = getMonthList(date).map { item ->
-                            val hasSchedule = data.find { DateTime(it.date).toLocalDate() == item } != null
+                            val planCheck = data.find { DateTime(it.date).toLocalDate() == item }
                             CalendarItemUIModel(
                                 startDate = startDate,
+                                endDate = endDate,
                                 date = item,
-                                hasSchedule = hasSchedule
+                                hasSchedule = planCheck != null,
+                                imageTag = planCheck?.imageTags,
+                                satisfact = planCheck?.satisfact ?: -1
                             )
                         }
                         binding.calendarView.initCalendar(date, filteredValue)

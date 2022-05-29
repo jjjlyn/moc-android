@@ -10,26 +10,19 @@ import app.moc.android.util.layoutInflater
 
 class CareerCheckAdapter: ListAdapter<Uri, CareerCheckAdapter.ViewHolder>(DIFF_CALLBACK){
 
-    internal var selectedUris = mutableListOf<Uri>()
-    internal var clearClickListener : ((Uri) -> Unit)? = null
+    internal var selectedUris: List<Uri> = emptyList()
+    internal var onImageRemove : ((Uri) -> Unit)? = null
 
     inner class ViewHolder(private val binding: CareerCheckItemBinding): RecyclerView.ViewHolder(binding.root){
         internal fun bind(uri: Uri){
-            binding.uri = uri
-            binding.imageClear.setOnClickListener {
-                clearClickListener?.invoke(uri)
+            binding.apply {
+                this.uri = uri
+                imageSelected.clipToOutline = true
+                imageClear.setOnClickListener {
+                    onImageRemove?.invoke(uri)
+                }
             }
         }
-    }
-
-    internal fun clearUriSelect(uri: Uri){
-        if(selectedUris.contains(uri)){
-            removeUri(uri)
-        }
-    }
-
-    private fun removeUri(uri: Uri) {
-        selectedUris.remove(uri)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =

@@ -28,7 +28,8 @@ interface CommunityService {
     suspend fun fetchSearchResults(@Query("keyword") keywords: List<String>): List<CommunityResponse>
 
     @POST("community")
-    suspend fun uploadCommunityItem(@Body communityItemUploadRequest: CommunityItemUploadRequest): CommunityResponse
+    // multipart로 전송해야 함
+    suspend fun uploadCommunityItem(@Part communityItemUploadRequest: CommunityItemUploadRequest): CommunityResponse
 
     @DELETE("community")
     suspend fun deleteCommunityItem(@Query("board_id") boardID: String)

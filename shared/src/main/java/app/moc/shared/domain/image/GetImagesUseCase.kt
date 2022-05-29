@@ -2,7 +2,6 @@ package app.moc.shared.domain.image
 
 import app.moc.model.Image
 import app.moc.shared.data.image.ImageRepository
-import app.moc.shared.data.prefs.PreferencesStorage
 import app.moc.shared.di.IODispatcher
 import app.moc.shared.domain.FlowUseCase
 import app.moc.shared.result.Result

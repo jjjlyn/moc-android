@@ -5,6 +5,7 @@ import app.moc.shared.data.api.request.PlanModifyRequest
 import app.moc.shared.data.api.request.PlanRegisterRequest
 import app.moc.shared.data.api.response.PlanCheckResponse
 import app.moc.shared.data.api.response.PlanResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 
@@ -33,7 +34,8 @@ interface PlanService {
         @Part("planId") planId: RequestBody,
         @Part("type") type: RequestBody,
         @Part("date") date: RequestBody,
-        @Part("satisfact") satisfact: RequestBody
+        @Part("satisfact") satisfact: RequestBody,
+        @Part images: List<MultipartBody.Part>
     ): PlanCheckResponse
 
     @GET("plan/getPlanCheckList")

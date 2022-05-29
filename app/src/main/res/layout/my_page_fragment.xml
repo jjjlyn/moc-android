@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/header"
+        android:id="@+id/headerSearch"
         layout="@layout/my_page_header"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

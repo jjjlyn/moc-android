@@ -55,10 +55,13 @@ class CalendarView @JvmOverloads constructor(
             addView(DayItemView(
                 context = context,
                 startDate = it.startDate,
+                endDate = it.endDate,
                 date = it.date,
                 firstDayOfMonth = firstDayOfMonth,
                 hasSchedule = it.hasSchedule,
-                isToday = it.date == LocalDate.now()
+                imageTag = it.imageTag,
+                isToday = it.date == LocalDate.now(),
+                satisfact = it.satisfact
             ).apply {
                 showHistory = this@CalendarView.showHistory
             })

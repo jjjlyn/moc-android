@@ -81,7 +81,7 @@
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:visibility="@{uiModel.isCompleted ? View.GONE : View.VISIBLE}"
+                android:visibility="@{uiModel.isCheckDisabled ? View.GONE : View.VISIBLE}"
                 android:onClick="@{() -> actionHandler.showCareerCheck(uiModel)}"
                 android:src="@drawable/ic_career_complete"
                 android:tint="@{Color.parseColor(uiModel.color)}"

@@ -23,11 +23,20 @@ data class CalendarHistoryItemUIModel(
 @Keep
 data class CalendarItemUIModel(
     val startDate: LocalDate,
+    val endDate: LocalDate,
     val date: LocalDate,
-    val hasSchedule: Boolean
+    val hasSchedule: Boolean,
+    val imageTag: String?,
+    val satisfact: Int,
 ) {
     fun getDateDisplayText(): String {
-        return "yyyy년 MM월 yy일".fmt(date)
+        return "yyyy년 MM월 dd일".fmt(date)
+    }
+    fun getSatisfiedDisplayText() = when(satisfact){
+        1 -> "만족"
+        2 -> "보통"
+        3 -> "불만족"
+        else -> "없음"
     }
 }
 

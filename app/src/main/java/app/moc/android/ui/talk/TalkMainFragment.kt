@@ -36,13 +36,14 @@ class TalkMainFragment : Fragment(R.layout.talk_main_fragment), TalkActionHandle
             actionHandler = this@TalkMainFragment
         }
         talkMainAdapter = ConcatAdapter(filterAdapter, mocTalkAdapter)
-        binding = TalkMainFragmentBinding.bind(view)
-        with(binding){
+        binding = TalkMainFragmentBinding.bind(view).apply {
             header.apply {
-                header.textTitle.text = "모크러 TALK"
-                header.imageOption.also { it.setImageResource(R.drawable.ic_search) }.setOnClickListener {
-                    findNavController().navigate(TalkMainFragmentDirections.toTalkSearch())
-                }
+                textTitle.text = "모크러 TALK"
+                imageOption
+                    .apply { setImageResource(R.drawable.ic_search) }
+                    .setOnClickListener {
+                        findNavController().navigate(TalkMainFragmentDirections.toTalkSearch())
+                    }
             }
             listTalk.apply {
                 addItemDecoration(ItemMarginDecoration(vertical = resources.getDimensionPixelOffset(R.dimen.stroke_small)))

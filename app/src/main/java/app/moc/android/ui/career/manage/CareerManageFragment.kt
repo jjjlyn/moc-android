@@ -52,68 +52,75 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment){
         val careerManageItemActionHandler = object : CareerManageItemActionHandler {
             override fun showCareerCheck(uiModel: CareerItemUIModel) {
                 if (childFragmentManager.isDialogShowing()) return
-                CareerCheckDialogFragment().apply {
-                    arguments = bundleOf("careerItemUIModel" to uiModel)
-                }.show(childFragmentManager, "career_check_dialog")
+                CareerCheckDialogFragment()
+                    .apply {
+                        arguments = bundleOf("careerItemUIModel" to uiModel)
+                    }
+                    .show(childFragmentManager, "career_check_dialog")
             }
         }
 
         careerManagerInProgressHeaderAdapter = CareerManageHeaderAdapter()
-        careerManagerCompletedHeaderAdapter = CareerManageHeaderAdapter().apply {
-            onArrowClick = { isExpanded ->
-                careerManagerCompletedHeaderAdapter.submitList(
-                    currentList.toMutableList().apply {
-                        set(0, ComponentTitleUIModel(null, "완료", if (isExpanded) "접기" else "펼치기"))
+        careerManagerCompletedHeaderAdapter = CareerManageHeaderAdapter()
+            .apply {
+                onArrowClick = { isExpanded ->
+                    careerManagerCompletedHeaderAdapter.submitList(
+                        currentList
+                            .toMutableList()
+                            .apply {
+                                set(0, ComponentTitleUIModel(null, "완료", if (isExpanded) "접기" else "펼치기"))
+                            }
+                    )
+                    if(isExpanded) {
+                        careerManageAdapter.addAdapter(careerManageCompletedItemAdapter)
+                    } else {
+                        careerManageAdapter.removeAdapter(careerManageCompletedItemAdapter)
                     }
-                )
-                if(isExpanded) {
-                    careerManageAdapter.addAdapter(careerManageCompletedItemAdapter)
-                } else {
-                    careerManageAdapter.removeAdapter(careerManageCompletedItemAdapter)
                 }
             }
-        }
-        careerManageInProgressItemAdapter = CareerManageItemAdapter().apply {
-            onItemClick = {
-                navigationHandler.navigateToCareerHistory(it){ uiModel ->
-                    findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
+        careerManageInProgressItemAdapter = CareerManageItemAdapter()
+            .apply {
+                onItemClick = {
+                    navigationHandler.navigateToCareerHistory(it){ uiModel ->
+                        findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
+                    }
                 }
+                actionHandler = careerManageItemActionHandler
             }
-            actionHandler = careerManageItemActionHandler
-        }
-        careerManageCompletedItemAdapter = CareerManageItemAdapter().apply {
-            onItemClick = {
-                navigationHandler.navigateToCareerHistory(it){ uiModel ->
-                    findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
+        careerManageCompletedItemAdapter = CareerManageItemAdapter()
+            .apply {
+                onItemClick = {
+                    navigationHandler.navigateToCareerHistory(it){ uiModel ->
+                        findNavController().navigate(CareerManageFragmentDirections.toCareerHistory(uiModel))
+                    }
                 }
+                actionHandler = careerManageItemActionHandler
             }
-            actionHandler = careerManageItemActionHandler
-        }
 
-        careerManageAdapter = ConcatAdapter().apply {
-            addAdapter(careerManagerInProgressHeaderAdapter)
-            addAdapter(careerManageInProgressItemAdapter)
-            addAdapter(careerManagerCompletedHeaderAdapter)
-            addAdapter(careerManageCompletedItemAdapter)
-        }
+        careerManageAdapter = ConcatAdapter()
+            .apply {
+                addAdapter(careerManagerInProgressHeaderAdapter)
+                addAdapter(careerManageInProgressItemAdapter)
+                addAdapter(careerManagerCompletedHeaderAdapter)
+                addAdapter(careerManageCompletedItemAdapter)
+            }
 
-        binding = CareerManageFragmentBinding.bind(view).apply {
-            viewModel = careerManageViewModel
-            lifecycleOwner = viewLifecycleOwner
-            listCareerManage.apply {
-                adapter = careerManageAdapter
-            }
-            bgRegister.setOnClickListener {
-                navigationHandler.navigateToRegisterCareerDetail {
-                    findNavController().navigate(CareerManageFragmentDirections.toCareerDetail(null))
+        binding = CareerManageFragmentBinding.bind(view)
+            .apply {
+                viewModel = careerManageViewModel
+                lifecycleOwner = viewLifecycleOwner
+                listCareerManage.adapter = careerManageAdapter
+                bgRegister.setOnClickListener {
+                    navigationHandler.navigateToRegisterCareerDetail {
+                        findNavController().navigate(CareerManageFragmentDirections.toCareerDetail(null))
+                    }
+                }
+                imageRegister.setOnClickListener {
+                    navigationHandler.navigateToRegisterCareerDetail {
+                        findNavController().navigate(CareerManageFragmentDirections.toCareerDetail(null))
+                    }
                 }
             }
-            imageRegister.setOnClickListener {
-                navigationHandler.navigateToRegisterCareerDetail {
-                    findNavController().navigate(CareerManageFragmentDirections.toCareerDetail(null))
-                }
-            }
-        }
 
         launchAndRepeatWithViewLifecycle {
             launch {
@@ -121,10 +128,14 @@ class CareerManageFragment: Fragment(R.layout.career_manage_fragment){
                     binding.containerLoading.root.setVisible(result.isLoading)
                     if(result is Result.Success){
                         val data = result.data
-                        careerManagerInProgressHeaderAdapter.submitList(listOf(ComponentTitleUIModel(null,"진행중", "접기")))
+                        careerManagerInProgressHeaderAdapter.submitList(
+                            listOf(ComponentTitleUIModel(null,"진행중", "접기"))
+                        )
                         careerManageInProgressItemAdapter.submitList(data[0].list)
 
-                        careerManagerCompletedHeaderAdapter.submitList(listOf(ComponentTitleUIModel(null,"완료", "접기")))
+                        careerManagerCompletedHeaderAdapter.submitList(
+                            listOf(ComponentTitleUIModel(null,"완료", "접기", data[1].list.isEmpty()))
+                        )
                         careerManageCompletedItemAdapter.submitList(data[1].list)
                     }
                 }

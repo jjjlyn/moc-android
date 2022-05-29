@@ -7,5 +7,6 @@ import androidx.annotation.Keep
 data class ComponentTitleUIModel(
     val image: Drawable? = null,
     val text: String,
-    val button: String? = null
+    val button: String? = null,
+    val isListEmpty: Boolean = false
 )
