@@ -19,3 +19,5 @@ services.tar
 .idea/gradle.xml
 .idea/misc.xml
 /fastlane
+Gemfile
+Gemfile.lock
